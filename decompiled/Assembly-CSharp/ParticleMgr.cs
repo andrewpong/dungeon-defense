@@ -9,7 +9,7 @@ public class ParticleMgr : MonoBehaviour
 {
   private static Dictionary<string, List<ParticleElt>> dicParticle = new Dictionary<string, List<ParticleElt>>();
   private static Dictionary<string, int> dicNum = new Dictionary<string, int>();
-  private static int nMax = 4;
+  private static int nMax = 6;
   private static bool bLoaded = false;
   public static ParticleMgr single;
   public List<ParticleElt> listPS;

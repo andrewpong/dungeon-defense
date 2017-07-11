@@ -169,23 +169,14 @@ namespace GooglePlayGames
 
     public void GetStats(Action<CommonStatusCodes, PlayerStats> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      PlayGamesLocalUser.\u003CGetStats\u003Ec__AnonStorey0 statsCAnonStorey0 = new PlayGamesLocalUser.\u003CGetStats\u003Ec__AnonStorey0();
-      // ISSUE: reference to a compiler-generated field
-      statsCAnonStorey0.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      statsCAnonStorey0.\u0024this = this;
       if (this.mStats == null || !this.mStats.Valid)
-      {
-        // ISSUE: reference to a compiler-generated method
-        this.mPlatform.GetPlayerStats(new Action<CommonStatusCodes, PlayerStats>(statsCAnonStorey0.\u003C\u003Em__0));
-      }
+        this.mPlatform.GetPlayerStats((Action<CommonStatusCodes, PlayerStats>) ((rc, stats) =>
+        {
+          this.mStats = stats;
+          callback(rc, stats);
+        }));
       else
-      {
-        // ISSUE: reference to a compiler-generated field
-        statsCAnonStorey0.callback(CommonStatusCodes.Success, this.mStats);
-      }
+        callback(CommonStatusCodes.Success, this.mStats);
     }
   }
 }

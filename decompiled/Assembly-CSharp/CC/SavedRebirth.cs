@@ -42,6 +42,10 @@ namespace CC
     public ObscuredInt nInitElementalTrait = (ObscuredInt) 0;
     public ObscuredLong nNewMedal = (ObscuredLong) 0L;
     public ObscuredLong nNewStone = (ObscuredLong) 0L;
+    public Dictionary<ObscuredShort, Dictionary<MonTraitID, ObscuredInt>> dictMonTrait = new Dictionary<ObscuredShort, Dictionary<MonTraitID, ObscuredInt>>();
+    public Dictionary<ObscuredShort, ObscuredLong> dictMonRebirthExp = new Dictionary<ObscuredShort, ObscuredLong>();
+    public ObscuredInt nRebirthBonus = (ObscuredInt) 0;
+    public ObscuredBool bSaveErrorReward = (ObscuredBool) false;
     public bool bAttention;
     public bool bAttentionRuby;
     public bool bAttentionHell;

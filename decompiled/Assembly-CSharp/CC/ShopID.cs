@@ -43,6 +43,11 @@ namespace CC
     eHellR120 = 33,
     eHellR250 = 34,
     eElementalPackage = 35,
-    eMax = 36,
+    eRebirthPackage = 36,
+    eElementalExp = 37,
+    eRebirthExp = 38,
+    eFirst50000 = 39,
+    eRubyF12000 = 40,
+    eMax = 41,
   }
 }

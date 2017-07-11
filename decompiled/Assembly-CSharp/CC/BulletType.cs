@@ -12,5 +12,6 @@ namespace CC
     eExplosionDir,
     eFrostExplosionCir,
     eSoulBomb,
+    eLittleSoulBomb,
   }
 }

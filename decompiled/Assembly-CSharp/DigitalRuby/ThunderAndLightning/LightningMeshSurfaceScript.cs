@@ -10,12 +10,24 @@ namespace DigitalRuby.ThunderAndLightning
   public class LightningMeshSurfaceScript : LightningBoltPrefabScriptBase
   {
     [SingleLine("Random range that the point will offset from the mesh, using the normal of the chosen point to offset")]
-    public RangeOfFloats MeshOffsetRange = new RangeOfFloats() { Minimum = 0.5f, Maximum = 1f };
+    public RangeOfFloats MeshOffsetRange = new RangeOfFloats()
+    {
+      Minimum = 0.5f,
+      Maximum = 1f
+    };
     [Header("Lightning Path Properties")]
     [SingleLine("Range for points in the lightning path")]
-    public RangeOfIntegers PathLengthCount = new RangeOfIntegers() { Minimum = 3, Maximum = 6 };
+    public RangeOfIntegers PathLengthCount = new RangeOfIntegers()
+    {
+      Minimum = 3,
+      Maximum = 6
+    };
     [SingleLine("Range for minimum distance between points in the lightning path")]
-    public RangeOfFloats MinimumPathDistanceRange = new RangeOfFloats() { Minimum = 0.5f, Maximum = 1f };
+    public RangeOfFloats MinimumPathDistanceRange = new RangeOfFloats()
+    {
+      Minimum = 0.5f,
+      Maximum = 1f
+    };
     [Tooltip("The maximum distance between mesh points. When walking the mesh, if a point is greater than this, the path direction is reversed. This tries to avoid paths crossing between mesh points that are not actually physically touching.")]
     public float MaximumPathDistance = 2f;
     private readonly List<Vector3> sourcePoints = new List<Vector3>();

@@ -10,13 +10,19 @@ namespace GooglePlayGames.Native
 {
   internal static class JavaUtils
   {
-    private static ConstructorInfo IntPtrConstructor = typeof (AndroidJavaObject).GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, (Binder) null, new System.Type[1]{ typeof (IntPtr) }, (ParameterModifier[]) null);
+    private static ConstructorInfo IntPtrConstructor = typeof (AndroidJavaObject).GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, (Binder) null, new System.Type[1]
+    {
+      typeof (IntPtr)
+    }, (ParameterModifier[]) null);
 
     internal static AndroidJavaObject JavaObjectFromPointer(IntPtr jobject)
     {
       if (jobject == IntPtr.Zero)
         return (AndroidJavaObject) null;
-      return (AndroidJavaObject) JavaUtils.IntPtrConstructor.Invoke(new object[1]{ (object) jobject });
+      return (AndroidJavaObject) JavaUtils.IntPtrConstructor.Invoke(new object[1]
+      {
+        (object) jobject
+      });
     }
 
     internal static AndroidJavaObject NullSafeCall(this AndroidJavaObject target, string methodName, params object[] args)

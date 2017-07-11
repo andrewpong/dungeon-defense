@@ -12,7 +12,37 @@ namespace GooglePlayGames.Native.PInvoke
 {
   internal class MultiplayerParticipant : BaseReferenceHolder
   {
-    private static readonly Dictionary<Types.ParticipantStatus, Participant.ParticipantStatus> StatusConversion = new Dictionary<Types.ParticipantStatus, Participant.ParticipantStatus>() { { Types.ParticipantStatus.INVITED, Participant.ParticipantStatus.Invited }, { Types.ParticipantStatus.JOINED, Participant.ParticipantStatus.Joined }, { Types.ParticipantStatus.DECLINED, Participant.ParticipantStatus.Declined }, { Types.ParticipantStatus.LEFT, Participant.ParticipantStatus.Left }, { Types.ParticipantStatus.NOT_INVITED_YET, Participant.ParticipantStatus.NotInvitedYet }, { Types.ParticipantStatus.FINISHED, Participant.ParticipantStatus.Finished }, { Types.ParticipantStatus.UNRESPONSIVE, Participant.ParticipantStatus.Unresponsive } };
+    private static readonly Dictionary<Types.ParticipantStatus, Participant.ParticipantStatus> StatusConversion = new Dictionary<Types.ParticipantStatus, Participant.ParticipantStatus>()
+    {
+      {
+        Types.ParticipantStatus.INVITED,
+        Participant.ParticipantStatus.Invited
+      },
+      {
+        Types.ParticipantStatus.JOINED,
+        Participant.ParticipantStatus.Joined
+      },
+      {
+        Types.ParticipantStatus.DECLINED,
+        Participant.ParticipantStatus.Declined
+      },
+      {
+        Types.ParticipantStatus.LEFT,
+        Participant.ParticipantStatus.Left
+      },
+      {
+        Types.ParticipantStatus.NOT_INVITED_YET,
+        Participant.ParticipantStatus.NotInvitedYet
+      },
+      {
+        Types.ParticipantStatus.FINISHED,
+        Participant.ParticipantStatus.Finished
+      },
+      {
+        Types.ParticipantStatus.UNRESPONSIVE,
+        Participant.ParticipantStatus.Unresponsive
+      }
+    };
 
     internal MultiplayerParticipant(IntPtr selfPointer)
       : base(selfPointer)

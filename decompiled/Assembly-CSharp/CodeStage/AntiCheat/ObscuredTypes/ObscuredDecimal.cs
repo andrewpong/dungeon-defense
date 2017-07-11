@@ -138,7 +138,10 @@ namespace CodeStage.AntiCheat.ObscuredTypes
     public Decimal GetEncrypted()
     {
       this.ApplyNewCryptoKey();
-      return new ObscuredDecimal.DecimalLongBytesUnion() { b16 = this.hiddenValue }.d;
+      return new ObscuredDecimal.DecimalLongBytesUnion()
+      {
+        b16 = this.hiddenValue
+      }.d;
     }
 
     public void SetEncrypted(Decimal encrypted)

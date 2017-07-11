@@ -14,9 +14,17 @@ namespace DigitalRuby.ThunderAndLightning
     [Tooltip("Whether to enable point lights for the particles")]
     public bool EnableParticleLights = true;
     [SingleLineClamp("Possible range for particle lights", 0.001, 100.0)]
-    public RangeOfFloats ParticleLightRange = new RangeOfFloats() { Minimum = 2f, Maximum = 5f };
+    public RangeOfFloats ParticleLightRange = new RangeOfFloats()
+    {
+      Minimum = 2f,
+      Maximum = 5f
+    };
     [SingleLineClamp("Possible range of intensity for particle lights", 0.00999999977648258, 8.0)]
-    public RangeOfFloats ParticleLightIntensity = new RangeOfFloats() { Minimum = 0.2f, Maximum = 0.3f };
+    public RangeOfFloats ParticleLightIntensity = new RangeOfFloats()
+    {
+      Minimum = 0.2f,
+      Maximum = 0.3f
+    };
     [Tooltip("Possible range of colors for particle lights")]
     public Color ParticleLightColor1 = Color.white;
     [Tooltip("Possible range of colors for particle lights")]

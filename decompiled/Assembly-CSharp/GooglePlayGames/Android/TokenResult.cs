@@ -17,27 +17,27 @@ namespace GooglePlayGames.Android
 
     public Status getStatus()
     {
-      return new Status(this.InvokeCall<IntPtr>("getStatus", "()Lcom/google/android/gms/common/api/Status;"));
+      return new Status(this.InvokeCall<IntPtr>(nameof (getStatus), "()Lcom/google/android/gms/common/api/Status;"));
     }
 
     public int getStatusCode()
     {
-      return this.InvokeCall<int>("getStatusCode", "()I");
+      return this.InvokeCall<int>(nameof (getStatusCode), "()I");
     }
 
     public string getAccessToken()
     {
-      return this.InvokeCall<string>("getAccessToken", "()Ljava/lang/String;");
+      return this.InvokeCall<string>(nameof (getAccessToken), "()Ljava/lang/String;");
     }
 
     public string getEmail()
     {
-      return this.InvokeCall<string>("getEmail", "()Ljava/lang/String;");
+      return this.InvokeCall<string>(nameof (getEmail), "()Ljava/lang/String;");
     }
 
     public string getIdToken()
     {
-      return this.InvokeCall<string>("getIdToken", "()Ljava/lang/String;");
+      return this.InvokeCall<string>(nameof (getIdToken), "()Ljava/lang/String;");
     }
   }
 }

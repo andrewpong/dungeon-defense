@@ -112,7 +112,10 @@ namespace Thinksquirrel.CShakeExample
     private IEnumerator DoFootsteps()
     {
       // ISSUE: object of a compiler-generated type is created
-      return (IEnumerator) new CameraShakeExample.\u003CDoFootsteps\u003Ec__Iterator0() { \u0024this = this };
+      return (IEnumerator) new CameraShakeExample.\u003CDoFootsteps\u003Ec__Iterator0()
+      {
+        \u0024this = this
+      };
     }
 
     private void Earthquake()
@@ -127,14 +130,20 @@ namespace Thinksquirrel.CShakeExample
     private IEnumerator DoEarthquake()
     {
       // ISSUE: object of a compiler-generated type is created
-      return (IEnumerator) new CameraShakeExample.\u003CDoEarthquake\u003Ec__Iterator1() { \u0024this = this };
+      return (IEnumerator) new CameraShakeExample.\u003CDoEarthquake\u003Ec__Iterator1()
+      {
+        \u0024this = this
+      };
     }
 
     [DebuggerHidden]
     private IEnumerator DoEarthquake2()
     {
       // ISSUE: object of a compiler-generated type is created
-      return (IEnumerator) new CameraShakeExample.\u003CDoEarthquake2\u003Ec__Iterator2() { \u0024this = this };
+      return (IEnumerator) new CameraShakeExample.\u003CDoEarthquake2\u003Ec__Iterator2()
+      {
+        \u0024this = this
+      };
     }
 
     public void OnShakeCamera()

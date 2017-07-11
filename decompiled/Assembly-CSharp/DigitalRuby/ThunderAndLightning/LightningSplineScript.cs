@@ -10,7 +10,10 @@ namespace DigitalRuby.ThunderAndLightning
 {
   public class LightningSplineScript : LightningBoltPathScriptBase
   {
-    private readonly List<Vector3> prevSourcePoints = new List<Vector3>((IEnumerable<Vector3>) new Vector3[1]{ Vector3.zero });
+    private readonly List<Vector3> prevSourcePoints = new List<Vector3>((IEnumerable<Vector3>) new Vector3[1]
+    {
+      Vector3.zero
+    });
     private readonly List<Vector3> sourcePoints = new List<Vector3>();
     private int previousGenerations = -1;
     private float previousDistancePerSegment = -1f;

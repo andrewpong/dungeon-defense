@@ -29,7 +29,10 @@ namespace Com.Google.Android.Gms.Common.Api
     public void onResult(AndroidJavaObject arg_Result_1)
     {
       IntPtr rawObject = arg_Result_1.GetRawObject();
-      ConstructorInfo constructor = typeof (R).GetConstructor(new System.Type[1]{ rawObject.GetType() });
+      ConstructorInfo constructor = typeof (R).GetConstructor(new System.Type[1]
+      {
+        rawObject.GetType()
+      });
       R arg_Result_1_1;
       if (constructor != null)
       {

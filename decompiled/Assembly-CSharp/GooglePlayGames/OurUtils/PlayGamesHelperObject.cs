@@ -50,21 +50,15 @@ namespace GooglePlayGames.OurUtils
 
     public static void RunCoroutine(IEnumerator action)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      PlayGamesHelperObject.\u003CRunCoroutine\u003Ec__AnonStorey0 coroutineCAnonStorey0 = new PlayGamesHelperObject.\u003CRunCoroutine\u003Ec__AnonStorey0();
-      // ISSUE: reference to a compiler-generated field
-      coroutineCAnonStorey0.action = action;
       if (!((UnityEngine.Object) PlayGamesHelperObject.instance != (UnityEngine.Object) null))
         return;
-      // ISSUE: reference to a compiler-generated method
-      PlayGamesHelperObject.RunOnGameThread(new Action(coroutineCAnonStorey0.\u003C\u003Em__0));
+      PlayGamesHelperObject.RunOnGameThread((Action) (() => PlayGamesHelperObject.instance.StartCoroutine(action)));
     }
 
     public static void RunOnGameThread(Action action)
     {
       if (action == null)
-        throw new ArgumentNullException("action");
+        throw new ArgumentNullException(nameof (action));
       if (PlayGamesHelperObject.sIsDummy)
         return;
       lock ((object) PlayGamesHelperObject.sQueue)

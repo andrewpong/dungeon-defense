@@ -43,5 +43,10 @@ public class DataTrial : ScriptableObject
     public int Hell8;
     public int Hell9;
     public int Hell10;
+    public int Hell11;
+    public int Hell12;
+    public int Hell13;
+    public int Hell14;
+    public int Hell15;
   }
 }

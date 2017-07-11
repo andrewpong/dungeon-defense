@@ -31,144 +31,179 @@ namespace GooglePlayGames.Native
 
     public void CreateQuickMatch(uint minOpponents, uint maxOpponents, uint variant, ulong exclusiveBitmask, Action<bool, GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeTurnBasedMultiplayerClient.\u003CCreateQuickMatch\u003Ec__AnonStorey1 matchCAnonStorey1 = new NativeTurnBasedMultiplayerClient.\u003CCreateQuickMatch\u003Ec__AnonStorey1();
-      // ISSUE: reference to a compiler-generated field
-      matchCAnonStorey1.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      matchCAnonStorey1.callback = Callbacks.AsOnGameThreadCallback<bool, GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch>(matchCAnonStorey1.callback);
+      callback = Callbacks.AsOnGameThreadCallback<bool, GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch>(callback);
       using (GooglePlayGames.Native.PInvoke.TurnBasedMatchConfigBuilder matchConfigBuilder = GooglePlayGames.Native.PInvoke.TurnBasedMatchConfigBuilder.Create())
       {
         matchConfigBuilder.SetVariant(variant).SetMinimumAutomatchingPlayers(minOpponents).SetMaximumAutomatchingPlayers(maxOpponents).SetExclusiveBitMask(exclusiveBitmask);
         using (GooglePlayGames.Native.PInvoke.TurnBasedMatchConfig config = matchConfigBuilder.Build())
-        {
-          // ISSUE: reference to a compiler-generated method
-          this.mTurnBasedManager.CreateMatch(config, this.BridgeMatchToUserCallback(new Action<GooglePlayGames.BasicApi.UIStatus, GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch>(matchCAnonStorey1.\u003C\u003Em__0)));
-        }
+          this.mTurnBasedManager.CreateMatch(config, this.BridgeMatchToUserCallback((Action<GooglePlayGames.BasicApi.UIStatus, GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch>) ((status, match) => callback(status == GooglePlayGames.BasicApi.UIStatus.Valid, match))));
       }
     }
 
     public void CreateWithInvitationScreen(uint minOpponents, uint maxOpponents, uint variant, Action<bool, GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: reference to a compiler-generated method
-      this.CreateWithInvitationScreen(minOpponents, maxOpponents, variant, new Action<GooglePlayGames.BasicApi.UIStatus, GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch>(new NativeTurnBasedMultiplayerClient.\u003CCreateWithInvitationScreen\u003Ec__AnonStorey2()
-      {
-        callback = callback
-      }.\u003C\u003Em__0));
+      this.CreateWithInvitationScreen(minOpponents, maxOpponents, variant, (Action<GooglePlayGames.BasicApi.UIStatus, GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch>) ((status, match) => callback(status == GooglePlayGames.BasicApi.UIStatus.Valid, match)));
     }
 
     public void CreateWithInvitationScreen(uint minOpponents, uint maxOpponents, uint variant, Action<GooglePlayGames.BasicApi.UIStatus, GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeTurnBasedMultiplayerClient.\u003CCreateWithInvitationScreen\u003Ec__AnonStorey3 screenCAnonStorey3 = new NativeTurnBasedMultiplayerClient.\u003CCreateWithInvitationScreen\u003Ec__AnonStorey3();
-      // ISSUE: reference to a compiler-generated field
-      screenCAnonStorey3.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      screenCAnonStorey3.variant = variant;
-      // ISSUE: reference to a compiler-generated field
-      screenCAnonStorey3.\u0024this = this;
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      screenCAnonStorey3.callback = Callbacks.AsOnGameThreadCallback<GooglePlayGames.BasicApi.UIStatus, GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch>(screenCAnonStorey3.callback);
-      // ISSUE: reference to a compiler-generated method
-      this.mTurnBasedManager.ShowPlayerSelectUI(minOpponents, maxOpponents, true, new Action<PlayerSelectUIResponse>(screenCAnonStorey3.\u003C\u003Em__0));
+      callback = Callbacks.AsOnGameThreadCallback<GooglePlayGames.BasicApi.UIStatus, GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch>(callback);
+      this.mTurnBasedManager.ShowPlayerSelectUI(minOpponents, maxOpponents, true, (Action<PlayerSelectUIResponse>) (result =>
+      {
+        if (result.Status() != CommonErrorStatus.UIStatus.VALID)
+        {
+          callback((GooglePlayGames.BasicApi.UIStatus) result.Status(), (GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch) null);
+        }
+        else
+        {
+          using (GooglePlayGames.Native.PInvoke.TurnBasedMatchConfigBuilder matchConfigBuilder = GooglePlayGames.Native.PInvoke.TurnBasedMatchConfigBuilder.Create())
+          {
+            matchConfigBuilder.PopulateFromUIResponse(result).SetVariant(variant);
+            using (GooglePlayGames.Native.PInvoke.TurnBasedMatchConfig config = matchConfigBuilder.Build())
+              this.mTurnBasedManager.CreateMatch(config, this.BridgeMatchToUserCallback(callback));
+          }
+        }
+      }));
     }
 
     public void GetAllInvitations(Action<Invitation[]> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: reference to a compiler-generated method
-      this.mTurnBasedManager.GetAllTurnbasedMatches(new Action<TurnBasedManager.TurnBasedMatchesResponse>(new NativeTurnBasedMultiplayerClient.\u003CGetAllInvitations\u003Ec__AnonStorey4()
+      this.mTurnBasedManager.GetAllTurnbasedMatches((Action<TurnBasedManager.TurnBasedMatchesResponse>) (allMatches =>
       {
-        callback = callback
-      }.\u003C\u003Em__0));
+        Invitation[] invitationArray = new Invitation[allMatches.InvitationCount()];
+        int num = 0;
+        foreach (GooglePlayGames.Native.PInvoke.MultiplayerInvitation invitation in allMatches.Invitations())
+          invitationArray[num++] = invitation.AsInvitation();
+        callback(invitationArray);
+      }));
     }
 
     public void GetAllMatches(Action<GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch[]> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: reference to a compiler-generated method
-      this.mTurnBasedManager.GetAllTurnbasedMatches(new Action<TurnBasedManager.TurnBasedMatchesResponse>(new NativeTurnBasedMultiplayerClient.\u003CGetAllMatches\u003Ec__AnonStorey5()
+      this.mTurnBasedManager.GetAllTurnbasedMatches((Action<TurnBasedManager.TurnBasedMatchesResponse>) (allMatches =>
       {
-        callback = callback,
-        \u0024this = this
-      }.\u003C\u003Em__0));
+        GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch[] turnBasedMatchArray = new GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch[allMatches.MyTurnMatchesCount() + allMatches.TheirTurnMatchesCount() + allMatches.CompletedMatchesCount()];
+        int num = 0;
+        foreach (NativeTurnBasedMatch myTurnMatch in allMatches.MyTurnMatches())
+          turnBasedMatchArray[num++] = myTurnMatch.AsTurnBasedMatch(this.mNativeClient.GetUserId());
+        foreach (NativeTurnBasedMatch theirTurnMatch in allMatches.TheirTurnMatches())
+          turnBasedMatchArray[num++] = theirTurnMatch.AsTurnBasedMatch(this.mNativeClient.GetUserId());
+        foreach (NativeTurnBasedMatch completedMatch in allMatches.CompletedMatches())
+          turnBasedMatchArray[num++] = completedMatch.AsTurnBasedMatch(this.mNativeClient.GetUserId());
+        callback(turnBasedMatchArray);
+      }));
     }
 
     private Action<TurnBasedManager.TurnBasedMatchResponse> BridgeMatchToUserCallback(Action<GooglePlayGames.BasicApi.UIStatus, GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch> userCallback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: reference to a compiler-generated method
-      return new Action<TurnBasedManager.TurnBasedMatchResponse>(new NativeTurnBasedMultiplayerClient.\u003CBridgeMatchToUserCallback\u003Ec__AnonStorey6() { userCallback = userCallback, \u0024this = this }.\u003C\u003Em__0);
+      return (Action<TurnBasedManager.TurnBasedMatchResponse>) (callbackResult =>
+      {
+        using (NativeTurnBasedMatch nativeTurnBasedMatch = callbackResult.Match())
+        {
+          if (nativeTurnBasedMatch == null)
+          {
+            GooglePlayGames.BasicApi.UIStatus uiStatus = GooglePlayGames.BasicApi.UIStatus.InternalError;
+            switch (callbackResult.ResponseStatus() + 5)
+            {
+              case ~(CommonErrorStatus.MultiplayerStatus.ERROR_INTERNAL | CommonErrorStatus.MultiplayerStatus.VALID):
+                uiStatus = GooglePlayGames.BasicApi.UIStatus.Timeout;
+                break;
+              case CommonErrorStatus.MultiplayerStatus.VALID:
+                uiStatus = GooglePlayGames.BasicApi.UIStatus.VersionUpdateRequired;
+                break;
+              case CommonErrorStatus.MultiplayerStatus.VALID_BUT_STALE:
+                uiStatus = GooglePlayGames.BasicApi.UIStatus.NotAuthorized;
+                break;
+              case CommonErrorStatus.MultiplayerStatus.VALID | CommonErrorStatus.MultiplayerStatus.VALID_BUT_STALE:
+                uiStatus = GooglePlayGames.BasicApi.UIStatus.InternalError;
+                break;
+              case ~CommonErrorStatus.MultiplayerStatus.ERROR_MATCH_ALREADY_REMATCHED:
+                uiStatus = GooglePlayGames.BasicApi.UIStatus.Valid;
+                break;
+              case ~CommonErrorStatus.MultiplayerStatus.ERROR_INACTIVE_MATCH:
+                uiStatus = GooglePlayGames.BasicApi.UIStatus.Valid;
+                break;
+            }
+            userCallback(uiStatus, (GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch) null);
+          }
+          else
+          {
+            GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch turnBasedMatch = nativeTurnBasedMatch.AsTurnBasedMatch(this.mNativeClient.GetUserId());
+            Logger.d("Passing converted match to user callback:" + (object) turnBasedMatch);
+            userCallback(GooglePlayGames.BasicApi.UIStatus.Valid, turnBasedMatch);
+          }
+        }
+      });
     }
 
     public void AcceptFromInbox(Action<bool, GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeTurnBasedMultiplayerClient.\u003CAcceptFromInbox\u003Ec__AnonStorey7 inboxCAnonStorey7 = new NativeTurnBasedMultiplayerClient.\u003CAcceptFromInbox\u003Ec__AnonStorey7();
-      // ISSUE: reference to a compiler-generated field
-      inboxCAnonStorey7.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      inboxCAnonStorey7.\u0024this = this;
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      inboxCAnonStorey7.callback = Callbacks.AsOnGameThreadCallback<bool, GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch>(inboxCAnonStorey7.callback);
-      // ISSUE: reference to a compiler-generated method
-      this.mTurnBasedManager.ShowInboxUI(new Action<TurnBasedManager.MatchInboxUIResponse>(inboxCAnonStorey7.\u003C\u003Em__0));
+      callback = Callbacks.AsOnGameThreadCallback<bool, GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch>(callback);
+      this.mTurnBasedManager.ShowInboxUI((Action<TurnBasedManager.MatchInboxUIResponse>) (callbackResult =>
+      {
+        using (NativeTurnBasedMatch nativeTurnBasedMatch = callbackResult.Match())
+        {
+          if (nativeTurnBasedMatch == null)
+          {
+            callback(false, (GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch) null);
+          }
+          else
+          {
+            GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch turnBasedMatch = nativeTurnBasedMatch.AsTurnBasedMatch(this.mNativeClient.GetUserId());
+            Logger.d("Passing converted match to user callback:" + (object) turnBasedMatch);
+            callback(true, turnBasedMatch);
+          }
+        }
+      }));
     }
 
     public void AcceptInvitation(string invitationId, Action<bool, GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeTurnBasedMultiplayerClient.\u003CAcceptInvitation\u003Ec__AnonStorey8 invitationCAnonStorey8 = new NativeTurnBasedMultiplayerClient.\u003CAcceptInvitation\u003Ec__AnonStorey8();
-      // ISSUE: reference to a compiler-generated field
-      invitationCAnonStorey8.invitationId = invitationId;
-      // ISSUE: reference to a compiler-generated field
-      invitationCAnonStorey8.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      invitationCAnonStorey8.\u0024this = this;
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      invitationCAnonStorey8.callback = Callbacks.AsOnGameThreadCallback<bool, GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch>(invitationCAnonStorey8.callback);
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated method
-      this.FindInvitationWithId(invitationCAnonStorey8.invitationId, new Action<GooglePlayGames.Native.PInvoke.MultiplayerInvitation>(invitationCAnonStorey8.\u003C\u003Em__0));
+      callback = Callbacks.AsOnGameThreadCallback<bool, GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch>(callback);
+      this.FindInvitationWithId(invitationId, (Action<GooglePlayGames.Native.PInvoke.MultiplayerInvitation>) (invitation =>
+      {
+        if (invitation == null)
+        {
+          Logger.e("Could not find invitation with id " + invitationId);
+          callback(false, (GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch) null);
+        }
+        else
+          this.mTurnBasedManager.AcceptInvitation(invitation, this.BridgeMatchToUserCallback((Action<GooglePlayGames.BasicApi.UIStatus, GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch>) ((status, match) => callback(status == GooglePlayGames.BasicApi.UIStatus.Valid, match))));
+      }));
     }
 
     private void FindInvitationWithId(string invitationId, Action<GooglePlayGames.Native.PInvoke.MultiplayerInvitation> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: reference to a compiler-generated method
-      this.mTurnBasedManager.GetAllTurnbasedMatches(new Action<TurnBasedManager.TurnBasedMatchesResponse>(new NativeTurnBasedMultiplayerClient.\u003CFindInvitationWithId\u003Ec__AnonStorey9()
+      this.mTurnBasedManager.GetAllTurnbasedMatches((Action<TurnBasedManager.TurnBasedMatchesResponse>) (allMatches =>
       {
-        callback = callback,
-        invitationId = invitationId
-      }.\u003C\u003Em__0));
+        if (allMatches.Status() <= ~(CommonErrorStatus.MultiplayerStatus.ERROR_INTERNAL | CommonErrorStatus.MultiplayerStatus.VALID))
+        {
+          callback((GooglePlayGames.Native.PInvoke.MultiplayerInvitation) null);
+        }
+        else
+        {
+          foreach (GooglePlayGames.Native.PInvoke.MultiplayerInvitation invitation in allMatches.Invitations())
+          {
+            using (invitation)
+            {
+              if (invitation.Id().Equals(invitationId))
+              {
+                callback(invitation);
+                return;
+              }
+            }
+          }
+          callback((GooglePlayGames.Native.PInvoke.MultiplayerInvitation) null);
+        }
+      }));
     }
 
     public void RegisterMatchDelegate(MatchDelegate del)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeTurnBasedMultiplayerClient.\u003CRegisterMatchDelegate\u003Ec__AnonStoreyA delegateCAnonStoreyA = new NativeTurnBasedMultiplayerClient.\u003CRegisterMatchDelegate\u003Ec__AnonStoreyA();
-      // ISSUE: reference to a compiler-generated field
-      delegateCAnonStoreyA.del = del;
-      // ISSUE: reference to a compiler-generated field
-      if (delegateCAnonStoreyA.del == null)
-      {
+      if (del == null)
         this.mMatchDelegate = (Action<GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch, bool>) null;
-      }
       else
-      {
-        // ISSUE: reference to a compiler-generated method
-        this.mMatchDelegate = Callbacks.AsOnGameThreadCallback<GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch, bool>(new Action<GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch, bool>(delegateCAnonStoreyA.\u003C\u003Em__0));
-      }
+        this.mMatchDelegate = Callbacks.AsOnGameThreadCallback<GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch, bool>((Action<GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch, bool>) ((match, autoLaunch) => del(match, autoLaunch)));
     }
 
     internal void HandleMatchEvent(Types.MultiplayerEvent eventType, string matchId, NativeTurnBasedMatch match)
@@ -204,63 +239,76 @@ namespace GooglePlayGames.Native
     private IEnumerator WaitForLogin(Action method)
     {
       // ISSUE: object of a compiler-generated type is created
-      return (IEnumerator) new NativeTurnBasedMultiplayerClient.\u003CWaitForLogin\u003Ec__Iterator0() { method = method, \u0024this = this };
+      return (IEnumerator) new NativeTurnBasedMultiplayerClient.\u003CWaitForLogin\u003Ec__Iterator0()
+      {
+        method = method,
+        \u0024this = this
+      };
     }
 
     public void TakeTurn(GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch match, byte[] data, string pendingParticipantId, Action<bool> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeTurnBasedMultiplayerClient.\u003CTakeTurn\u003Ec__AnonStoreyC turnCAnonStoreyC = new NativeTurnBasedMultiplayerClient.\u003CTakeTurn\u003Ec__AnonStoreyC();
-      // ISSUE: reference to a compiler-generated field
-      turnCAnonStoreyC.data = data;
-      // ISSUE: reference to a compiler-generated field
-      turnCAnonStoreyC.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      turnCAnonStoreyC.\u0024this = this;
-      // ISSUE: reference to a compiler-generated field
-      Logger.describe(turnCAnonStoreyC.data);
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      turnCAnonStoreyC.callback = Callbacks.AsOnGameThreadCallback<bool>(turnCAnonStoreyC.callback);
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated method
-      this.FindEqualVersionMatchWithParticipant(match, pendingParticipantId, turnCAnonStoreyC.callback, new Action<GooglePlayGames.Native.PInvoke.MultiplayerParticipant, NativeTurnBasedMatch>(turnCAnonStoreyC.\u003C\u003Em__0));
+      Logger.describe(data);
+      callback = Callbacks.AsOnGameThreadCallback<bool>(callback);
+      this.FindEqualVersionMatchWithParticipant(match, pendingParticipantId, callback, (Action<GooglePlayGames.Native.PInvoke.MultiplayerParticipant, NativeTurnBasedMatch>) ((pendingParticipant, foundMatch) => this.mTurnBasedManager.TakeTurn(foundMatch, data, pendingParticipant, (Action<TurnBasedManager.TurnBasedMatchResponse>) (result =>
+      {
+        if (result.RequestSucceeded())
+        {
+          callback(true);
+        }
+        else
+        {
+          Logger.d("Taking turn failed: " + (object) result.ResponseStatus());
+          callback(false);
+        }
+      }))));
     }
 
     private void FindEqualVersionMatch(GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch match, Action<bool> onFailure, Action<NativeTurnBasedMatch> onVersionMatch)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeTurnBasedMultiplayerClient.\u003CFindEqualVersionMatch\u003Ec__AnonStoreyD matchCAnonStoreyD = new NativeTurnBasedMultiplayerClient.\u003CFindEqualVersionMatch\u003Ec__AnonStoreyD();
-      // ISSUE: reference to a compiler-generated field
-      matchCAnonStoreyD.match = match;
-      // ISSUE: reference to a compiler-generated field
-      matchCAnonStoreyD.onFailure = onFailure;
-      // ISSUE: reference to a compiler-generated field
-      matchCAnonStoreyD.onVersionMatch = onVersionMatch;
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated method
-      this.mTurnBasedManager.GetMatch(matchCAnonStoreyD.match.MatchId, new Action<TurnBasedManager.TurnBasedMatchResponse>(matchCAnonStoreyD.\u003C\u003Em__0));
+      this.mTurnBasedManager.GetMatch(match.MatchId, (Action<TurnBasedManager.TurnBasedMatchResponse>) (response =>
+      {
+        using (NativeTurnBasedMatch nativeTurnBasedMatch = response.Match())
+        {
+          if (nativeTurnBasedMatch == null)
+          {
+            Logger.e(string.Format("Could not find match {0}", (object) match.MatchId));
+            onFailure(false);
+          }
+          else if ((int) nativeTurnBasedMatch.Version() != (int) match.Version)
+          {
+            Logger.e(string.Format("Attempted to update a stale version of the match. Expected version was {0} but current version is {1}.", (object) match.Version, (object) nativeTurnBasedMatch.Version()));
+            onFailure(false);
+          }
+          else
+            onVersionMatch(nativeTurnBasedMatch);
+        }
+      }));
     }
 
     private void FindEqualVersionMatchWithParticipant(GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch match, string participantId, Action<bool> onFailure, Action<GooglePlayGames.Native.PInvoke.MultiplayerParticipant, NativeTurnBasedMatch> onFoundParticipantAndMatch)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeTurnBasedMultiplayerClient.\u003CFindEqualVersionMatchWithParticipant\u003Ec__AnonStoreyE participantCAnonStoreyE = new NativeTurnBasedMultiplayerClient.\u003CFindEqualVersionMatchWithParticipant\u003Ec__AnonStoreyE();
-      // ISSUE: reference to a compiler-generated field
-      participantCAnonStoreyE.participantId = participantId;
-      // ISSUE: reference to a compiler-generated field
-      participantCAnonStoreyE.onFoundParticipantAndMatch = onFoundParticipantAndMatch;
-      // ISSUE: reference to a compiler-generated field
-      participantCAnonStoreyE.match = match;
-      // ISSUE: reference to a compiler-generated field
-      participantCAnonStoreyE.onFailure = onFailure;
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated method
-      this.FindEqualVersionMatch(participantCAnonStoreyE.match, participantCAnonStoreyE.onFailure, new Action<NativeTurnBasedMatch>(participantCAnonStoreyE.\u003C\u003Em__0));
+      this.FindEqualVersionMatch(match, onFailure, (Action<NativeTurnBasedMatch>) (foundMatch =>
+      {
+        if (participantId == null)
+        {
+          using (GooglePlayGames.Native.PInvoke.MultiplayerParticipant multiplayerParticipant = GooglePlayGames.Native.PInvoke.MultiplayerParticipant.AutomatchingSentinel())
+            onFoundParticipantAndMatch(multiplayerParticipant, foundMatch);
+        }
+        else
+        {
+          using (GooglePlayGames.Native.PInvoke.MultiplayerParticipant multiplayerParticipant = foundMatch.ParticipantWithId(participantId))
+          {
+            if (multiplayerParticipant == null)
+            {
+              Logger.e(string.Format("Located match {0} but desired participant with ID {1} could not be found", (object) match.MatchId, (object) participantId));
+              onFailure(false);
+            }
+            else
+              onFoundParticipantAndMatch(multiplayerParticipant, foundMatch);
+          }
+        }
+      }));
     }
 
     public int GetMaxMatchDataSize()
@@ -270,23 +318,34 @@ namespace GooglePlayGames.Native
 
     public void Finish(GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch match, byte[] data, MatchOutcome outcome, Action<bool> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeTurnBasedMultiplayerClient.\u003CFinish\u003Ec__AnonStoreyF finishCAnonStoreyF = new NativeTurnBasedMultiplayerClient.\u003CFinish\u003Ec__AnonStoreyF();
-      // ISSUE: reference to a compiler-generated field
-      finishCAnonStoreyF.outcome = outcome;
-      // ISSUE: reference to a compiler-generated field
-      finishCAnonStoreyF.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      finishCAnonStoreyF.data = data;
-      // ISSUE: reference to a compiler-generated field
-      finishCAnonStoreyF.\u0024this = this;
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      finishCAnonStoreyF.callback = Callbacks.AsOnGameThreadCallback<bool>(finishCAnonStoreyF.callback);
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated method
-      this.FindEqualVersionMatch(match, finishCAnonStoreyF.callback, new Action<NativeTurnBasedMatch>(finishCAnonStoreyF.\u003C\u003Em__0));
+      callback = Callbacks.AsOnGameThreadCallback<bool>(callback);
+      this.FindEqualVersionMatch(match, callback, (Action<NativeTurnBasedMatch>) (foundMatch =>
+      {
+        GooglePlayGames.Native.PInvoke.ParticipantResults results = foundMatch.Results();
+        foreach (string participantId in outcome.ParticipantIds)
+        {
+          Types.MatchResult matchResult1 = NativeTurnBasedMultiplayerClient.ResultToMatchResult(outcome.GetResultFor(participantId));
+          uint placementFor = outcome.GetPlacementFor(participantId);
+          if (results.HasResultsForParticipant(participantId))
+          {
+            Types.MatchResult matchResult2 = results.ResultsForParticipant(participantId);
+            uint num = results.PlacingForParticipant(participantId);
+            if (matchResult1 != matchResult2 || (int) placementFor != (int) num)
+            {
+              Logger.e(string.Format("Attempted to override existing results for participant {0}: Placing {1}, Result {2}", (object) participantId, (object) num, (object) matchResult2));
+              callback(false);
+              return;
+            }
+          }
+          else
+          {
+            GooglePlayGames.Native.PInvoke.ParticipantResults participantResults = results;
+            results = participantResults.WithResult(participantId, placementFor, matchResult1);
+            participantResults.Dispose();
+          }
+        }
+        this.mTurnBasedManager.FinishMatchDuringMyTurn(foundMatch, data, results, (Action<TurnBasedManager.TurnBasedMatchResponse>) (response => callback(response.RequestSucceeded())));
+      }));
     }
 
     private static Types.MatchResult ResultToMatchResult(MatchOutcome.ParticipantResult result)
@@ -309,87 +368,32 @@ namespace GooglePlayGames.Native
 
     public void AcknowledgeFinished(GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch match, Action<bool> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeTurnBasedMultiplayerClient.\u003CAcknowledgeFinished\u003Ec__AnonStorey10 finishedCAnonStorey10 = new NativeTurnBasedMultiplayerClient.\u003CAcknowledgeFinished\u003Ec__AnonStorey10();
-      // ISSUE: reference to a compiler-generated field
-      finishedCAnonStorey10.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      finishedCAnonStorey10.\u0024this = this;
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      finishedCAnonStorey10.callback = Callbacks.AsOnGameThreadCallback<bool>(finishedCAnonStorey10.callback);
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated method
-      this.FindEqualVersionMatch(match, finishedCAnonStorey10.callback, new Action<NativeTurnBasedMatch>(finishedCAnonStorey10.\u003C\u003Em__0));
+      callback = Callbacks.AsOnGameThreadCallback<bool>(callback);
+      this.FindEqualVersionMatch(match, callback, (Action<NativeTurnBasedMatch>) (foundMatch => this.mTurnBasedManager.ConfirmPendingCompletion(foundMatch, (Action<TurnBasedManager.TurnBasedMatchResponse>) (response => callback(response.RequestSucceeded())))));
     }
 
     public void Leave(GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch match, Action<bool> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeTurnBasedMultiplayerClient.\u003CLeave\u003Ec__AnonStorey11 leaveCAnonStorey11 = new NativeTurnBasedMultiplayerClient.\u003CLeave\u003Ec__AnonStorey11();
-      // ISSUE: reference to a compiler-generated field
-      leaveCAnonStorey11.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      leaveCAnonStorey11.\u0024this = this;
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      leaveCAnonStorey11.callback = Callbacks.AsOnGameThreadCallback<bool>(leaveCAnonStorey11.callback);
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated method
-      this.FindEqualVersionMatch(match, leaveCAnonStorey11.callback, new Action<NativeTurnBasedMatch>(leaveCAnonStorey11.\u003C\u003Em__0));
+      callback = Callbacks.AsOnGameThreadCallback<bool>(callback);
+      this.FindEqualVersionMatch(match, callback, (Action<NativeTurnBasedMatch>) (foundMatch => this.mTurnBasedManager.LeaveMatchDuringTheirTurn(foundMatch, (Action<CommonErrorStatus.MultiplayerStatus>) (status => callback(status > ~(CommonErrorStatus.MultiplayerStatus.ERROR_INTERNAL | CommonErrorStatus.MultiplayerStatus.VALID))))));
     }
 
     public void LeaveDuringTurn(GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch match, string pendingParticipantId, Action<bool> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeTurnBasedMultiplayerClient.\u003CLeaveDuringTurn\u003Ec__AnonStorey12 turnCAnonStorey12 = new NativeTurnBasedMultiplayerClient.\u003CLeaveDuringTurn\u003Ec__AnonStorey12();
-      // ISSUE: reference to a compiler-generated field
-      turnCAnonStorey12.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      turnCAnonStorey12.\u0024this = this;
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      turnCAnonStorey12.callback = Callbacks.AsOnGameThreadCallback<bool>(turnCAnonStorey12.callback);
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated method
-      this.FindEqualVersionMatchWithParticipant(match, pendingParticipantId, turnCAnonStorey12.callback, new Action<GooglePlayGames.Native.PInvoke.MultiplayerParticipant, NativeTurnBasedMatch>(turnCAnonStorey12.\u003C\u003Em__0));
+      callback = Callbacks.AsOnGameThreadCallback<bool>(callback);
+      this.FindEqualVersionMatchWithParticipant(match, pendingParticipantId, callback, (Action<GooglePlayGames.Native.PInvoke.MultiplayerParticipant, NativeTurnBasedMatch>) ((pendingParticipant, foundMatch) => this.mTurnBasedManager.LeaveDuringMyTurn(foundMatch, pendingParticipant, (Action<CommonErrorStatus.MultiplayerStatus>) (status => callback(status > ~(CommonErrorStatus.MultiplayerStatus.ERROR_INTERNAL | CommonErrorStatus.MultiplayerStatus.VALID))))));
     }
 
     public void Cancel(GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch match, Action<bool> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeTurnBasedMultiplayerClient.\u003CCancel\u003Ec__AnonStorey13 cancelCAnonStorey13 = new NativeTurnBasedMultiplayerClient.\u003CCancel\u003Ec__AnonStorey13();
-      // ISSUE: reference to a compiler-generated field
-      cancelCAnonStorey13.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      cancelCAnonStorey13.\u0024this = this;
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      cancelCAnonStorey13.callback = Callbacks.AsOnGameThreadCallback<bool>(cancelCAnonStorey13.callback);
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated method
-      this.FindEqualVersionMatch(match, cancelCAnonStorey13.callback, new Action<NativeTurnBasedMatch>(cancelCAnonStorey13.\u003C\u003Em__0));
+      callback = Callbacks.AsOnGameThreadCallback<bool>(callback);
+      this.FindEqualVersionMatch(match, callback, (Action<NativeTurnBasedMatch>) (foundMatch => this.mTurnBasedManager.CancelMatch(foundMatch, (Action<CommonErrorStatus.MultiplayerStatus>) (status => callback(status > ~(CommonErrorStatus.MultiplayerStatus.ERROR_INTERNAL | CommonErrorStatus.MultiplayerStatus.VALID))))));
     }
 
     public void Rematch(GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch match, Action<bool, GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeTurnBasedMultiplayerClient.\u003CRematch\u003Ec__AnonStorey14 rematchCAnonStorey14 = new NativeTurnBasedMultiplayerClient.\u003CRematch\u003Ec__AnonStorey14();
-      // ISSUE: reference to a compiler-generated field
-      rematchCAnonStorey14.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      rematchCAnonStorey14.\u0024this = this;
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      rematchCAnonStorey14.callback = Callbacks.AsOnGameThreadCallback<bool, GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch>(rematchCAnonStorey14.callback);
-      // ISSUE: reference to a compiler-generated method
-      // ISSUE: reference to a compiler-generated method
-      this.FindEqualVersionMatch(match, new Action<bool>(rematchCAnonStorey14.\u003C\u003Em__0), new Action<NativeTurnBasedMatch>(rematchCAnonStorey14.\u003C\u003Em__1));
+      callback = Callbacks.AsOnGameThreadCallback<bool, GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch>(callback);
+      this.FindEqualVersionMatch(match, (Action<bool>) (failed => callback(false, (GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch) null)), (Action<NativeTurnBasedMatch>) (foundMatch => this.mTurnBasedManager.Rematch(foundMatch, this.BridgeMatchToUserCallback((Action<GooglePlayGames.BasicApi.UIStatus, GooglePlayGames.BasicApi.Multiplayer.TurnBasedMatch>) ((status, m) => callback(status == GooglePlayGames.BasicApi.UIStatus.Valid, m))))));
     }
 
     public void DeclineInvitation(string invitationId)

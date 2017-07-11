@@ -16,7 +16,14 @@ namespace CC
     public ObscuredInt nGold = (ObscuredInt) 0;
     public ObscuredInt nPerfect = (ObscuredInt) 0;
     public ObscuredInt nMod = (ObscuredInt) 0;
-    public ObscuredLong[] nEquipWeapon = new ObscuredLong[5]{ (ObscuredLong) -1L, (ObscuredLong) -1L, (ObscuredLong) -1L, (ObscuredLong) -1L, (ObscuredLong) -1L };
+    public ObscuredLong[] nEquipWeapon = new ObscuredLong[5]
+    {
+      (ObscuredLong) -1L,
+      (ObscuredLong) -1L,
+      (ObscuredLong) -1L,
+      (ObscuredLong) -1L,
+      (ObscuredLong) -1L
+    };
     public ObscuredFloat fDunCurHP = (ObscuredFloat) 100f;
     public PlayerMonsterData[] arrPlayerMon = new PlayerMonsterData[5];
     public List<PlayerItemData> listShopItem = new List<PlayerItemData>();

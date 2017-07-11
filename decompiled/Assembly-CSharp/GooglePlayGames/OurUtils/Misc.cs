@@ -25,11 +25,11 @@ namespace GooglePlayGames.OurUtils
     public static byte[] GetSubsetBytes(byte[] array, int offset, int length)
     {
       if (array == null)
-        throw new ArgumentNullException("array");
+        throw new ArgumentNullException(nameof (array));
       if (offset < 0 || offset >= array.Length)
-        throw new ArgumentOutOfRangeException("offset");
+        throw new ArgumentOutOfRangeException(nameof (offset));
       if (length < 0 || array.Length - offset < length)
-        throw new ArgumentOutOfRangeException("length");
+        throw new ArgumentOutOfRangeException(nameof (length));
       if (offset == 0 && length == array.Length)
         return array;
       byte[] numArray = new byte[length];

@@ -108,7 +108,10 @@ namespace CodeStage.AntiCheat.ObscuredTypes
 
     public static float Decrypt(int value, int key)
     {
-      return new ObscuredFloat.FloatIntBytesUnion() { i = (value ^ key) }.f;
+      return new ObscuredFloat.FloatIntBytesUnion()
+      {
+        i = (value ^ key)
+      }.f;
     }
 
     public void ApplyNewCryptoKey()
@@ -133,7 +136,10 @@ namespace CodeStage.AntiCheat.ObscuredTypes
     public int GetEncrypted()
     {
       this.ApplyNewCryptoKey();
-      return new ObscuredFloat.FloatIntBytesUnion() { b4 = this.hiddenValue }.i;
+      return new ObscuredFloat.FloatIntBytesUnion()
+      {
+        b4 = this.hiddenValue
+      }.i;
     }
 
     public void SetEncrypted(int encrypted)

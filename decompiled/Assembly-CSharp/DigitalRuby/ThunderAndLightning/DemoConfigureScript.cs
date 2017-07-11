@@ -186,7 +186,23 @@ namespace DigitalRuby.ThunderAndLightning
       Stopwatch stopwatch = Stopwatch.StartNew();
       while (num1-- > 0)
       {
-        LightningBoltParameters lightningBoltParameters = new LightningBoltParameters() { Start = this.lastStart, End = this.lastEnd, Generations = (int) this.GenerationsSlider.value, LifeTime = num1 != 1 ? num7 * (float) (random.NextDouble() * 0.400000005960464 + 0.800000011920929) : num7, Delay = num3, ChaosFactor = num4, TrunkWidth = num5, Intensity = this.IntensitySlider.value, GlowIntensity = this.GlowIntensitySlider.value, GlowWidthMultiplier = this.GlowWidthSlider.value, Forkedness = num6, Random = random, FadePercent = num8, GrowthMultiplier = num9 };
+        LightningBoltParameters lightningBoltParameters = new LightningBoltParameters()
+        {
+          Start = this.lastStart,
+          End = this.lastEnd,
+          Generations = (int) this.GenerationsSlider.value,
+          LifeTime = num1 != 1 ? num7 * (float) (random.NextDouble() * 0.400000005960464 + 0.800000011920929) : num7,
+          Delay = num3,
+          ChaosFactor = num4,
+          TrunkWidth = num5,
+          Intensity = this.IntensitySlider.value,
+          GlowIntensity = this.GlowIntensitySlider.value,
+          GlowWidthMultiplier = this.GlowWidthSlider.value,
+          Forkedness = num6,
+          Random = random,
+          FadePercent = num8,
+          GrowthMultiplier = num9
+        };
         lightningBoltParametersList.Add(lightningBoltParameters);
         num3 += num7 * (float) (random.NextDouble() * 0.800000011920929 + 0.400000005960464);
       }

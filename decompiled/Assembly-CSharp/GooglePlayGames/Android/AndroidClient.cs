@@ -72,23 +72,35 @@ namespace GooglePlayGames.Android
 
     public void GetPlayerStats(IntPtr apiClient, Action<CommonStatusCodes, GooglePlayGames.BasicApi.PlayerStats> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      AndroidClient.\u003CGetPlayerStats\u003Ec__AnonStorey1 statsCAnonStorey1 = new AndroidClient.\u003CGetPlayerStats\u003Ec__AnonStorey1();
-      // ISSUE: reference to a compiler-generated field
-      statsCAnonStorey1.callback = callback;
       GoogleApiClient arg_GoogleApiClient_1 = new GoogleApiClient(apiClient);
       AndroidClient.StatsResultCallback statsResultCallback;
       try
       {
-        // ISSUE: reference to a compiler-generated method
-        statsResultCallback = new AndroidClient.StatsResultCallback(new Action<int, Com.Google.Android.Gms.Games.Stats.PlayerStats>(statsCAnonStorey1.\u003C\u003Em__0));
+        statsResultCallback = new AndroidClient.StatsResultCallback((Action<int, Com.Google.Android.Gms.Games.Stats.PlayerStats>) ((result, stats) =>
+        {
+          Debug.Log((object) ("Result for getStats: " + (object) result));
+          GooglePlayGames.BasicApi.PlayerStats playerStats = (GooglePlayGames.BasicApi.PlayerStats) null;
+          if (stats != null)
+          {
+            playerStats = new GooglePlayGames.BasicApi.PlayerStats();
+            playerStats.AvgSessonLength = stats.getAverageSessionLength();
+            playerStats.DaysSinceLastPlayed = stats.getDaysSinceLastPlayed();
+            playerStats.NumberOfPurchases = stats.getNumberOfPurchases();
+            playerStats.NumberOfSessions = stats.getNumberOfSessions();
+            playerStats.SessPercentile = stats.getSessionPercentile();
+            playerStats.SpendPercentile = stats.getSpendPercentile();
+            playerStats.ChurnProbability = stats.getChurnProbability();
+            playerStats.SpendProbability = stats.getSpendProbability();
+            playerStats.HighSpenderProbability = stats.getHighSpenderProbability();
+            playerStats.TotalSpendNext28Days = stats.getTotalSpendNext28Days();
+          }
+          callback((CommonStatusCodes) result, playerStats);
+        }));
       }
       catch (Exception ex)
       {
         Debug.LogException(ex);
-        // ISSUE: reference to a compiler-generated field
-        statsCAnonStorey1.callback(CommonStatusCodes.DeveloperError, (GooglePlayGames.BasicApi.PlayerStats) null);
+        callback(CommonStatusCodes.DeveloperError, (GooglePlayGames.BasicApi.PlayerStats) null);
         return;
       }
       Com.Google.Android.Gms.Games.Games.Stats.loadPlayerStats(arg_GoogleApiClient_1, true).setResultCallback((ResultCallback<Stats_LoadPlayerStatsResultObject>) statsResultCallback);

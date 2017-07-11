@@ -76,24 +76,12 @@ public class PopupResearchPlanner : UIPage
 
   private void AddUpListener(Button b, int value)
   {
-    // ISSUE: object of a compiler-generated type is created
-    // ISSUE: reference to a compiler-generated method
-    b.onClick.AddListener(new UnityAction(new PopupResearchPlanner.\u003CAddUpListener\u003Ec__AnonStorey0()
-    {
-      value = value,
-      \u0024this = this
-    }.\u003C\u003Em__0));
+    b.onClick.AddListener((UnityAction) (() => this.OnPlanUp(value)));
   }
 
   private void AddDownListener(Button b, int value)
   {
-    // ISSUE: object of a compiler-generated type is created
-    // ISSUE: reference to a compiler-generated method
-    b.onClick.AddListener(new UnityAction(new PopupResearchPlanner.\u003CAddDownListener\u003Ec__AnonStorey1()
-    {
-      value = value,
-      \u0024this = this
-    }.\u003C\u003Em__0));
+    b.onClick.AddListener((UnityAction) (() => this.OnPlanDown(value)));
   }
 
   protected override void Update()

@@ -48,8 +48,8 @@ public class PopupPromote : UIPage
     {
       MonsterData monster = BData.GetMonster((short) playerMon.sID);
       int promoteLevel = Info.GetPromoteLevel(monster.sID);
-      int num = Info.GetNeedMedalPromote(promoteLevel) * monster.nPromoteMul;
-      bool flag1 = (long) num > (long) Info.rebirth.nNewMedal;
+      long num = Info.GetNeedMedalPromote((long) promoteLevel) * (long) monster.nPromoteMul;
+      bool flag1 = num > (long) Info.rebirth.nNewMedal;
       this.imgChar.sprite = RSMgr.GetSprite(!Info.CheckRebirth(monster.eAwaken) ? monster.strSprite : monster.strSpriteAwk);
       this.textCurrentPromote.text = "+" + promoteLevel.ToString();
       this.textMedalNeed.text = num.ToString("N0");
@@ -105,8 +105,8 @@ public class PopupPromote : UIPage
     else
     {
       MonsterData monster = BData.GetMonster((short) playerMon.sID);
-      int num = Info.GetNeedMedalPromote(Info.GetPromoteLevel((short) playerMon.sID)) * monster.nPromoteMul;
-      if ((long) num > (long) Info.rebirth.nNewMedal)
+      long num = Info.GetNeedMedalPromote((long) Info.GetPromoteLevel((short) playerMon.sID)) * (long) monster.nPromoteMul;
+      if (num > (long) Info.rebirth.nNewMedal)
       {
         UIMgr.PlaySound("Negative", false);
         UIMgr.popupMsg.SetMsg(BData.GetString("UI0240"), true, false, string.Empty);
@@ -114,7 +114,7 @@ public class PopupPromote : UIPage
       else
       {
         SavedRebirth rebirth = Info.rebirth;
-        ObscuredLong obscuredLong = (ObscuredLong) ((long) rebirth.nNewMedal - (long) num);
+        ObscuredLong obscuredLong = (ObscuredLong) ((long) rebirth.nNewMedal - num);
         rebirth.nNewMedal = obscuredLong;
         Info.UpgPromoteLevel((short) playerMon.sID);
         UIMgr.PlaySound("Hire", false);
@@ -143,16 +143,16 @@ public class PopupPromote : UIPage
   {
     PlayerMonsterData playerMon = Info.GetPlayerMon((int) Info.nSelectedMonster);
     MonsterData monster = BData.GetMonster((short) playerMon.sID);
-    int promoteLevel = Info.GetPromoteLevel(monster.sID);
-    int num = promoteLevel * 5000;
-    for (int index = 0; index < promoteLevel; ++index)
+    long promoteLevel = (long) Info.GetPromoteLevel(monster.sID);
+    long num = promoteLevel * 5000L;
+    for (int index = 0; (long) index < promoteLevel; ++index)
     {
       SavedRebirth rebirth = Info.rebirth;
-      ObscuredLong obscuredLong = (ObscuredLong) ((long) rebirth.nNewMedal + (long) (Info.GetNeedMedalPromote(promoteLevel - 1 - index) * monster.nPromoteMul));
+      ObscuredLong obscuredLong = (ObscuredLong) ((long) rebirth.nNewMedal + Info.GetNeedMedalPromote(promoteLevel - 1L - (long) index) * (long) monster.nPromoteMul);
       rebirth.nNewMedal = obscuredLong;
     }
     SavedRebirth rebirth1 = Info.rebirth;
-    ObscuredLong obscuredLong1 = (ObscuredLong) ((long) rebirth1.nNewStone - (long) num);
+    ObscuredLong obscuredLong1 = (ObscuredLong) ((long) rebirth1.nNewStone - num);
     rebirth1.nNewStone = obscuredLong1;
     Info.InitPromoteLevel((short) playerMon.sID);
     UIMgr.PlaySound("Hire", false);

@@ -31,7 +31,10 @@ namespace DigitalRuby.ThunderAndLightning
     private IEnumerator WhipForward()
     {
       // ISSUE: object of a compiler-generated type is created
-      return (IEnumerator) new LightningWhipSpell.\u003CWhipForward\u003Ec__Iterator0() { \u0024this = this };
+      return (IEnumerator) new LightningWhipSpell.\u003CWhipForward\u003Ec__Iterator0()
+      {
+        \u0024this = this
+      };
     }
 
     protected override void Start()

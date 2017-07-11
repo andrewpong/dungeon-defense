@@ -37,6 +37,11 @@ public class DataRuby : ScriptableObject
     public float Hell8;
     public float Hell9;
     public float Hell10;
+    public float Hell11;
+    public float Hell12;
+    public float Hell13;
+    public float Hell14;
+    public float Hell15;
     public float Mul;
   }
 }

@@ -61,7 +61,11 @@ namespace GooglePlayGames.Native.PInvoke
     {
       // ISSUE: object of a compiler-generated type is created
       // ISSUE: variable of a compiler-generated type
-      PInvokeUtilities.\u003CToEnumerable\u003Ec__Iterator0<T> enumerableCIterator0 = new PInvokeUtilities.\u003CToEnumerable\u003Ec__Iterator0<T>() { size = size, getElement = getElement };
+      PInvokeUtilities.\u003CToEnumerable\u003Ec__Iterator0<T> enumerableCIterator0 = new PInvokeUtilities.\u003CToEnumerable\u003Ec__Iterator0<T>()
+      {
+        size = size,
+        getElement = getElement
+      };
       // ISSUE: reference to a compiler-generated field
       enumerableCIterator0.\u0024PC = -2;
       return (IEnumerable<T>) enumerableCIterator0;

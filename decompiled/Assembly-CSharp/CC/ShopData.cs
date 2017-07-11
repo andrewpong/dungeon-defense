@@ -11,5 +11,7 @@ namespace CC
     public string strDesc;
     public bool bOnly;
     public int nBonus;
+    public float fStoneBonus;
+    public float fRubyBonus;
   }
 }

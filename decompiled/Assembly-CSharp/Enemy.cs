@@ -80,6 +80,7 @@ public class Enemy : MonoBehaviour
   private float fInvincibleDur;
   private int nProtect;
   public bool bNatureObs;
+  public bool bCursed;
   public float fHPRate;
   private double dMaxHPDivider;
   private bool bClose;
@@ -197,6 +198,7 @@ public class Enemy : MonoBehaviour
     this.bDead = false;
     this.bNatureObs = false;
     this.bAtkDungeon = false;
+    this.bCursed = false;
     this.fDeadTime = 0.0f;
     this.fTakeDmg = 1f;
     this.fTakeDmg2 = 1f;
@@ -207,7 +209,7 @@ public class Enemy : MonoBehaviour
     this.animator.SetInteger("Health", 1);
     this.animator.Play("Idle");
     this.bDivine = PageBattle.CheckMutation(MutateType.eDivine) && !this.bBoss;
-    this.maxhp = this.hp = !this.bDivine ? Info.GetMonHP(nDay) * ((double) enemy.fMaxHP + (!this.bBoss ? 0.0 : 2.0)) * (!this.bBoss ? 1.0 : 11.0) * Info.fDiffEmHpFac[nDiff] : (double) PageBattle.GetMutation1(MutateType.eDivine);
+    this.maxhp = !this.bDivine ? (this.hp = Info.GetMonHP(nDay) * ((double) enemy.fMaxHP + (!this.bBoss ? 0.0 : 2.0)) * (!this.bBoss ? 1.0 : 11.0) * Info.fDiffEmHpFac[nDiff]) : (this.hp = (double) PageBattle.GetMutation1(MutateType.eDivine));
     if (nDiff > 4 && this.bBoss)
       this.maxhp = this.hp = this.hp * (double) nDiff;
     else if (nDiff > 3 && this.bBoss)
@@ -536,6 +538,12 @@ public class Enemy : MonoBehaviour
   public bool CheckMutate(MutateType eID)
   {
     return this.listMut.Contains(eID) && (double) this.dictMutDur[eID] > 0.0;
+  }
+
+  public void SetCursed(bool _bCursed)
+  {
+    this.bCursed = _bCursed;
+    this.sr.color = Color.magenta;
   }
 
   public void OnActiveMut(MutateType eID)

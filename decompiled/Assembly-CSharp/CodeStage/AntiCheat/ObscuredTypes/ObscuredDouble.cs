@@ -108,7 +108,10 @@ namespace CodeStage.AntiCheat.ObscuredTypes
 
     public static double Decrypt(long value, long key)
     {
-      return new ObscuredDouble.DoubleLongBytesUnion() { l = (value ^ key) }.d;
+      return new ObscuredDouble.DoubleLongBytesUnion()
+      {
+        l = (value ^ key)
+      }.d;
     }
 
     public void ApplyNewCryptoKey()
@@ -133,7 +136,10 @@ namespace CodeStage.AntiCheat.ObscuredTypes
     public long GetEncrypted()
     {
       this.ApplyNewCryptoKey();
-      return new ObscuredDouble.DoubleLongBytesUnion() { b8 = this.hiddenValue }.l;
+      return new ObscuredDouble.DoubleLongBytesUnion()
+      {
+        b8 = this.hiddenValue
+      }.l;
     }
 
     public void SetEncrypted(long encrypted)

@@ -24,9 +24,7 @@ namespace GooglePlayGames.Native.PInvoke
 
     private string PlayerIdAtIndex(UIntPtr index)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: reference to a compiler-generated method
-      return PInvokeUtilities.OutParamsToString(new PInvokeUtilities.OutStringMethod(new PlayerSelectUIResponse.\u003CPlayerIdAtIndex\u003Ec__AnonStorey0() { index = index, \u0024this = this }.\u003C\u003Em__0));
+      return PInvokeUtilities.OutParamsToString((PInvokeUtilities.OutStringMethod) ((out_string, size) => TurnBasedMultiplayerManager.TurnBasedMultiplayerManager_PlayerSelectUIResponse_GetPlayerIds_GetElement(this.SelfPtr(), index, out_string, size)));
     }
 
     public IEnumerator<string> GetEnumerator()

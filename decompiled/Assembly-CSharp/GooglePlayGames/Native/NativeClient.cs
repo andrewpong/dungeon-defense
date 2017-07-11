@@ -92,50 +92,31 @@ namespace GooglePlayGames.Native
 
     private static Action<T> AsOnGameThreadCallback<T>(Action<T> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeClient.\u003CAsOnGameThreadCallback\u003Ec__AnonStorey0<T> callbackCAnonStorey0 = new NativeClient.\u003CAsOnGameThreadCallback\u003Ec__AnonStorey0<T>();
-      // ISSUE: reference to a compiler-generated field
-      callbackCAnonStorey0.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      if (callbackCAnonStorey0.callback == null)
+      if (callback == null)
         return (Action<T>) (param0 => {});
-      // ISSUE: reference to a compiler-generated method
-      return new Action<T>(callbackCAnonStorey0.\u003C\u003Em__0);
+      return (Action<T>) (result => NativeClient.InvokeCallbackOnGameThread<T>(callback, result));
     }
 
     private static void InvokeCallbackOnGameThread<T, S>(Action<T, S> callback, T data, S msg)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeClient.\u003CInvokeCallbackOnGameThread\u003Ec__AnonStorey1<T, S> threadCAnonStorey1 = new NativeClient.\u003CInvokeCallbackOnGameThread\u003Ec__AnonStorey1<T, S>();
-      // ISSUE: reference to a compiler-generated field
-      threadCAnonStorey1.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      threadCAnonStorey1.data = data;
-      // ISSUE: reference to a compiler-generated field
-      threadCAnonStorey1.msg = msg;
-      // ISSUE: reference to a compiler-generated field
-      if (threadCAnonStorey1.callback == null)
+      if (callback == null)
         return;
-      // ISSUE: reference to a compiler-generated method
-      PlayGamesHelperObject.RunOnGameThread(new Action(threadCAnonStorey1.\u003C\u003Em__0));
+      PlayGamesHelperObject.RunOnGameThread((Action) (() =>
+      {
+        GooglePlayGames.OurUtils.Logger.d("Invoking user callback on game thread");
+        callback(data, msg);
+      }));
     }
 
     private static void InvokeCallbackOnGameThread<T>(Action<T> callback, T data)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeClient.\u003CInvokeCallbackOnGameThread\u003Ec__AnonStorey2<T> threadCAnonStorey2 = new NativeClient.\u003CInvokeCallbackOnGameThread\u003Ec__AnonStorey2<T>();
-      // ISSUE: reference to a compiler-generated field
-      threadCAnonStorey2.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      threadCAnonStorey2.data = data;
-      // ISSUE: reference to a compiler-generated field
-      if (threadCAnonStorey2.callback == null)
+      if (callback == null)
         return;
-      // ISSUE: reference to a compiler-generated method
-      PlayGamesHelperObject.RunOnGameThread(new Action(threadCAnonStorey2.\u003C\u003Em__0));
+      PlayGamesHelperObject.RunOnGameThread((Action) (() =>
+      {
+        GooglePlayGames.OurUtils.Logger.d("Invoking user callback on game thread");
+        callback(data);
+      }));
     }
 
     private void InitializeGameServices()
@@ -212,25 +193,17 @@ namespace GooglePlayGames.Native
 
     public void GetUserEmail(Action<CommonStatusCodes, string> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeClient.\u003CGetUserEmail\u003Ec__AnonStorey4 emailCAnonStorey4 = new NativeClient.\u003CGetUserEmail\u003Ec__AnonStorey4();
-      // ISSUE: reference to a compiler-generated field
-      emailCAnonStorey4.callback = callback;
       if (!this.IsAuthenticated())
       {
         Debug.Log((object) "Cannot get API client - not authenticated");
-        // ISSUE: reference to a compiler-generated field
-        if (emailCAnonStorey4.callback != null)
+        if (callback != null)
         {
-          // ISSUE: reference to a compiler-generated method
-          PlayGamesHelperObject.RunOnGameThread(new Action(emailCAnonStorey4.\u003C\u003Em__0));
+          PlayGamesHelperObject.RunOnGameThread((Action) (() => callback(CommonStatusCodes.SignInRequired, (string) null)));
           return;
         }
       }
       this.mTokenClient.SetRationale(this.rationale);
-      // ISSUE: reference to a compiler-generated method
-      this.mTokenClient.GetEmail(new Action<CommonStatusCodes, string>(emailCAnonStorey4.\u003C\u003Em__1));
+      this.mTokenClient.GetEmail((Action<CommonStatusCodes, string>) ((status, email) => PlayGamesHelperObject.RunOnGameThread((Action) (() => callback(status, email)))));
     }
 
     [Obsolete("Use GetServerAuthCode() then exchange it for a token")]
@@ -257,16 +230,10 @@ namespace GooglePlayGames.Native
     [Obsolete("Use GetServerAuthCode() then exchange it for a token")]
     public void GetIdToken(Action<string> idTokenCallback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeClient.\u003CGetIdToken\u003Ec__AnonStorey6 tokenCAnonStorey6 = new NativeClient.\u003CGetIdToken\u003Ec__AnonStorey6();
-      // ISSUE: reference to a compiler-generated field
-      tokenCAnonStorey6.idTokenCallback = idTokenCallback;
       if (!this.IsAuthenticated())
       {
         Debug.Log((object) "Cannot get API client - not authenticated");
-        // ISSUE: reference to a compiler-generated method
-        PlayGamesHelperObject.RunOnGameThread(new Action(tokenCAnonStorey6.\u003C\u003Em__0));
+        PlayGamesHelperObject.RunOnGameThread((Action) (() => idTokenCallback((string) null)));
       }
       if (!GameInfo.WebClientIdInitialized())
       {
@@ -275,22 +242,38 @@ namespace GooglePlayGames.Native
           Debug.LogError((object) "Web client ID has not been set, cannot request id token.");
           this.noWebClientIdWarningCount = this.noWebClientIdWarningCount / this.webclientWarningFreq + 1;
         }
-        // ISSUE: reference to a compiler-generated method
-        PlayGamesHelperObject.RunOnGameThread(new Action(tokenCAnonStorey6.\u003C\u003Em__1));
+        PlayGamesHelperObject.RunOnGameThread((Action) (() => idTokenCallback((string) null)));
       }
       this.mTokenClient.SetRationale(this.rationale);
-      // ISSUE: reference to a compiler-generated field
-      this.mTokenClient.GetIdToken(string.Empty, NativeClient.AsOnGameThreadCallback<string>(tokenCAnonStorey6.idTokenCallback));
+      this.mTokenClient.GetIdToken(string.Empty, NativeClient.AsOnGameThreadCallback<string>(idTokenCallback));
     }
 
     public void GetServerAuthCode(string serverClientId, Action<CommonStatusCodes, string> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: reference to a compiler-generated method
-      this.mServices.FetchServerAuthCode(serverClientId, new Action<GooglePlayGames.Native.PInvoke.GameServices.FetchServerAuthCodeResponse>(new NativeClient.\u003CGetServerAuthCode\u003Ec__AnonStorey7()
+      this.mServices.FetchServerAuthCode(serverClientId, (Action<GooglePlayGames.Native.PInvoke.GameServices.FetchServerAuthCodeResponse>) (serverAuthCodeResponse =>
       {
-        callback = callback
-      }.\u003C\u003Em__0));
+        // ISSUE: object of a compiler-generated type is created
+        // ISSUE: variable of a compiler-generated type
+        NativeClient.\u003CGetServerAuthCode\u003Ec__AnonStorey7.\u003CGetServerAuthCode\u003Ec__AnonStorey8 codeCAnonStorey8 = new NativeClient.\u003CGetServerAuthCode\u003Ec__AnonStorey7.\u003CGetServerAuthCode\u003Ec__AnonStorey8();
+        // ISSUE: reference to a compiler-generated field
+        codeCAnonStorey8.\u003C\u003Ef__ref\u00247 = this;
+        // ISSUE: reference to a compiler-generated field
+        codeCAnonStorey8.responseCode = ConversionUtils.ConvertResponseStatusToCommonStatus(serverAuthCodeResponse.Status());
+        // ISSUE: reference to a compiler-generated field
+        // ISSUE: reference to a compiler-generated field
+        if (codeCAnonStorey8.responseCode != CommonStatusCodes.Success && codeCAnonStorey8.responseCode != CommonStatusCodes.SuccessCached)
+          GooglePlayGames.OurUtils.Logger.e("Error loading server auth code: " + serverAuthCodeResponse.Status().ToString());
+        if (callback == null)
+          return;
+        // ISSUE: object of a compiler-generated type is created
+        // ISSUE: reference to a compiler-generated method
+        PlayGamesHelperObject.RunOnGameThread(new Action(new NativeClient.\u003CGetServerAuthCode\u003Ec__AnonStorey7.\u003CGetServerAuthCode\u003Ec__AnonStorey9()
+        {
+          \u003C\u003Ef__ref\u00247 = this,
+          \u003C\u003Ef__ref\u00248 = codeCAnonStorey8,
+          authCode = serverAuthCodeResponse.Code()
+        }.\u003C\u003Em__0));
+      }));
     }
 
     public bool IsAuthenticated()
@@ -301,29 +284,28 @@ namespace GooglePlayGames.Native
 
     public void LoadFriends(Action<bool> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeClient.\u003CLoadFriends\u003Ec__AnonStoreyA friendsCAnonStoreyA = new NativeClient.\u003CLoadFriends\u003Ec__AnonStoreyA();
-      // ISSUE: reference to a compiler-generated field
-      friendsCAnonStoreyA.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      friendsCAnonStoreyA.\u0024this = this;
       if (!this.IsAuthenticated())
       {
         GooglePlayGames.OurUtils.Logger.d("Cannot loadFriends when not authenticated");
-        // ISSUE: reference to a compiler-generated method
-        PlayGamesHelperObject.RunOnGameThread(new Action(friendsCAnonStoreyA.\u003C\u003Em__0));
+        PlayGamesHelperObject.RunOnGameThread((Action) (() => callback(false)));
       }
       else if (this.mFriends != null)
-      {
-        // ISSUE: reference to a compiler-generated method
-        PlayGamesHelperObject.RunOnGameThread(new Action(friendsCAnonStoreyA.\u003C\u003Em__1));
-      }
+        PlayGamesHelperObject.RunOnGameThread((Action) (() => callback(true)));
       else
-      {
-        // ISSUE: reference to a compiler-generated method
-        this.mServices.PlayerManager().FetchFriends(new Action<GooglePlayGames.BasicApi.ResponseStatus, List<GooglePlayGames.BasicApi.Multiplayer.Player>>(friendsCAnonStoreyA.\u003C\u003Em__2));
-      }
+        this.mServices.PlayerManager().FetchFriends((Action<GooglePlayGames.BasicApi.ResponseStatus, List<GooglePlayGames.BasicApi.Multiplayer.Player>>) ((status, players) =>
+        {
+          if (status == GooglePlayGames.BasicApi.ResponseStatus.Success || status == GooglePlayGames.BasicApi.ResponseStatus.SuccessWithStale)
+          {
+            this.mFriends = players;
+            PlayGamesHelperObject.RunOnGameThread((Action) (() => callback(true)));
+          }
+          else
+          {
+            this.mFriends = new List<GooglePlayGames.BasicApi.Multiplayer.Player>();
+            GooglePlayGames.OurUtils.Logger.e("Got " + (object) status + " loading friends");
+            PlayGamesHelperObject.RunOnGameThread((Action) (() => callback(false)));
+          }
+        }));
     }
 
     public IUserProfile[] GetFriends()
@@ -535,23 +517,29 @@ namespace GooglePlayGames.Native
 
     public void GetPlayerStats(Action<CommonStatusCodes, GooglePlayGames.BasicApi.PlayerStats> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: reference to a compiler-generated method
-      PlayGamesHelperObject.RunOnGameThread(new Action(new NativeClient.\u003CGetPlayerStats\u003Ec__AnonStoreyC()
-      {
-        callback = callback,
-        \u0024this = this
-      }.\u003C\u003Em__0));
+      PlayGamesHelperObject.RunOnGameThread((Action) (() => this.clientImpl.GetPlayerStats(this.GetApiClient(), callback)));
     }
 
     public void LoadUsers(string[] userIds, Action<IUserProfile[]> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: reference to a compiler-generated method
-      this.mServices.PlayerManager().FetchList(userIds, new Action<NativePlayer[]>(new NativeClient.\u003CLoadUsers\u003Ec__AnonStoreyD()
+      this.mServices.PlayerManager().FetchList(userIds, (Action<NativePlayer[]>) (nativeUsers =>
       {
-        callback = callback
-      }.\u003C\u003Em__0));
+        // ISSUE: object of a compiler-generated type is created
+        // ISSUE: variable of a compiler-generated type
+        NativeClient.\u003CLoadUsers\u003Ec__AnonStoreyD.\u003CLoadUsers\u003Ec__AnonStoreyE usersCAnonStoreyE = new NativeClient.\u003CLoadUsers\u003Ec__AnonStoreyD.\u003CLoadUsers\u003Ec__AnonStoreyE();
+        // ISSUE: reference to a compiler-generated field
+        usersCAnonStoreyE.\u003C\u003Ef__ref\u002413 = this;
+        // ISSUE: reference to a compiler-generated field
+        usersCAnonStoreyE.users = new IUserProfile[nativeUsers.Length];
+        // ISSUE: reference to a compiler-generated field
+        for (int index = 0; index < usersCAnonStoreyE.users.Length; ++index)
+        {
+          // ISSUE: reference to a compiler-generated field
+          usersCAnonStoreyE.users[index] = (IUserProfile) nativeUsers[index].AsPlayer();
+        }
+        // ISSUE: reference to a compiler-generated method
+        PlayGamesHelperObject.RunOnGameThread(new Action(usersCAnonStoreyE.\u003C\u003Em__0));
+      }));
     }
 
     public GooglePlayGames.BasicApi.Achievement GetAchievement(string achId)
@@ -578,190 +566,148 @@ namespace GooglePlayGames.Native
 
     public void UnlockAchievement(string achId, Action<bool> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeClient.\u003CUnlockAchievement\u003Ec__AnonStorey10 achievementCAnonStorey10 = new NativeClient.\u003CUnlockAchievement\u003Ec__AnonStorey10();
-      // ISSUE: reference to a compiler-generated field
-      achievementCAnonStorey10.achId = achId;
-      // ISSUE: reference to a compiler-generated field
-      achievementCAnonStorey10.\u0024this = this;
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated method
-      this.UpdateAchievement("Unlock", achievementCAnonStorey10.achId, callback, (Predicate<GooglePlayGames.BasicApi.Achievement>) (a => a.IsUnlocked), new Action<GooglePlayGames.BasicApi.Achievement>(achievementCAnonStorey10.\u003C\u003Em__0));
+      this.UpdateAchievement("Unlock", achId, callback, (Predicate<GooglePlayGames.BasicApi.Achievement>) (a => a.IsUnlocked), (Action<GooglePlayGames.BasicApi.Achievement>) (a =>
+      {
+        a.IsUnlocked = true;
+        this.GameServices().AchievementManager().Unlock(achId);
+      }));
     }
 
     public void RevealAchievement(string achId, Action<bool> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeClient.\u003CRevealAchievement\u003Ec__AnonStorey11 achievementCAnonStorey11 = new NativeClient.\u003CRevealAchievement\u003Ec__AnonStorey11();
-      // ISSUE: reference to a compiler-generated field
-      achievementCAnonStorey11.achId = achId;
-      // ISSUE: reference to a compiler-generated field
-      achievementCAnonStorey11.\u0024this = this;
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated method
-      this.UpdateAchievement("Reveal", achievementCAnonStorey11.achId, callback, (Predicate<GooglePlayGames.BasicApi.Achievement>) (a => a.IsRevealed), new Action<GooglePlayGames.BasicApi.Achievement>(achievementCAnonStorey11.\u003C\u003Em__0));
+      this.UpdateAchievement("Reveal", achId, callback, (Predicate<GooglePlayGames.BasicApi.Achievement>) (a => a.IsRevealed), (Action<GooglePlayGames.BasicApi.Achievement>) (a =>
+      {
+        a.IsRevealed = true;
+        this.GameServices().AchievementManager().Reveal(achId);
+      }));
     }
 
     private void UpdateAchievement(string updateType, string achId, Action<bool> callback, Predicate<GooglePlayGames.BasicApi.Achievement> alreadyDone, Action<GooglePlayGames.BasicApi.Achievement> updateAchievment)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeClient.\u003CUpdateAchievement\u003Ec__AnonStorey12 achievementCAnonStorey12 = new NativeClient.\u003CUpdateAchievement\u003Ec__AnonStorey12();
-      // ISSUE: reference to a compiler-generated field
-      achievementCAnonStorey12.achId = achId;
-      // ISSUE: reference to a compiler-generated field
-      achievementCAnonStorey12.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      achievementCAnonStorey12.\u0024this = this;
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      achievementCAnonStorey12.callback = NativeClient.AsOnGameThreadCallback<bool>(achievementCAnonStorey12.callback);
-      // ISSUE: reference to a compiler-generated field
-      Misc.CheckNotNull<string>(achievementCAnonStorey12.achId);
+      callback = NativeClient.AsOnGameThreadCallback<bool>(callback);
+      Misc.CheckNotNull<string>(achId);
       this.InitializeGameServices();
-      // ISSUE: reference to a compiler-generated field
-      GooglePlayGames.BasicApi.Achievement achievement = this.GetAchievement(achievementCAnonStorey12.achId);
+      GooglePlayGames.BasicApi.Achievement achievement = this.GetAchievement(achId);
       if (achievement == null)
       {
-        // ISSUE: reference to a compiler-generated field
-        GooglePlayGames.OurUtils.Logger.d("Could not " + updateType + ", no achievement with ID " + achievementCAnonStorey12.achId);
-        // ISSUE: reference to a compiler-generated field
-        achievementCAnonStorey12.callback(false);
+        GooglePlayGames.OurUtils.Logger.d("Could not " + updateType + ", no achievement with ID " + achId);
+        callback(false);
       }
       else if (alreadyDone(achievement))
       {
-        // ISSUE: reference to a compiler-generated field
-        GooglePlayGames.OurUtils.Logger.d("Did not need to perform " + updateType + ": on achievement " + achievementCAnonStorey12.achId);
-        // ISSUE: reference to a compiler-generated field
-        achievementCAnonStorey12.callback(true);
+        GooglePlayGames.OurUtils.Logger.d("Did not need to perform " + updateType + ": on achievement " + achId);
+        callback(true);
       }
       else
       {
-        // ISSUE: reference to a compiler-generated field
-        GooglePlayGames.OurUtils.Logger.d("Performing " + updateType + " on " + achievementCAnonStorey12.achId);
+        GooglePlayGames.OurUtils.Logger.d("Performing " + updateType + " on " + achId);
         updateAchievment(achievement);
-        // ISSUE: reference to a compiler-generated field
-        // ISSUE: reference to a compiler-generated method
-        this.GameServices().AchievementManager().Fetch(achievementCAnonStorey12.achId, new Action<GooglePlayGames.Native.PInvoke.AchievementManager.FetchResponse>(achievementCAnonStorey12.\u003C\u003Em__0));
+        this.GameServices().AchievementManager().Fetch(achId, (Action<GooglePlayGames.Native.PInvoke.AchievementManager.FetchResponse>) (rsp =>
+        {
+          if (rsp.Status() == CommonErrorStatus.ResponseStatus.VALID)
+          {
+            this.mAchievements.Remove(achId);
+            this.mAchievements.Add(achId, rsp.Achievement().AsAchievement());
+            callback(true);
+          }
+          else
+          {
+            GooglePlayGames.OurUtils.Logger.e("Cannot refresh achievement " + achId + ": " + (object) rsp.Status());
+            callback(false);
+          }
+        }));
       }
     }
 
     public void IncrementAchievement(string achId, int steps, Action<bool> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeClient.\u003CIncrementAchievement\u003Ec__AnonStorey13 achievementCAnonStorey13 = new NativeClient.\u003CIncrementAchievement\u003Ec__AnonStorey13();
-      // ISSUE: reference to a compiler-generated field
-      achievementCAnonStorey13.achId = achId;
-      // ISSUE: reference to a compiler-generated field
-      achievementCAnonStorey13.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      achievementCAnonStorey13.\u0024this = this;
-      // ISSUE: reference to a compiler-generated field
-      Misc.CheckNotNull<string>(achievementCAnonStorey13.achId);
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      achievementCAnonStorey13.callback = NativeClient.AsOnGameThreadCallback<bool>(achievementCAnonStorey13.callback);
+      Misc.CheckNotNull<string>(achId);
+      callback = NativeClient.AsOnGameThreadCallback<bool>(callback);
       this.InitializeGameServices();
-      // ISSUE: reference to a compiler-generated field
-      GooglePlayGames.BasicApi.Achievement achievement = this.GetAchievement(achievementCAnonStorey13.achId);
+      GooglePlayGames.BasicApi.Achievement achievement = this.GetAchievement(achId);
       if (achievement == null)
       {
-        // ISSUE: reference to a compiler-generated field
-        GooglePlayGames.OurUtils.Logger.e("Could not increment, no achievement with ID " + achievementCAnonStorey13.achId);
-        // ISSUE: reference to a compiler-generated field
-        achievementCAnonStorey13.callback(false);
+        GooglePlayGames.OurUtils.Logger.e("Could not increment, no achievement with ID " + achId);
+        callback(false);
       }
       else if (!achievement.IsIncremental)
       {
-        // ISSUE: reference to a compiler-generated field
-        GooglePlayGames.OurUtils.Logger.e("Could not increment, achievement with ID " + achievementCAnonStorey13.achId + " was not incremental");
-        // ISSUE: reference to a compiler-generated field
-        achievementCAnonStorey13.callback(false);
+        GooglePlayGames.OurUtils.Logger.e("Could not increment, achievement with ID " + achId + " was not incremental");
+        callback(false);
       }
       else if (steps < 0)
       {
         GooglePlayGames.OurUtils.Logger.e("Attempted to increment by negative steps");
-        // ISSUE: reference to a compiler-generated field
-        achievementCAnonStorey13.callback(false);
+        callback(false);
       }
       else
       {
-        // ISSUE: reference to a compiler-generated field
-        this.GameServices().AchievementManager().Increment(achievementCAnonStorey13.achId, Convert.ToUInt32(steps));
-        // ISSUE: reference to a compiler-generated field
-        // ISSUE: reference to a compiler-generated method
-        this.GameServices().AchievementManager().Fetch(achievementCAnonStorey13.achId, new Action<GooglePlayGames.Native.PInvoke.AchievementManager.FetchResponse>(achievementCAnonStorey13.\u003C\u003Em__0));
+        this.GameServices().AchievementManager().Increment(achId, Convert.ToUInt32(steps));
+        this.GameServices().AchievementManager().Fetch(achId, (Action<GooglePlayGames.Native.PInvoke.AchievementManager.FetchResponse>) (rsp =>
+        {
+          if (rsp.Status() == CommonErrorStatus.ResponseStatus.VALID)
+          {
+            this.mAchievements.Remove(achId);
+            this.mAchievements.Add(achId, rsp.Achievement().AsAchievement());
+            callback(true);
+          }
+          else
+          {
+            GooglePlayGames.OurUtils.Logger.e("Cannot refresh achievement " + achId + ": " + (object) rsp.Status());
+            callback(false);
+          }
+        }));
       }
     }
 
     public void SetStepsAtLeast(string achId, int steps, Action<bool> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeClient.\u003CSetStepsAtLeast\u003Ec__AnonStorey14 leastCAnonStorey14 = new NativeClient.\u003CSetStepsAtLeast\u003Ec__AnonStorey14();
-      // ISSUE: reference to a compiler-generated field
-      leastCAnonStorey14.achId = achId;
-      // ISSUE: reference to a compiler-generated field
-      leastCAnonStorey14.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      leastCAnonStorey14.\u0024this = this;
-      // ISSUE: reference to a compiler-generated field
-      Misc.CheckNotNull<string>(leastCAnonStorey14.achId);
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      leastCAnonStorey14.callback = NativeClient.AsOnGameThreadCallback<bool>(leastCAnonStorey14.callback);
+      Misc.CheckNotNull<string>(achId);
+      callback = NativeClient.AsOnGameThreadCallback<bool>(callback);
       this.InitializeGameServices();
-      // ISSUE: reference to a compiler-generated field
-      GooglePlayGames.BasicApi.Achievement achievement = this.GetAchievement(leastCAnonStorey14.achId);
+      GooglePlayGames.BasicApi.Achievement achievement = this.GetAchievement(achId);
       if (achievement == null)
       {
-        // ISSUE: reference to a compiler-generated field
-        GooglePlayGames.OurUtils.Logger.e("Could not increment, no achievement with ID " + leastCAnonStorey14.achId);
-        // ISSUE: reference to a compiler-generated field
-        leastCAnonStorey14.callback(false);
+        GooglePlayGames.OurUtils.Logger.e("Could not increment, no achievement with ID " + achId);
+        callback(false);
       }
       else if (!achievement.IsIncremental)
       {
-        // ISSUE: reference to a compiler-generated field
-        GooglePlayGames.OurUtils.Logger.e("Could not increment, achievement with ID " + leastCAnonStorey14.achId + " is not incremental");
-        // ISSUE: reference to a compiler-generated field
-        leastCAnonStorey14.callback(false);
+        GooglePlayGames.OurUtils.Logger.e("Could not increment, achievement with ID " + achId + " is not incremental");
+        callback(false);
       }
       else if (steps < 0)
       {
         GooglePlayGames.OurUtils.Logger.e("Attempted to increment by negative steps");
-        // ISSUE: reference to a compiler-generated field
-        leastCAnonStorey14.callback(false);
+        callback(false);
       }
       else
       {
-        // ISSUE: reference to a compiler-generated field
-        this.GameServices().AchievementManager().SetStepsAtLeast(leastCAnonStorey14.achId, Convert.ToUInt32(steps));
-        // ISSUE: reference to a compiler-generated field
-        // ISSUE: reference to a compiler-generated method
-        this.GameServices().AchievementManager().Fetch(leastCAnonStorey14.achId, new Action<GooglePlayGames.Native.PInvoke.AchievementManager.FetchResponse>(leastCAnonStorey14.\u003C\u003Em__0));
+        this.GameServices().AchievementManager().SetStepsAtLeast(achId, Convert.ToUInt32(steps));
+        this.GameServices().AchievementManager().Fetch(achId, (Action<GooglePlayGames.Native.PInvoke.AchievementManager.FetchResponse>) (rsp =>
+        {
+          if (rsp.Status() == CommonErrorStatus.ResponseStatus.VALID)
+          {
+            this.mAchievements.Remove(achId);
+            this.mAchievements.Add(achId, rsp.Achievement().AsAchievement());
+            callback(true);
+          }
+          else
+          {
+            GooglePlayGames.OurUtils.Logger.e("Cannot refresh achievement " + achId + ": " + (object) rsp.Status());
+            callback(false);
+          }
+        }));
       }
     }
 
     public void ShowAchievementsUI(Action<GooglePlayGames.BasicApi.UIStatus> cb)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeClient.\u003CShowAchievementsUI\u003Ec__AnonStorey15 achievementsUiCAnonStorey15 = new NativeClient.\u003CShowAchievementsUI\u003Ec__AnonStorey15();
-      // ISSUE: reference to a compiler-generated field
-      achievementsUiCAnonStorey15.cb = cb;
       if (!this.IsAuthenticated())
         return;
       Action<CommonErrorStatus.UIStatus> callback = Callbacks.NoopUICallback;
-      // ISSUE: reference to a compiler-generated field
-      if (achievementsUiCAnonStorey15.cb != null)
-      {
-        // ISSUE: reference to a compiler-generated method
-        callback = new Action<CommonErrorStatus.UIStatus>(achievementsUiCAnonStorey15.\u003C\u003Em__0);
-      }
+      if (cb != null)
+        callback = (Action<CommonErrorStatus.UIStatus>) (result => cb((GooglePlayGames.BasicApi.UIStatus) result));
       this.GameServices().AchievementManager().ShowAllUI(NativeClient.AsOnGameThreadCallback<CommonErrorStatus.UIStatus>(callback));
     }
 
@@ -772,20 +718,11 @@ namespace GooglePlayGames.Native
 
     public void ShowLeaderboardUI(string leaderboardId, GooglePlayGames.BasicApi.LeaderboardTimeSpan span, Action<GooglePlayGames.BasicApi.UIStatus> cb)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeClient.\u003CShowLeaderboardUI\u003Ec__AnonStorey16 leaderboardUiCAnonStorey16 = new NativeClient.\u003CShowLeaderboardUI\u003Ec__AnonStorey16();
-      // ISSUE: reference to a compiler-generated field
-      leaderboardUiCAnonStorey16.cb = cb;
       if (!this.IsAuthenticated())
         return;
       Action<CommonErrorStatus.UIStatus> callback1 = Callbacks.NoopUICallback;
-      // ISSUE: reference to a compiler-generated field
-      if (leaderboardUiCAnonStorey16.cb != null)
-      {
-        // ISSUE: reference to a compiler-generated method
-        callback1 = new Action<CommonErrorStatus.UIStatus>(leaderboardUiCAnonStorey16.\u003C\u003Em__0);
-      }
+      if (cb != null)
+        callback1 = (Action<CommonErrorStatus.UIStatus>) (result => cb((GooglePlayGames.BasicApi.UIStatus) result));
       Action<CommonErrorStatus.UIStatus> callback2 = NativeClient.AsOnGameThreadCallback<CommonErrorStatus.UIStatus>(callback1);
       if (leaderboardId == null)
         this.GameServices().LeaderboardManager().ShowAllUI(callback2);
@@ -812,7 +749,7 @@ namespace GooglePlayGames.Native
         callback(false);
       this.InitializeGameServices();
       if (leaderboardId == null)
-        throw new ArgumentNullException("leaderboardId");
+        throw new ArgumentNullException(nameof (leaderboardId));
       this.GameServices().LeaderboardManager().SubmitScore(leaderboardId, score, (string) null);
       callback(true);
     }
@@ -824,7 +761,7 @@ namespace GooglePlayGames.Native
         callback(false);
       this.InitializeGameServices();
       if (leaderboardId == null)
-        throw new ArgumentNullException("leaderboardId");
+        throw new ArgumentNullException(nameof (leaderboardId));
       this.GameServices().LeaderboardManager().SubmitScore(leaderboardId, score, metadata);
       callback(true);
     }
@@ -863,21 +800,10 @@ namespace GooglePlayGames.Native
 
     public void RegisterInvitationDelegate(InvitationReceivedDelegate invitationDelegate)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeClient.\u003CRegisterInvitationDelegate\u003Ec__AnonStorey17 delegateCAnonStorey17 = new NativeClient.\u003CRegisterInvitationDelegate\u003Ec__AnonStorey17();
-      // ISSUE: reference to a compiler-generated field
-      delegateCAnonStorey17.invitationDelegate = invitationDelegate;
-      // ISSUE: reference to a compiler-generated field
-      if (delegateCAnonStorey17.invitationDelegate == null)
-      {
+      if (invitationDelegate == null)
         this.mInvitationDelegate = (Action<Invitation, bool>) null;
-      }
       else
-      {
-        // ISSUE: reference to a compiler-generated method
-        this.mInvitationDelegate = Callbacks.AsOnGameThreadCallback<Invitation, bool>(new Action<Invitation, bool>(delegateCAnonStorey17.\u003C\u003Em__0));
-      }
+        this.mInvitationDelegate = Callbacks.AsOnGameThreadCallback<Invitation, bool>((Action<Invitation, bool>) ((invitation, autoAccept) => invitationDelegate(invitation, autoAccept)));
     }
 
     public string GetToken()

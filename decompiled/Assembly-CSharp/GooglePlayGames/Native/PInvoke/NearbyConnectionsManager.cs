@@ -204,7 +204,10 @@ namespace GooglePlayGames.Native.PInvoke
         using (AndroidJavaObject androidJavaObject = androidJavaClass.GetStatic<AndroidJavaObject>("currentActivity"))
         {
           string str1 = androidJavaObject.Call<string>("getPackageName");
-          string str2 = androidJavaObject.Call<AndroidJavaObject>("getPackageManager").Call<AndroidJavaObject>("getApplicationInfo", (object) str1, (object) 128).Get<AndroidJavaObject>("metaData").Call<string>("getString", new object[1]{ (object) "com.google.android.gms.nearby.connection.SERVICE_ID" });
+          string str2 = androidJavaObject.Call<AndroidJavaObject>("getPackageManager").Call<AndroidJavaObject>("getApplicationInfo", (object) str1, (object) 128).Get<AndroidJavaObject>("metaData").Call<string>("getString", new object[1]
+          {
+            (object) "com.google.android.gms.nearby.connection.SERVICE_ID"
+          });
           Debug.Log((object) ("SystemId from Manifest: " + str2));
           return str2;
         }

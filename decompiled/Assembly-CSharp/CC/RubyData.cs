@@ -7,6 +7,6 @@ namespace CC
   public class RubyData
   {
     public int nWave;
-    public int[] nRuby;
+    public long[] nRuby;
   }
 }

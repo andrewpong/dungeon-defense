@@ -7,6 +7,6 @@ namespace CC
   public class StoneData
   {
     public int nDay;
-    public int[] nStone;
+    public long[] nStone;
   }
 }

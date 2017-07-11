@@ -14,6 +14,7 @@ public class Monster : MonoBehaviour
   private static float fMaxRecoil = 30f;
   private static float fMinRecoil = 3f;
   private static float fIncRecoil = 1f;
+  public ObscuredInt nCharge = (ObscuredInt) 0;
   [HideInInspector]
   public ObscuredFloat fRecoil = (ObscuredFloat) 3f;
   [HideInInspector]
@@ -154,7 +155,7 @@ public class Monster : MonoBehaviour
   {
     get
     {
-      return ((float) this.fAtkBonus + (float) this.fRageAtkBonus + this.fWarcryFactor + this.fDarkFactor) * (float) this.fAfterAtkBonus;
+      return (float) ((double) (float) this.fAtkBonus * (1.0 + (double) (float) this.fRageAtkBonus) * (1.0 + (double) this.fWarcryFactor) * (1.0 + (double) this.fDarkFactor)) * (float) this.fAfterAtkBonus;
     }
   }
 
@@ -428,10 +429,13 @@ public class Monster : MonoBehaviour
     Monster monster1 = this;
     ObscuredFloat obscuredFloat1 = (ObscuredFloat) ((float) monster1.fRageAtkBonus * (float) (1.0 + (double) Info.GetElementalFac(ElementalID.eFireRageAtk, 0) * 0.00999999977648258));
     monster1.fRageAtkBonus = obscuredFloat1;
-    this.fRageAspBonus = this.fRageReloadBonus = (ObscuredFloat) 1f;
     Monster monster2 = this;
-    ObscuredFloat obscuredFloat2 = (ObscuredFloat) ((float) monster2.fRageAspBonus + (float) this.fFrenzyBonus);
-    monster2.fRageAspBonus = obscuredFloat2;
+    ObscuredFloat obscuredFloat2 = (ObscuredFloat) ((float) monster2.fRageAtkBonus * (float) (1.0 + (double) PageBattle.obj.GetPartyMonTrait(MonTraitID.eRageCharDmg) * 0.00999999977648258));
+    monster2.fRageAtkBonus = obscuredFloat2;
+    this.fRageAspBonus = this.fRageReloadBonus = (ObscuredFloat) 1f;
+    Monster monster3 = this;
+    ObscuredFloat obscuredFloat3 = (ObscuredFloat) ((float) monster3.fRageAspBonus + (float) this.fFrenzyBonus);
+    monster3.fRageAspBonus = obscuredFloat3;
   }
 
   private void OnRageEnd()
@@ -457,6 +461,7 @@ public class Monster : MonoBehaviour
       this.gameObject.SetActive(true);
       this.sID = (short) pData.sID;
       this.nEquip = (long) pData.nEquip;
+      this.nCharge = (ObscuredInt) 0;
       if (this.nPos == 0 && (PageBattle.obj.eTrial == MutateType.eNoMainMagical || PageBattle.obj.eTrial == MutateType.eNoMainPhysical))
         this.nEquip = -1L;
       this.sWeapon = Info.GetPlayerWeapon((long) pData.nEquip) != null ? (short) Info.GetPlayerWeapon((long) pData.nEquip).sID : (short) -1;
@@ -521,6 +526,9 @@ public class Monster : MonoBehaviour
         Monster monster7 = this;
         ObscuredFloat obscuredFloat6 = (ObscuredFloat) ((float) monster7.fAtkBonus * (float) (1.0 + (double) PageBattle.obj.GetSkillFac(this.nPos, SkillKey.eElementalForce) * 0.00999999977648258 * (double) num));
         monster7.fAtkBonus = obscuredFloat6;
+        Monster monster8 = this;
+        ObscuredFloat obscuredFloat7 = (ObscuredFloat) ((float) monster8.fAtkBonus * (float) (1.0 + (double) PageBattle.obj.GetSkillFac(this.nPos, SkillKey.eElementalForce) * 0.00999999977648258 * (double) num * (double) PageBattle.obj.GetMonTrait(this.nPos, MonTraitID.eElementalForcePlus) * 0.00999999977648258));
+        monster8.fAtkBonus = obscuredFloat7;
       }
       if (Info.isAwaken(this.pData))
       {
@@ -543,22 +551,31 @@ public class Monster : MonoBehaviour
       else
       {
         Monster monster7 = this;
-        ObscuredFloat obscuredFloat6 = (ObscuredFloat) ((float) monster7.fAtkBonus * (float) (1.0 + (double) Info.GetResearchFac(ResearchID.eMecenaryTraining) * 0.00999999977648258));
+        ObscuredFloat obscuredFloat6 = (ObscuredFloat) ((float) monster7.fAtkBonus * (float) (1.0 + (double) PageBattle.obj.GetMonTrait(this.nPos, MonTraitID.eMecernaryPlus) * 0.00999999977648258));
         monster7.fAtkBonus = obscuredFloat6;
         Monster monster8 = this;
-        ObscuredFloat obscuredFloat7 = (ObscuredFloat) ((float) monster8.fAtkBonus * (float) (1.0 + (double) Info.GetRebirthFac(RebirthID.eMercenaryDmg) * 0.00999999977648258));
+        ObscuredFloat obscuredFloat7 = (ObscuredFloat) ((float) monster8.fAtkBonus * (float) (1.0 + (double) PageBattle.obj.GetMonTrait(0, MonTraitID.eMecernaryKing) * 0.00999999977648258));
         monster8.fAtkBonus = obscuredFloat7;
         Monster monster9 = this;
-        ObscuredFloat obscuredFloat8 = (ObscuredFloat) ((float) monster9.fAtkBonus * (float) (1.0 + (double) Info.GetElementalFac(ElementalID.eLightMercernary, 0) * 0.00999999977648258));
+        ObscuredFloat obscuredFloat8 = (ObscuredFloat) ((float) monster9.fAtkBonus * (float) (1.0 + (double) Info.GetResearchFac(ResearchID.eMecenaryTraining) * 0.00999999977648258));
         monster9.fAtkBonus = obscuredFloat8;
+        Monster monster10 = this;
+        ObscuredFloat obscuredFloat9 = (ObscuredFloat) ((float) monster10.fAtkBonus * (float) (1.0 + (double) Info.GetRebirthFac(RebirthID.eMercenaryDmg) * 0.00999999977648258));
+        monster10.fAtkBonus = obscuredFloat9;
+        Monster monster11 = this;
+        ObscuredFloat obscuredFloat10 = (ObscuredFloat) ((float) monster11.fAtkBonus * (float) (1.0 + (double) Info.GetElementalFac(ElementalID.eLightMercernary, 0) * 0.00999999977648258));
+        monster11.fAtkBonus = obscuredFloat10;
       }
+      Monster monster12 = this;
+      ObscuredFloat obscuredFloat11 = (ObscuredFloat) ((float) monster12.fAtkBonus * (float) (1.0 + (double) PageBattle.obj.GetMonTrait(this.nPos, MonTraitID.eCompressShot) * 0.00999999977648258));
+      monster12.fAtkBonus = obscuredFloat11;
       this.SetNpcAtkBonus(this.bNPC);
       this.fCriDmg = (ObscuredFloat) 2f;
       this.fFrenzyBonus = (ObscuredFloat) (PageBattle.obj.GetSkillFac(this.nPos, SkillKey.eFrenzy) * 0.01f);
       this.fAspBonus = (ObscuredFloat) ((float) (1.0 + (double) PageBattle.obj.GetSkillFac(this.nPos, SkillKey.eFirerate) * 0.00999999977648258 - (double) PageBattle.obj.GetSkillFac2(this.nPos, SkillKey.eSnipe) * 0.00999999977648258));
-      Monster monster10 = this;
-      ObscuredFloat obscuredFloat9 = (ObscuredFloat) ((float) monster10.fAspBonus * (float) (1.0 + (double) Info.GetAccModFac(this.nPos, ModType.eAsp) * 0.00999999977648258));
-      monster10.fAspBonus = obscuredFloat9;
+      Monster monster13 = this;
+      ObscuredFloat obscuredFloat12 = (ObscuredFloat) ((float) monster13.fAspBonus * (float) (1.0 + (double) Info.GetAccModFac(this.nPos, ModType.eAsp) * 0.00999999977648258));
+      monster13.fAspBonus = obscuredFloat12;
       this.fRageGetBonus = (float) (1.0 + (double) PageBattle.obj.GetSkillFac(this.nPos, SkillKey.eMoreRage) * 0.00999999977648258);
       this.fAfterAspBonus = (ObscuredFloat) 1f;
       if (PageBattle.CheckMutation(MutateType.eSlow))
@@ -568,12 +585,13 @@ public class Monster : MonoBehaviour
         monster7.fAfterAspBonus = obscuredFloat6;
       }
       this.fReloadBonus = (ObscuredFloat) ((float) (1.0 + (double) PageBattle.obj.GetSkillFac(this.nPos, SkillKey.eReloading) * 0.00999999977648258));
-      Monster monster11 = this;
-      ObscuredFloat obscuredFloat10 = (ObscuredFloat) ((float) monster11.fReloadBonus * (float) (1.0 + (double) Info.GetAccModFac(ModType.eReload) * 0.00999999977648258));
-      monster11.fReloadBonus = obscuredFloat10;
+      Monster monster14 = this;
+      ObscuredFloat obscuredFloat13 = (ObscuredFloat) ((float) monster14.fReloadBonus * (float) (1.0 + (double) Info.GetAccModFac(ModType.eReload) * 0.00999999977648258));
+      monster14.fReloadBonus = obscuredFloat13;
       this.fCriDmg = (ObscuredFloat) ((float) ((double) Info.GetAccModFac(this.nPos, ModType.eCriDmg) * 0.00999999977648258 + (double) Info.GetPartySkillFac(SkillKey.eCriDmgParty) * 0.00999999977648258 + (double) Info.GetElementalFac(ElementalID.eFireCrDmg, 0) * 0.00999999977648258));
       this.fRageCriDmg += PageBattle.obj.GetSkillFac2(this.nPos, SkillKey.eBerserk) * 0.01f;
       this.fRageCriDmg += Info.GetElementalFac(ElementalID.eFireRageCrDmg, 0) * 0.01f;
+      this.fRageCriDmg += PageBattle.obj.GetPartyMonTrait(MonTraitID.eRageCritDmg) * 0.01f;
       this.goAtkBuff.SetActive(false);
       this.goAspBuff.SetActive(false);
       this.goReloadBuff.SetActive(false);
@@ -583,24 +601,24 @@ public class Monster : MonoBehaviour
       BattleItemData battleItem = Info.GetBattleItem(this.nEquip);
       this.eWeapon = battleItem.eWeapon;
       this.nMaxAmmo = (ObscuredInt) battleItem.nAmmo;
-      this.nAmmo = this.nMaxAmmo = (ObscuredInt) Mathf.RoundToInt((float) ((double) (int) this.nMaxAmmo * (1.0 + (double) Info.GetAccModFac(this.nPos, ModType.eAmmo) * 0.00999999977648258) * (1.0 + (double) PageBattle.obj.GetSkillFac(this.nPos, SkillKey.eAmmoSupply) * 0.00999999977648258)));
+      this.nAmmo = this.nMaxAmmo = (ObscuredInt) Mathf.RoundToInt((float) ((double) (int) this.nMaxAmmo * (1.0 + (double) Info.GetAccModFac(this.nPos, ModType.eAmmo) * 0.00999999977648258) * (1.0 + (double) PageBattle.obj.GetSkillFac(this.nPos, SkillKey.eAmmoSupply) * 0.00999999977648258) * (1.0 - (double) PageBattle.obj.GetMonTrait(this.nPos, MonTraitID.eCompressShot) * 0.00999999977648258)));
       if (BData.GetWeapon((short) battleItem.sID).eWeapon == WeaponType.eBow)
-        this.nAmmo = this.nMaxAmmo = (ObscuredInt) 1;
+        this.nAmmo = this.nMaxAmmo = (ObscuredInt) (1 + (int) PageBattle.obj.GetMonTrait(this.nPos, MonTraitID.eBigQuiver));
       this.fCool = (ObscuredFloat) battleItem.fRate;
       this.fTime = 0.0f;
       this.fRange = (ObscuredFloat) battleItem.fRange;
-      Monster monster12 = this;
-      ObscuredFloat obscuredFloat11 = (ObscuredFloat) ((float) monster12.fCri + battleItem.fCri);
-      monster12.fCri = obscuredFloat11;
-      Monster monster13 = this;
-      ObscuredFloat obscuredFloat12 = (ObscuredFloat) ((float) monster13.fCriDmg + battleItem.fCriDmg);
-      monster13.fCriDmg = obscuredFloat12;
-      Monster monster14 = this;
-      ObscuredFloat obscuredFloat13 = (ObscuredFloat) ((float) monster14.fAtkBonus * (float) (1.0 + (double) PageBattle.obj.GetSkillFac(this.nPos, SkillKey.eTrainedKnight) * 0.00999999977648258));
-      monster14.fAtkBonus = obscuredFloat13;
       Monster monster15 = this;
-      ObscuredFloat obscuredFloat14 = (ObscuredFloat) ((float) monster15.fAspBonus * (float) (1.0 + (double) PageBattle.obj.GetSkillFac2(this.nPos, SkillKey.eTrainedKnight) * 0.00999999977648258));
-      monster15.fAspBonus = obscuredFloat14;
+      ObscuredFloat obscuredFloat14 = (ObscuredFloat) ((float) monster15.fCri + battleItem.fCri);
+      monster15.fCri = obscuredFloat14;
+      Monster monster16 = this;
+      ObscuredFloat obscuredFloat15 = (ObscuredFloat) ((float) monster16.fCriDmg + battleItem.fCriDmg);
+      monster16.fCriDmg = obscuredFloat15;
+      Monster monster17 = this;
+      ObscuredFloat obscuredFloat16 = (ObscuredFloat) ((float) monster17.fAtkBonus * (float) (1.0 + (double) PageBattle.obj.GetSkillFac(this.nPos, SkillKey.eTrainedKnight) * 0.00999999977648258));
+      monster17.fAtkBonus = obscuredFloat16;
+      Monster monster18 = this;
+      ObscuredFloat obscuredFloat17 = (ObscuredFloat) ((float) monster18.fAspBonus * (float) (1.0 + (double) PageBattle.obj.GetSkillFac2(this.nPos, SkillKey.eTrainedKnight) * 0.00999999977648258));
+      monster18.fAspBonus = obscuredFloat17;
       if (Info.CheckResearch(ResearchID.eScope))
         this.fRange = (ObscuredFloat) 800f;
       this.SetSpeed(this.nEquip);

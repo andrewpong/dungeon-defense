@@ -49,6 +49,11 @@ public class Purchaser : MonoBehaviour, IStoreListener
   private static string kIDHellRepeat120 = "hell_first_120";
   private static string kIDHellRepeat250 = "hell_first_250";
   private static string kIDElementalPackage = "elementalpackage";
+  private static string kIDRebirthPackage = "rebirthpackage";
+  private static string kIDRebirthExp = "rebirthexp";
+  private static string kIDElementalExp = "elementalexp";
+  private static string kIDFirst50000 = "first_50000";
+  private static string kIDRubyFirst12000 = "ruby_first_12000";
   private static string kGoogleNonCSFeaturePackage = "dd_featurepackage";
   private static string kGoogleNonCSMagicalPacakage = "dd_magicalpackage";
   private static string kGoogleNonCSTotalPackage = "dd_totalpackage";
@@ -85,6 +90,11 @@ public class Purchaser : MonoBehaviour, IStoreListener
   private static string kGoogleHellRepeat120 = "dd_hell_repeat_120";
   private static string kGoogleHellRepeat250 = "dd_hell_repeat_250";
   private static string kGoogleElementalPackage = "dd_elementalpackage";
+  private static string kGoogleRebirthPackage = "dd_rebirthpackage";
+  private static string kGoogleRebirthExp = "dd_rebirth_exp";
+  private static string kGoogleElementalExp = "dd_elemental_exp";
+  private static string kGoogleCSFirst50000 = "dd_first_50000";
+  private static string kGoogleRubyFirst12000 = "dd_ruby_first_12000";
   public static Purchaser single;
   private static IStoreController m_StoreController;
   private static IExtensionProvider m_StoreExtensionProvider;
@@ -506,6 +516,61 @@ public class Purchaser : MonoBehaviour, IStoreListener
         new string[1]{ "AppleAppStore" }
       }
     });
+    builder.AddProduct(Purchaser.kIDRebirthPackage, ProductType.NonConsumable, new IDs()
+    {
+      {
+        Purchaser.kGoogleRebirthPackage,
+        new string[1]{ "GooglePlay" }
+      },
+      {
+        Purchaser.kGoogleRebirthPackage,
+        new string[1]{ "AppleAppStore" }
+      }
+    });
+    builder.AddProduct(Purchaser.kIDRebirthExp, ProductType.NonConsumable, new IDs()
+    {
+      {
+        Purchaser.kGoogleRebirthExp,
+        new string[1]{ "GooglePlay" }
+      },
+      {
+        Purchaser.kGoogleRebirthExp,
+        new string[1]{ "AppleAppStore" }
+      }
+    });
+    builder.AddProduct(Purchaser.kIDElementalExp, ProductType.NonConsumable, new IDs()
+    {
+      {
+        Purchaser.kGoogleElementalExp,
+        new string[1]{ "GooglePlay" }
+      },
+      {
+        Purchaser.kGoogleElementalExp,
+        new string[1]{ "AppleAppStore" }
+      }
+    });
+    builder.AddProduct(Purchaser.kIDFirst50000, ProductType.NonConsumable, new IDs()
+    {
+      {
+        Purchaser.kGoogleCSFirst50000,
+        new string[1]{ "GooglePlay" }
+      },
+      {
+        Purchaser.kGoogleCSFirst50000,
+        new string[1]{ "AppleAppStore" }
+      }
+    });
+    builder.AddProduct(Purchaser.kIDRubyFirst12000, ProductType.NonConsumable, new IDs()
+    {
+      {
+        Purchaser.kGoogleRubyFirst12000,
+        new string[1]{ "GooglePlay" }
+      },
+      {
+        Purchaser.kGoogleRubyFirst12000,
+        new string[1]{ "AppleAppStore" }
+      }
+    });
     UnityPurchasing.Initialize((IStoreListener) this, builder);
   }
 
@@ -600,6 +665,16 @@ public class Purchaser : MonoBehaviour, IStoreListener
         return Purchaser.kIDHellRepeat250;
       case ShopID.eElementalPackage:
         return Purchaser.kIDElementalPackage;
+      case ShopID.eRebirthPackage:
+        return Purchaser.kIDRebirthPackage;
+      case ShopID.eElementalExp:
+        return Purchaser.kIDElementalExp;
+      case ShopID.eRebirthExp:
+        return Purchaser.kIDRebirthExp;
+      case ShopID.eFirst50000:
+        return Purchaser.kIDFirst50000;
+      case ShopID.eRubyF12000:
+        return Purchaser.kIDRubyFirst12000;
       default:
         return string.Empty;
     }
@@ -928,6 +1003,25 @@ public class Purchaser : MonoBehaviour, IStoreListener
         if ((bool) ((UnityEngine.Object) PopupRebirth.obj))
           PopupRebirth.obj.RefreshFromPurchase();
         UIMgr.popupMsg.SetMsg(BData.GetString("UI0197").Replace("[1]", BData.GetString(BData.GetShop(ShopID.eFirst18000).strName)).Replace("[2]", BData.GetString("UI0227")) + "\n\n" + BData.GetString("UI0331"), true, false, string.Empty);
+      }
+    }
+    else if (string.Equals(strID, Purchaser.kIDFirst50000, StringComparison.Ordinal))
+    {
+      Debug.Log((object) string.Format("ProcessPurchase: PASS. Product: '{0}'", (object) strID));
+      if (Info.rebirth.listPurchase.Contains(ShopID.eFirst50000))
+      {
+        Debug.Log((object) ("Already Have" + strID));
+      }
+      else
+      {
+        Info.rebirth.listPurchase.Add(ShopID.eFirst50000);
+        SavedRebirth rebirth = Info.rebirth;
+        ObscuredLong obscuredLong = (ObscuredLong) ((long) rebirth.nNewStone + 50000L);
+        rebirth.nNewStone = obscuredLong;
+        SaveManager.SaveRebirth();
+        if ((bool) ((UnityEngine.Object) PopupRebirth.obj))
+          PopupRebirth.obj.RefreshFromPurchase();
+        UIMgr.popupMsg.SetMsg(BData.GetString("UI0197").Replace("[1]", BData.GetString(BData.GetShop(ShopID.eFirst50000).strName)).Replace("[2]", BData.GetString("UI0227")) + "\n\n" + BData.GetString("UI0331"), true, false, string.Empty);
       }
     }
     else if (string.Equals(strID, Purchaser.kIDStone330, StringComparison.Ordinal))
@@ -1267,6 +1361,25 @@ public class Purchaser : MonoBehaviour, IStoreListener
         if ((bool) ((UnityEngine.Object) PopupRubyShop.obj))
           PopupRubyShop.obj.RefreshFromPurchase();
         UIMgr.popupMsg.SetMsg(BData.GetString("UI0197").Replace("[1]", BData.GetString(BData.GetShop(ShopID.eRubyF4200).strName)).Replace("[2]", BData.GetString("UI0282")) + "\n\n" + BData.GetString("UI0331"), true, false, string.Empty);
+      }
+    }
+    else if (string.Equals(strID, Purchaser.kIDRubyFirst12000, StringComparison.Ordinal))
+    {
+      Debug.Log((object) string.Format("ProcessPurchase: PASS. Product: '{0}'", (object) strID));
+      if (Info.rebirth.listPurchase.Contains(ShopID.eRubyF12000))
+      {
+        Debug.Log((object) ("Already Have" + strID));
+      }
+      else
+      {
+        Info.rebirth.listPurchase.Add(ShopID.eRubyF12000);
+        SavedRebirth rebirth = Info.rebirth;
+        ObscuredInt obscuredInt = (ObscuredInt) ((int) rebirth.nRuby + 12000);
+        rebirth.nRuby = obscuredInt;
+        SaveManager.SaveRebirth();
+        if ((bool) ((UnityEngine.Object) PopupRubyShop.obj))
+          PopupRubyShop.obj.RefreshFromPurchase();
+        UIMgr.popupMsg.SetMsg(BData.GetString("UI0197").Replace("[1]", BData.GetString(BData.GetShop(ShopID.eRubyF12000).strName)).Replace("[2]", BData.GetString("UI0282")) + "\n\n" + BData.GetString("UI0331"), true, false, string.Empty);
       }
     }
     else if (string.Equals(strID, Purchaser.kIDRubyRepeat90, StringComparison.Ordinal))
@@ -1652,6 +1765,59 @@ public class Purchaser : MonoBehaviour, IStoreListener
         if ((bool) ((UnityEngine.Object) PopupRebirth.obj))
           PopupRebirth.obj.RefreshFromPurchase();
         UIMgr.popupMsg.SetMsg(BData.GetString("UI0197").Replace("[1]", BData.GetString(BData.GetShop(ShopID.eElementalPackage).strName)).Replace("[2]", BData.GetString("UI0282")) + "\n\n" + BData.GetString("UI0331"), true, false, string.Empty);
+      }
+    }
+    else if (string.Equals(strID, Purchaser.kIDRebirthPackage, StringComparison.Ordinal))
+    {
+      Debug.Log((object) string.Format("ProcessPurchase: PASS. Product: '{0}'", (object) strID));
+      if (Info.rebirth.listPurchase.Contains(ShopID.eRebirthPackage))
+      {
+        Debug.Log((object) ("Already Have" + strID));
+      }
+      else
+      {
+        Info.rebirth.listPurchase.Add(ShopID.eRebirthPackage);
+        for (int index = 0; index < BData.dictMonster.Count; ++index)
+        {
+          if (!Info.CheckMonTrait((short) index, MonTraitID.eRebirthExp))
+            Info.AddMonTrait((short) index, MonTraitID.eRebirthExp);
+        }
+        SaveManager.SaveRebirth();
+        if ((bool) ((UnityEngine.Object) PopupRebirth.obj))
+          PopupRebirth.obj.RefreshFromPurchase();
+        UIMgr.popupMsg.SetMsg(BData.GetString("UI0197").Replace("[1]", BData.GetString(BData.GetShop(ShopID.eRebirthPackage).strName)).Replace("[2]", BData.GetString("UI0282")) + "\n\n" + BData.GetString("UI0331"), true, false, string.Empty);
+      }
+    }
+    else if (string.Equals(strID, Purchaser.kIDRebirthExp, StringComparison.Ordinal))
+    {
+      Debug.Log((object) string.Format("ProcessPurchase: PASS. Product: '{0}'", (object) strID));
+      if (Info.rebirth.listPurchase.Contains(ShopID.eRebirthExp))
+      {
+        Debug.Log((object) ("Already Have" + strID));
+      }
+      else
+      {
+        Info.rebirth.listPurchase.Add(ShopID.eRebirthExp);
+        SaveManager.SaveRebirth();
+        if ((bool) ((UnityEngine.Object) PopupRebirth.obj))
+          PopupRebirth.obj.RefreshFromPurchase();
+        UIMgr.popupMsg.SetMsg(BData.GetString("UI0197").Replace("[1]", BData.GetString(BData.GetShop(ShopID.eRebirthExp).strName)).Replace("[2]", BData.GetString("UI0282")) + "\n\n" + BData.GetString("UI0331"), true, false, string.Empty);
+      }
+    }
+    else if (string.Equals(strID, Purchaser.kIDElementalExp, StringComparison.Ordinal))
+    {
+      Debug.Log((object) string.Format("ProcessPurchase: PASS. Product: '{0}'", (object) strID));
+      if (Info.rebirth.listPurchase.Contains(ShopID.eElementalExp))
+      {
+        Debug.Log((object) ("Already Have" + strID));
+      }
+      else
+      {
+        Info.rebirth.listPurchase.Add(ShopID.eElementalExp);
+        SaveManager.SaveRebirth();
+        if ((bool) ((UnityEngine.Object) PopupRebirth.obj))
+          PopupRebirth.obj.RefreshFromPurchase();
+        UIMgr.popupMsg.SetMsg(BData.GetString("UI0197").Replace("[1]", BData.GetString(BData.GetShop(ShopID.eElementalExp).strName)).Replace("[2]", BData.GetString("UI0282")) + "\n\n" + BData.GetString("UI0331"), true, false, string.Empty);
       }
     }
     else

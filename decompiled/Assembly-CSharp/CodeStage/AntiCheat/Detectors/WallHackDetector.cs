@@ -534,7 +534,10 @@ namespace CodeStage.AntiCheat.Detectors
     private IEnumerator InitDetector()
     {
       // ISSUE: object of a compiler-generated type is created
-      return (IEnumerator) new WallHackDetector.\u003CInitDetector\u003Ec__Iterator0() { \u0024this = this };
+      return (IEnumerator) new WallHackDetector.\u003CInitDetector\u003Ec__Iterator0()
+      {
+        \u0024this = this
+      };
     }
 
     private void StartRigidModule()
@@ -555,7 +558,7 @@ namespace CodeStage.AntiCheat.Detectors
         this.rigidPlayer.angularVelocity = Vector3.zero;
         this.rigidPlayer.transform.localPosition = new Vector3(0.75f, 0.0f, -1f);
         this.rigidPlayer.velocity = this.rigidPlayerVelocity;
-        this.Invoke("StartRigidModule", 4f);
+        this.Invoke(nameof (StartRigidModule), 4f);
       }
     }
 
@@ -575,7 +578,7 @@ namespace CodeStage.AntiCheat.Detectors
           this.controllerDetections = (byte) 0;
         this.charControllerPlayer.transform.localPosition = new Vector3(-0.75f, 0.0f, -1f);
         this.charControllerVelocity = 0.01f;
-        this.Invoke("StartControllerModule", 4f);
+        this.Invoke(nameof (StartControllerModule), 4f);
       }
     }
 
@@ -597,14 +600,17 @@ namespace CodeStage.AntiCheat.Detectors
     private void ShootWireframeModule()
     {
       this.StartCoroutine(this.CaptureFrame());
-      this.Invoke("ShootWireframeModule", (float) this.wireframeDelay);
+      this.Invoke(nameof (ShootWireframeModule), (float) this.wireframeDelay);
     }
 
     [DebuggerHidden]
     private IEnumerator CaptureFrame()
     {
       // ISSUE: object of a compiler-generated type is created
-      return (IEnumerator) new WallHackDetector.\u003CCaptureFrame\u003Ec__Iterator1() { \u0024this = this };
+      return (IEnumerator) new WallHackDetector.\u003CCaptureFrame\u003Ec__Iterator1()
+      {
+        \u0024this = this
+      };
     }
 
     private void StartRaycastModule()
@@ -631,7 +637,7 @@ namespace CodeStage.AntiCheat.Detectors
         if (this.Detect())
           return;
       }
-      this.Invoke("ShootRaycastModule", (float) this.raycastDelay);
+      this.Invoke(nameof (ShootRaycastModule), (float) this.raycastDelay);
     }
 
     private void StopRigidModule()

@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 public class PopupRebirth : UIPage
 {
-  private static int[] nCashBonus = new int[10]
+  private static int[] nCashBonus = new int[11]
   {
     120,
     120,
@@ -22,7 +22,8 @@ public class PopupRebirth : UIPage
     10,
     20,
     40,
-    80
+    80,
+    400
   };
   public static PopupRebirth obj;
   public Text textTitle;
@@ -55,6 +56,7 @@ public class PopupRebirth : UIPage
   public Text textRefundWarn;
   public GameObject goRemoveAd;
   public GameObject goForbidden;
+  public GameObject goExpensive;
   private bool bChange;
 
   public ObscuredLong nStone
@@ -245,6 +247,11 @@ public class PopupRebirth : UIPage
     shopIdList.Add(ShopID.eRepeat9000);
     shopIdList.Add(ShopID.eRemoveAds);
     shopIdList.Add(ShopID.eElementalPackage);
+    shopIdList.Add(ShopID.eFirst50000);
+    shopIdList.Add(ShopID.eElementalExp);
+    shopIdList.Add(ShopID.eRebirthPackage);
+    shopIdList.Add(ShopID.eRebirthExp);
+    this.goExpensive.SetActive(Info.rebirth.listPurchase.Contains(ShopID.eFirst50000));
     for (int index = 0; index < shopIdList.Count; ++index)
     {
       ShopData shop = BData.GetShop(shopIdList[index]);

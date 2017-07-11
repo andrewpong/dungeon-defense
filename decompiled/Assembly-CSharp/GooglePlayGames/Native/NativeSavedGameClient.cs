@@ -8,6 +8,7 @@ using GooglePlayGames.Native.PInvoke;
 using GooglePlayGames.OurUtils;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace GooglePlayGames.Native
@@ -24,38 +25,48 @@ namespace GooglePlayGames.Native
 
     public void OpenWithAutomaticConflictResolution(string filename, GooglePlayGames.BasicApi.DataSource source, ConflictResolutionStrategy resolutionStrategy, Action<SavedGameRequestStatus, ISavedGameMetadata> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeSavedGameClient.\u003COpenWithAutomaticConflictResolution\u003Ec__AnonStorey0 resolutionCAnonStorey0 = new NativeSavedGameClient.\u003COpenWithAutomaticConflictResolution\u003Ec__AnonStorey0();
-      // ISSUE: reference to a compiler-generated field
-      resolutionCAnonStorey0.resolutionStrategy = resolutionStrategy;
-      // ISSUE: reference to a compiler-generated field
-      resolutionCAnonStorey0.callback = callback;
       Misc.CheckNotNull<string>(filename);
-      // ISSUE: reference to a compiler-generated field
-      Misc.CheckNotNull<Action<SavedGameRequestStatus, ISavedGameMetadata>>(resolutionCAnonStorey0.callback);
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      resolutionCAnonStorey0.callback = NativeSavedGameClient.ToOnGameThread<SavedGameRequestStatus, ISavedGameMetadata>(resolutionCAnonStorey0.callback);
+      Misc.CheckNotNull<Action<SavedGameRequestStatus, ISavedGameMetadata>>(callback);
+      callback = NativeSavedGameClient.ToOnGameThread<SavedGameRequestStatus, ISavedGameMetadata>(callback);
       if (!NativeSavedGameClient.IsValidFilename(filename))
       {
         Logger.e("Received invalid filename: " + filename);
-        // ISSUE: reference to a compiler-generated field
-        resolutionCAnonStorey0.callback(SavedGameRequestStatus.BadInputError, (ISavedGameMetadata) null);
+        callback(SavedGameRequestStatus.BadInputError, (ISavedGameMetadata) null);
       }
       else
-      {
-        // ISSUE: reference to a compiler-generated method
-        // ISSUE: reference to a compiler-generated field
-        this.OpenWithManualConflictResolution(filename, source, false, new ConflictCallback(resolutionCAnonStorey0.\u003C\u003Em__0), resolutionCAnonStorey0.callback);
-      }
+        this.OpenWithManualConflictResolution(filename, source, false, (ConflictCallback) ((resolver, original, originalData, unmerged, unmergedData) =>
+        {
+          switch (resolutionStrategy)
+          {
+            case ConflictResolutionStrategy.UseLongestPlaytime:
+              if (original.TotalTimePlayed >= unmerged.TotalTimePlayed)
+              {
+                resolver.ChooseMetadata(original);
+                break;
+              }
+              resolver.ChooseMetadata(unmerged);
+              break;
+            case ConflictResolutionStrategy.UseOriginal:
+              resolver.ChooseMetadata(original);
+              break;
+            case ConflictResolutionStrategy.UseUnmerged:
+              resolver.ChooseMetadata(unmerged);
+              break;
+            default:
+              Logger.e("Unhandled strategy " + (object) resolutionStrategy);
+              callback(SavedGameRequestStatus.InternalError, (ISavedGameMetadata) null);
+              break;
+          }
+        }), callback);
     }
 
     private ConflictCallback ToOnGameThread(ConflictCallback conflictCallback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: reference to a compiler-generated method
-      return new ConflictCallback(new NativeSavedGameClient.\u003CToOnGameThread\u003Ec__AnonStorey1() { conflictCallback = conflictCallback }.\u003C\u003Em__0);
+      return (ConflictCallback) ((resolver, original, originalData, unmerged, unmergedData) =>
+      {
+        Logger.d("Invoking conflict callback");
+        PlayGamesHelperObject.RunOnGameThread((Action) (() => conflictCallback(resolver, original, originalData, unmerged, unmergedData)));
+      });
     }
 
     public void OpenWithManualConflictResolution(string filename, GooglePlayGames.BasicApi.DataSource source, bool prefetchDataOnConflict, ConflictCallback conflictCallback, Action<SavedGameRequestStatus, ISavedGameMetadata> completedCallback)
@@ -76,134 +87,131 @@ namespace GooglePlayGames.Native
 
     private void InternalManualOpen(string filename, GooglePlayGames.BasicApi.DataSource source, bool prefetchDataOnConflict, ConflictCallback conflictCallback, Action<SavedGameRequestStatus, ISavedGameMetadata> completedCallback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeSavedGameClient.\u003CInternalManualOpen\u003Ec__AnonStorey3 openCAnonStorey3 = new NativeSavedGameClient.\u003CInternalManualOpen\u003Ec__AnonStorey3();
-      // ISSUE: reference to a compiler-generated field
-      openCAnonStorey3.completedCallback = completedCallback;
-      // ISSUE: reference to a compiler-generated field
-      openCAnonStorey3.filename = filename;
-      // ISSUE: reference to a compiler-generated field
-      openCAnonStorey3.source = source;
-      // ISSUE: reference to a compiler-generated field
-      openCAnonStorey3.prefetchDataOnConflict = prefetchDataOnConflict;
-      // ISSUE: reference to a compiler-generated field
-      openCAnonStorey3.conflictCallback = conflictCallback;
-      // ISSUE: reference to a compiler-generated field
-      openCAnonStorey3.\u0024this = this;
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated method
-      this.mSnapshotManager.Open(openCAnonStorey3.filename, NativeSavedGameClient.AsDataSource(openCAnonStorey3.source), Types.SnapshotConflictPolicy.MANUAL, new Action<GooglePlayGames.Native.PInvoke.SnapshotManager.OpenResponse>(openCAnonStorey3.\u003C\u003Em__0));
+      this.mSnapshotManager.Open(filename, NativeSavedGameClient.AsDataSource(source), Types.SnapshotConflictPolicy.MANUAL, (Action<GooglePlayGames.Native.PInvoke.SnapshotManager.OpenResponse>) (response =>
+      {
+        if (!response.RequestSucceeded())
+          completedCallback(NativeSavedGameClient.AsRequestStatus(response.ResponseStatus()), (ISavedGameMetadata) null);
+        else if (response.ResponseStatus() == CommonErrorStatus.SnapshotOpenStatus.VALID)
+          completedCallback(SavedGameRequestStatus.Success, (ISavedGameMetadata) response.Data());
+        else if (response.ResponseStatus() == CommonErrorStatus.SnapshotOpenStatus.VALID_WITH_CONFLICT)
+        {
+          // ISSUE: object of a compiler-generated type is created
+          // ISSUE: variable of a compiler-generated type
+          NativeSavedGameClient.\u003CInternalManualOpen\u003Ec__AnonStorey3.\u003CInternalManualOpen\u003Ec__AnonStorey4 openCAnonStorey4 = new NativeSavedGameClient.\u003CInternalManualOpen\u003Ec__AnonStorey3.\u003CInternalManualOpen\u003Ec__AnonStorey4();
+          // ISSUE: reference to a compiler-generated field
+          openCAnonStorey4.\u003C\u003Ef__ref\u00243 = this;
+          // ISSUE: reference to a compiler-generated field
+          openCAnonStorey4.original = response.ConflictOriginal();
+          // ISSUE: reference to a compiler-generated field
+          openCAnonStorey4.unmerged = response.ConflictUnmerged();
+          // ISSUE: reference to a compiler-generated field
+          // ISSUE: reference to a compiler-generated field
+          // ISSUE: reference to a compiler-generated field
+          // ISSUE: reference to a compiler-generated method
+          openCAnonStorey4.resolver = new NativeSavedGameClient.NativeConflictResolver(this.mSnapshotManager, response.ConflictId(), openCAnonStorey4.original, openCAnonStorey4.unmerged, completedCallback, new Action(openCAnonStorey4.\u003C\u003Em__0));
+          if (!prefetchDataOnConflict)
+          {
+            // ISSUE: reference to a compiler-generated field
+            // ISSUE: reference to a compiler-generated field
+            // ISSUE: reference to a compiler-generated field
+            conflictCallback((IConflictResolver) openCAnonStorey4.resolver, (ISavedGameMetadata) openCAnonStorey4.original, (byte[]) null, (ISavedGameMetadata) openCAnonStorey4.unmerged, (byte[]) null);
+          }
+          else
+          {
+            // ISSUE: reference to a compiler-generated method
+            NativeSavedGameClient.Prefetcher prefetcher = new NativeSavedGameClient.Prefetcher(new Action<byte[], byte[]>(openCAnonStorey4.\u003C\u003Em__1), completedCallback);
+            // ISSUE: reference to a compiler-generated field
+            this.mSnapshotManager.Read(openCAnonStorey4.original, new Action<GooglePlayGames.Native.PInvoke.SnapshotManager.ReadResponse>(prefetcher.OnOriginalDataRead));
+            // ISSUE: reference to a compiler-generated field
+            this.mSnapshotManager.Read(openCAnonStorey4.unmerged, new Action<GooglePlayGames.Native.PInvoke.SnapshotManager.ReadResponse>(prefetcher.OnUnmergedDataRead));
+          }
+        }
+        else
+        {
+          Logger.e("Unhandled response status");
+          completedCallback(SavedGameRequestStatus.InternalError, (ISavedGameMetadata) null);
+        }
+      }));
     }
 
     public void ReadBinaryData(ISavedGameMetadata metadata, Action<SavedGameRequestStatus, byte[]> completedCallback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeSavedGameClient.\u003CReadBinaryData\u003Ec__AnonStorey5 dataCAnonStorey5 = new NativeSavedGameClient.\u003CReadBinaryData\u003Ec__AnonStorey5();
-      // ISSUE: reference to a compiler-generated field
-      dataCAnonStorey5.completedCallback = completedCallback;
       Misc.CheckNotNull<ISavedGameMetadata>(metadata);
-      // ISSUE: reference to a compiler-generated field
-      Misc.CheckNotNull<Action<SavedGameRequestStatus, byte[]>>(dataCAnonStorey5.completedCallback);
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      dataCAnonStorey5.completedCallback = NativeSavedGameClient.ToOnGameThread<SavedGameRequestStatus, byte[]>(dataCAnonStorey5.completedCallback);
+      Misc.CheckNotNull<Action<SavedGameRequestStatus, byte[]>>(completedCallback);
+      completedCallback = NativeSavedGameClient.ToOnGameThread<SavedGameRequestStatus, byte[]>(completedCallback);
       NativeSnapshotMetadata metadata1 = metadata as NativeSnapshotMetadata;
       if (metadata1 == null)
       {
         Logger.e("Encountered metadata that was not generated by this ISavedGameClient");
-        // ISSUE: reference to a compiler-generated field
-        dataCAnonStorey5.completedCallback(SavedGameRequestStatus.BadInputError, (byte[]) null);
+        completedCallback(SavedGameRequestStatus.BadInputError, (byte[]) null);
       }
       else if (!metadata1.IsOpen)
       {
         Logger.e("This method requires an open ISavedGameMetadata.");
-        // ISSUE: reference to a compiler-generated field
-        dataCAnonStorey5.completedCallback(SavedGameRequestStatus.BadInputError, (byte[]) null);
+        completedCallback(SavedGameRequestStatus.BadInputError, (byte[]) null);
       }
       else
-      {
-        // ISSUE: reference to a compiler-generated method
-        this.mSnapshotManager.Read(metadata1, new Action<GooglePlayGames.Native.PInvoke.SnapshotManager.ReadResponse>(dataCAnonStorey5.\u003C\u003Em__0));
-      }
+        this.mSnapshotManager.Read(metadata1, (Action<GooglePlayGames.Native.PInvoke.SnapshotManager.ReadResponse>) (response =>
+        {
+          if (!response.RequestSucceeded())
+            completedCallback(NativeSavedGameClient.AsRequestStatus(response.ResponseStatus()), (byte[]) null);
+          else
+            completedCallback(SavedGameRequestStatus.Success, response.Data());
+        }));
     }
 
     public void ShowSelectSavedGameUI(string uiTitle, uint maxDisplayedSavedGames, bool showCreateSaveUI, bool showDeleteSaveUI, Action<SelectUIStatus, ISavedGameMetadata> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeSavedGameClient.\u003CShowSelectSavedGameUI\u003Ec__AnonStorey6 gameUiCAnonStorey6 = new NativeSavedGameClient.\u003CShowSelectSavedGameUI\u003Ec__AnonStorey6();
-      // ISSUE: reference to a compiler-generated field
-      gameUiCAnonStorey6.callback = callback;
       Misc.CheckNotNull<string>(uiTitle);
-      // ISSUE: reference to a compiler-generated field
-      Misc.CheckNotNull<Action<SelectUIStatus, ISavedGameMetadata>>(gameUiCAnonStorey6.callback);
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      gameUiCAnonStorey6.callback = NativeSavedGameClient.ToOnGameThread<SelectUIStatus, ISavedGameMetadata>(gameUiCAnonStorey6.callback);
+      Misc.CheckNotNull<Action<SelectUIStatus, ISavedGameMetadata>>(callback);
+      callback = NativeSavedGameClient.ToOnGameThread<SelectUIStatus, ISavedGameMetadata>(callback);
       if (maxDisplayedSavedGames <= 0U)
       {
         Logger.e("maxDisplayedSavedGames must be greater than 0");
-        // ISSUE: reference to a compiler-generated field
-        gameUiCAnonStorey6.callback(SelectUIStatus.BadInputError, (ISavedGameMetadata) null);
+        callback(SelectUIStatus.BadInputError, (ISavedGameMetadata) null);
       }
       else
-      {
-        // ISSUE: reference to a compiler-generated method
-        this.mSnapshotManager.SnapshotSelectUI(showCreateSaveUI, showDeleteSaveUI, maxDisplayedSavedGames, uiTitle, new Action<GooglePlayGames.Native.PInvoke.SnapshotManager.SnapshotSelectUIResponse>(gameUiCAnonStorey6.\u003C\u003Em__0));
-      }
+        this.mSnapshotManager.SnapshotSelectUI(showCreateSaveUI, showDeleteSaveUI, maxDisplayedSavedGames, uiTitle, (Action<GooglePlayGames.Native.PInvoke.SnapshotManager.SnapshotSelectUIResponse>) (response => callback(NativeSavedGameClient.AsUIStatus(response.RequestStatus()), !response.RequestSucceeded() ? (ISavedGameMetadata) null : (ISavedGameMetadata) response.Data())));
     }
 
     public void CommitUpdate(ISavedGameMetadata metadata, SavedGameMetadataUpdate updateForMetadata, byte[] updatedBinaryData, Action<SavedGameRequestStatus, ISavedGameMetadata> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeSavedGameClient.\u003CCommitUpdate\u003Ec__AnonStorey7 updateCAnonStorey7 = new NativeSavedGameClient.\u003CCommitUpdate\u003Ec__AnonStorey7();
-      // ISSUE: reference to a compiler-generated field
-      updateCAnonStorey7.callback = callback;
       Misc.CheckNotNull<ISavedGameMetadata>(metadata);
       Misc.CheckNotNull<byte[]>(updatedBinaryData);
-      // ISSUE: reference to a compiler-generated field
-      Misc.CheckNotNull<Action<SavedGameRequestStatus, ISavedGameMetadata>>(updateCAnonStorey7.callback);
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      updateCAnonStorey7.callback = NativeSavedGameClient.ToOnGameThread<SavedGameRequestStatus, ISavedGameMetadata>(updateCAnonStorey7.callback);
+      Misc.CheckNotNull<Action<SavedGameRequestStatus, ISavedGameMetadata>>(callback);
+      callback = NativeSavedGameClient.ToOnGameThread<SavedGameRequestStatus, ISavedGameMetadata>(callback);
       NativeSnapshotMetadata metadata1 = metadata as NativeSnapshotMetadata;
       if (metadata1 == null)
       {
         Logger.e("Encountered metadata that was not generated by this ISavedGameClient");
-        // ISSUE: reference to a compiler-generated field
-        updateCAnonStorey7.callback(SavedGameRequestStatus.BadInputError, (ISavedGameMetadata) null);
+        callback(SavedGameRequestStatus.BadInputError, (ISavedGameMetadata) null);
       }
       else if (!metadata1.IsOpen)
       {
         Logger.e("This method requires an open ISavedGameMetadata.");
-        // ISSUE: reference to a compiler-generated field
-        updateCAnonStorey7.callback(SavedGameRequestStatus.BadInputError, (ISavedGameMetadata) null);
+        callback(SavedGameRequestStatus.BadInputError, (ISavedGameMetadata) null);
       }
       else
-      {
-        // ISSUE: reference to a compiler-generated method
-        this.mSnapshotManager.Commit(metadata1, NativeSavedGameClient.AsMetadataChange(updateForMetadata), updatedBinaryData, new Action<GooglePlayGames.Native.PInvoke.SnapshotManager.CommitResponse>(updateCAnonStorey7.\u003C\u003Em__0));
-      }
+        this.mSnapshotManager.Commit(metadata1, NativeSavedGameClient.AsMetadataChange(updateForMetadata), updatedBinaryData, (Action<GooglePlayGames.Native.PInvoke.SnapshotManager.CommitResponse>) (response =>
+        {
+          if (!response.RequestSucceeded())
+            callback(NativeSavedGameClient.AsRequestStatus(response.ResponseStatus()), (ISavedGameMetadata) null);
+          else
+            callback(SavedGameRequestStatus.Success, (ISavedGameMetadata) response.Data());
+        }));
     }
 
     public void FetchAllSavedGames(GooglePlayGames.BasicApi.DataSource source, Action<SavedGameRequestStatus, List<ISavedGameMetadata>> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeSavedGameClient.\u003CFetchAllSavedGames\u003Ec__AnonStorey8 gamesCAnonStorey8 = new NativeSavedGameClient.\u003CFetchAllSavedGames\u003Ec__AnonStorey8();
-      // ISSUE: reference to a compiler-generated field
-      gamesCAnonStorey8.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      Misc.CheckNotNull<Action<SavedGameRequestStatus, List<ISavedGameMetadata>>>(gamesCAnonStorey8.callback);
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      gamesCAnonStorey8.callback = NativeSavedGameClient.ToOnGameThread<SavedGameRequestStatus, List<ISavedGameMetadata>>(gamesCAnonStorey8.callback);
-      // ISSUE: reference to a compiler-generated method
-      this.mSnapshotManager.FetchAll(NativeSavedGameClient.AsDataSource(source), new Action<GooglePlayGames.Native.PInvoke.SnapshotManager.FetchAllResponse>(gamesCAnonStorey8.\u003C\u003Em__0));
+      Misc.CheckNotNull<Action<SavedGameRequestStatus, List<ISavedGameMetadata>>>(callback);
+      callback = NativeSavedGameClient.ToOnGameThread<SavedGameRequestStatus, List<ISavedGameMetadata>>(callback);
+      this.mSnapshotManager.FetchAll(NativeSavedGameClient.AsDataSource(source), (Action<GooglePlayGames.Native.PInvoke.SnapshotManager.FetchAllResponse>) (response =>
+      {
+        if (!response.RequestSucceeded())
+          callback(NativeSavedGameClient.AsRequestStatus(response.ResponseStatus()), new List<ISavedGameMetadata>());
+        else
+          callback(SavedGameRequestStatus.Success, response.Data().Cast<ISavedGameMetadata>().ToList<ISavedGameMetadata>());
+      }));
     }
 
     public void Delete(ISavedGameMetadata metadata)
@@ -316,9 +324,7 @@ namespace GooglePlayGames.Native
 
     private static Action<T1, T2> ToOnGameThread<T1, T2>(Action<T1, T2> toConvert)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: reference to a compiler-generated method
-      return new Action<T1, T2>(new NativeSavedGameClient.\u003CToOnGameThread\u003Ec__AnonStorey9<T1, T2>() { toConvert = toConvert }.\u003C\u003Em__0);
+      return (Action<T1, T2>) ((val1, val2) => PlayGamesHelperObject.RunOnGameThread((Action) (() => toConvert(val1, val2))));
     }
 
     private class NativeConflictResolver : IConflictResolver

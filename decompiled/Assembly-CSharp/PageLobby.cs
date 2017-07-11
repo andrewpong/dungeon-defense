@@ -37,6 +37,7 @@ public class PageLobby : UIMgr
   public Text textCharFocusSkill;
   public Text textCharStat;
   public Text textCharPromote;
+  public Text textCharTrait;
   public RectTransform rtCharSkillRect;
   public CharSkillElt[] arrCharSkillElt;
   public WeaponElt eltCharWeapon;
@@ -55,6 +56,8 @@ public class PageLobby : UIMgr
   public Text textRebirthDesc;
   public Text textRebirthStone;
   public Text textRebirthRuby;
+  public Text textStoneBonus;
+  public Text textRubyBonus;
   public Button btnRebirth;
   public Image imgAcvFill;
   public Text textAcvFill;
@@ -127,6 +130,7 @@ public class PageLobby : UIMgr
     this.textBattleDays.text = BData.GetString("UI0061").Replace("[1]", Info.currentSave.nDay.ToString());
     this.textBattleBegin.text = BData.GetString("UI0140");
     this.textCharPromote.text = BData.GetString("UI0385");
+    this.textCharTrait.text = BData.GetString("UI0367");
   }
 
   protected override void Start()
@@ -401,7 +405,11 @@ public class PageLobby : UIMgr
         break;
       case 2:
         this.textRebirthStone.text = Info.nTodayStone.ToString();
+        float num = Info.GetStoneBonus();
+        this.textStoneBonus.text = (double) num <= 0.0 ? string.Empty : BData.GetString("UI0405").Replace("[1]", num.ToString("N0")) + ((int) Info.rebirth.nRebirthBonus <= 0 ? string.Empty : "(" + Info.rebirth.nRebirthBonus.ToString() + "/5)");
         this.textRebirthRuby.text = Info.nTodayRuby.ToString();
+        num = Info.GetRubyBonus();
+        this.textRubyBonus.text = (double) num <= 0.0 ? string.Empty : BData.GetString("UI0405").Replace("[1]", num.ToString("N0")) + ((int) Info.rebirth.nRebirthBonus <= 0 ? string.Empty : "(" + Info.rebirth.nRebirthBonus.ToString() + "/5)");
         this.btnRebirth.interactable = true;
         break;
       case 3:
@@ -1014,5 +1022,11 @@ public class PageLobby : UIMgr
   {
     UIMgr.PlaySound("MainButton", false);
     UIMgr.AddPage("PopupPromote");
+  }
+
+  public void OnCallMonTrait()
+  {
+    UIMgr.PlaySound("MainButton", false);
+    UIMgr.AddPage("PopupMonsterTrait");
   }
 }

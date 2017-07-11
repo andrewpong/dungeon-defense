@@ -177,7 +177,10 @@ namespace DigitalRuby.ThunderAndLightning
     private IEnumerator EnableLastRendererCoRoutine()
     {
       // ISSUE: object of a compiler-generated type is created
-      return (IEnumerator) new LightningBolt.\u003CEnableLastRendererCoRoutine\u003Ec__Iterator0() { \u0024this = this };
+      return (IEnumerator) new LightningBolt.\u003CEnableLastRendererCoRoutine\u003Ec__Iterator0()
+      {
+        \u0024this = this
+      };
     }
 
     private LightningBolt.LineRendererMesh GetOrCreateLineRenderer()
@@ -555,7 +558,12 @@ label_3:
     private IEnumerator GenerateParticleCoRoutine(ParticleSystem p, Vector3 pos, float delay)
     {
       // ISSUE: object of a compiler-generated type is created
-      return (IEnumerator) new LightningBolt.\u003CGenerateParticleCoRoutine\u003Ec__Iterator1() { delay = delay, pos = pos, p = p };
+      return (IEnumerator) new LightningBolt.\u003CGenerateParticleCoRoutine\u003Ec__Iterator1()
+      {
+        delay = delay,
+        pos = pos,
+        p = p
+      };
     }
 
     private void CheckForGlow(IEnumerable<LightningBoltParameters> parameters)

@@ -217,6 +217,31 @@ public class GPGSMgr : MonoBehaviour
           Social.ReportScore((long) (int) Info.currentSave.nMaxEndless, "CgkIu5mC6tcCEAIQKw", (Action<bool>) (obj => {}));
         Social.ReportScore((long) (int) Info.currentSave.nDay, "CgkIu5mC6tcCEAIQJg", (Action<bool>) (obj => {}));
         break;
+      case 16:
+        if ((int) Info.currentSave.nMaxEndless > 0)
+          Social.ReportScore((long) (int) Info.currentSave.nMaxEndless, "CgkIu5mC6tcCEAIQMQ", (Action<bool>) (obj => {}));
+        Social.ReportScore((long) (int) Info.currentSave.nDay, "CgkIu5mC6tcCEAIQLA", (Action<bool>) (obj => {}));
+        break;
+      case 17:
+        if ((int) Info.currentSave.nMaxEndless > 0)
+          Social.ReportScore((long) (int) Info.currentSave.nMaxEndless, "CgkIu5mC6tcCEAIQMg", (Action<bool>) (obj => {}));
+        Social.ReportScore((long) (int) Info.currentSave.nDay, "CgkIu5mC6tcCEAIQLQ", (Action<bool>) (obj => {}));
+        break;
+      case 18:
+        if ((int) Info.currentSave.nMaxEndless > 0)
+          Social.ReportScore((long) (int) Info.currentSave.nMaxEndless, "CgkIu5mC6tcCEAIQMw", (Action<bool>) (obj => {}));
+        Social.ReportScore((long) (int) Info.currentSave.nDay, "CgkIu5mC6tcCEAIQLg", (Action<bool>) (obj => {}));
+        break;
+      case 19:
+        if ((int) Info.currentSave.nMaxEndless > 0)
+          Social.ReportScore((long) (int) Info.currentSave.nMaxEndless, "CgkIu5mC6tcCEAIQNA", (Action<bool>) (obj => {}));
+        Social.ReportScore((long) (int) Info.currentSave.nDay, "CgkIu5mC6tcCEAIQLw", (Action<bool>) (obj => {}));
+        break;
+      case 20:
+        if ((int) Info.currentSave.nMaxEndless > 0)
+          Social.ReportScore((long) (int) Info.currentSave.nMaxEndless, "CgkIu5mC6tcCEAIQNQ", (Action<bool>) (obj => {}));
+        Social.ReportScore((long) (int) Info.currentSave.nDay, "CgkIu5mC6tcCEAIQMA", (Action<bool>) (obj => {}));
+        break;
     }
   }
 

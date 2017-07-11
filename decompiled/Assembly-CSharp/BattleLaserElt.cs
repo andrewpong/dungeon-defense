@@ -39,8 +39,11 @@ public class BattleLaserElt : MonoBehaviour
 
   public void OnCreated(float _fSize, Vector3 vStart, Vector3 vEnd)
   {
-    this.fOriSize = this.fSize = _fSize;
-    this.bCreated = true;
+    if ((double) this.fSize < (double) _fSize)
+    {
+      this.fOriSize = this.fSize = _fSize;
+      this.bCreated = true;
+    }
     vStart.z = vEnd.z = 10f;
     this.line.SetPosition(0, vStart);
     this.line.SetPosition(1, vEnd);

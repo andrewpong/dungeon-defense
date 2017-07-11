@@ -10,6 +10,7 @@ public class Bullet : MonoBehaviour
 {
   private float fSpd = 300f;
   private Vector2 vMovePos = Vector2.zero;
+  private float fSize = 1f;
   [HideInInspector]
   public float fPow;
   [HideInInspector]
@@ -34,6 +35,10 @@ public class Bullet : MonoBehaviour
   public bool bHuge;
   [HideInInspector]
   public bool bAssasinate;
+  [HideInInspector]
+  public bool bCursed;
+  [HideInInspector]
+  public bool bSpinning;
   [HideInInspector]
   public int nKill;
   [HideInInspector]
@@ -69,7 +74,8 @@ public class Bullet : MonoBehaviour
       if (Info.GetSkill(this.pMon.nPos, SkillKey.eSwordWill) > 0)
       {
         this.fSpd *= 1.5f;
-        this.bSpin = false;
+        this.bSpin = this.bSpinning;
+        this.nPen += (int) PageBattle.obj.GetMonTrait(this.pMon.nPos, MonTraitID.eSharpenEdge);
         this.nPen += Mathf.RoundToInt(PageBattle.obj.GetSkillFac(this.pMon.nPos, SkillKey.eDarkPenetrate));
         this.fPow *= (float) (1.0 + (double) Info.GetRebirthFac(RebirthID.ePenetratePower) * 0.00999999977648258 * (double) Mathf.RoundToInt(PageBattle.obj.GetSkillFac(this.pMon.nPos, SkillKey.eDarkPenetrate)));
       }
@@ -85,6 +91,7 @@ public class Bullet : MonoBehaviour
     this.fPow *= this.pMon.fFixAtkBonus;
     if (this.eWeapon == WeaponType.eBow || this.eWeapon == WeaponType.eSpear)
     {
+      this.nPen += (int) PageBattle.obj.GetMonTrait(this.pMon.nPos, MonTraitID.eSharpenEdge);
       this.nPen += (int) PageBattle.obj.GetSkillFac(this.pMon.nPos, SkillKey.ePenetrate);
       this.fPow *= (float) (1.0 + (double) Info.GetRebirthFac(RebirthID.ePenetratePower) * 0.00999999977648258 * (double) (int) PageBattle.obj.GetSkillFac(this.pMon.nPos, SkillKey.ePenetrate));
     }
@@ -109,7 +116,7 @@ public class Bullet : MonoBehaviour
 
   private void ResetImage(ItemData data)
   {
-    this.transform.localScale = Vector3.one * (!this.bHuge ? 150f : (float) (600.0 * (1.0 + (double) Info.GetResearchFac(ResearchID.eBigShot) * 0.00999999977648258)));
+    this.transform.localScale = Vector3.one * (!this.bHuge ? 150f : (float) (600.0 * (1.0 + (double) Info.GetResearchFac(ResearchID.eBigShot) * 0.00999999977648258))) * this.fSize;
     this.transform.eulerAngles = new Vector3(0.0f, 0.0f, ((double) this.vPos.y >= 0.0 ? 1f : -1f) * Vector2.Angle(new Vector2(1f, 0.0f), this.vPos));
     this.vMovePos = this.vPos * this.fSpd;
     for (int index = 0; index < this.goTrail.Length; ++index)
@@ -118,11 +125,12 @@ public class Bullet : MonoBehaviour
       this.srWeapon.transform.localEulerAngles = new Vector3(0.0f, 0.0f, -45f);
     if (this.eTrail != TrailType.eWeapon)
       return;
+    this.srWeapon.color = !this.bCursed ? Color.white : Color.magenta;
     this.srWeapon.sprite = RSMgr.GetSprite(data.strBullet);
     this.srWeapon.enabled = !Info.option.bAllFXOff;
   }
 
-  public Bullet SetTarget(Monster _pMon, TrailType _eTrail, BulletType _eType, Vector2 _vPos, BattleItemData data, float fDmg, bool _bCri, bool _bHuge, bool bAssasin, int _nRicochet, float fSpdBonus = 1f)
+  public Bullet SetTarget(Monster _pMon, TrailType _eTrail, BulletType _eType, Vector2 _vPos, BattleItemData data, float fDmg, bool _bCri, bool _bHuge, bool bAssasin, bool _bCursed, bool _bSpinning, int _nRicochet, float fSpdBonus = 1f)
   {
     this.pMon = _pMon;
     this.eTrail = _eTrail;
@@ -130,12 +138,28 @@ public class Bullet : MonoBehaviour
     this.vPos = _vPos;
     this.bHuge = _bHuge;
     this.bCri = _bCri;
+    this.bCursed = _bCursed;
+    this.bSpinning = _bSpinning;
+    this.fSize = 1f;
     this.bAssasinate = bAssasin;
     this.nRicochet = _nRicochet;
     ItemData weapon = BData.GetWeapon((short) data.sID);
     this.eWeapon = weapon.eWeapon;
-    this.bSpin = weapon.bSpin;
-    this.SetStat(fDmg, data.fvsArmor, data.fvsMagic, data.fSpd * (!this.bHuge ? 1f : 0.4f), data.nPen);
+    this.bSpin = weapon.bSpin || this.bSpinning;
+    if (this.bHuge)
+    {
+      if ((double) Random.Range(0.0f, 100f) < (double) PageBattle.obj.GetMonTrait(this.pMon.nPos, MonTraitID.eBFShot))
+      {
+        this.fSize = 2f;
+        fDmg *= (float) (1.0 + (double) PageBattle.obj.GetMonTrait(this.pMon.nPos, MonTraitID.eBFShot) * 0.00999999977648258);
+        fDmg *= (float) (1.0 + (double) PageBattle.obj.GetMonTrait(this.pMon.nPos, MonTraitID.eBFShotPlus) * 0.00999999977648258);
+      }
+      if (this.pMon.bRage)
+        fDmg *= (float) (1.0 + (double) PageBattle.obj.GetMonTrait(this.pMon.nPos, MonTraitID.eRageBigShot) * 0.00999999977648258);
+      if (this.bHuge)
+        fSpdBonus *= (float) (0.400000005960464 * (1.0 + (double) PageBattle.obj.GetMonTrait(this.pMon.nPos, MonTraitID.eBigSummonPlus) * 0.00999999977648258));
+    }
+    this.SetStat(fDmg, data.fvsArmor, data.fvsMagic, data.fSpd, data.nPen);
     this.fSpd *= fSpdBonus;
     this.CalcMonsterBonus();
     this.ResetImage(weapon);
@@ -149,10 +173,13 @@ public class Bullet : MonoBehaviour
     this.eType = _eType;
     this.vPos = _vPos;
     this.bHuge = _bHuge;
+    this.bCursed = false;
+    this.bSpinning = false;
     this.bCri = false;
+    this.fSize = 1f;
     this.eWeapon = data.eWeapon;
     this.bSpin = data.bSpin || this.bHuge;
-    this.SetStat(fDmg, data.fvsArmor, data.fvsMagic, data.fSpd * (!this.bHuge ? 1f : 0.4f), data.nPen);
+    this.SetStat(fDmg, data.fvsArmor, data.fvsMagic, data.fSpd * (!this.bHuge ? 1f : 0.5f), data.nPen);
     this.CalcMonsterBonus();
     this.ResetImage(data);
     return this;
@@ -197,7 +224,11 @@ public class Bullet : MonoBehaviour
       }
     }
     else
+    {
+      if (this.bSpinning)
+        PageBattle.obj.OnBulletRicochet(this, em);
       --this.nPen;
+    }
     if (this.bAssasinate && (Object) this.pMon != (Object) null)
       this.pMon.OnAssasinate();
     if (this.nPen < 1)

@@ -97,7 +97,10 @@ namespace GooglePlayGames
     internal IEnumerator LoadImage()
     {
       // ISSUE: object of a compiler-generated type is created
-      return (IEnumerator) new PlayGamesUserProfile.\u003CLoadImage\u003Ec__Iterator0() { \u0024this = this };
+      return (IEnumerator) new PlayGamesUserProfile.\u003CLoadImage\u003Ec__Iterator0()
+      {
+        \u0024this = this
+      };
     }
 
     public override bool Equals(object obj)

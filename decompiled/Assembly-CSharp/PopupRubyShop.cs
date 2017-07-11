@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 public class PopupRubyShop : UIPage
 {
-  private static int[] nCashBonus = new int[10]
+  private static int[] nCashBonus = new int[11]
   {
     100,
     100,
@@ -22,7 +22,8 @@ public class PopupRubyShop : UIPage
     0,
     10,
     20,
-    40
+    40,
+    300
   };
   public static PopupRubyShop obj;
   public Text textTitle;
@@ -50,6 +51,7 @@ public class PopupRubyShop : UIPage
   public Button[] btnAwakenPurchase;
   public Image[] imgBtnHighlight;
   public GameObject goForbidden;
+  public GameObject goExpensive;
   private bool bChange;
 
   public ObscuredInt nRuby
@@ -215,6 +217,8 @@ public class PopupRubyShop : UIPage
     shopIdList.Add(ShopID.eRubyR1080);
     shopIdList.Add(ShopID.eRubyR2100);
     shopIdList.Add(ShopID.eAwakenPackage);
+    shopIdList.Add(ShopID.eRubyF12000);
+    this.goExpensive.SetActive(Info.rebirth.listPurchase.Contains(ShopID.eRubyF12000));
     for (int index = 0; index < this.btnCashPurchase.Length; ++index)
     {
       ShopData shop = BData.GetShop(shopIdList[index]);

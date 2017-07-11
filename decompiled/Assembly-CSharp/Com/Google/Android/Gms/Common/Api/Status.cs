@@ -15,7 +15,7 @@ namespace Com.Google.Android.Gms.Common.Api
     {
       get
       {
-        return JavaObjWrapper.GetStaticObjectField<object>("com/google/android/gms/common/api/Status", "CREATOR", "Landroid/os/Parcelable$Creator;");
+        return JavaObjWrapper.GetStaticObjectField<object>("com/google/android/gms/common/api/Status", nameof (CREATOR), "Landroid/os/Parcelable$Creator;");
       }
     }
 
@@ -23,7 +23,7 @@ namespace Com.Google.Android.Gms.Common.Api
     {
       get
       {
-        return JavaObjWrapper.GetStaticStringField("com/google/android/gms/common/api/Status", "NULL");
+        return JavaObjWrapper.GetStaticStringField("com/google/android/gms/common/api/Status", nameof (NULL));
       }
     }
 
@@ -31,7 +31,7 @@ namespace Com.Google.Android.Gms.Common.Api
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/api/Status", "CONTENTS_FILE_DESCRIPTOR");
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/api/Status", nameof (CONTENTS_FILE_DESCRIPTOR));
       }
     }
 
@@ -39,7 +39,7 @@ namespace Com.Google.Android.Gms.Common.Api
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/api/Status", "PARCELABLE_WRITE_RETURN_VALUE");
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/api/Status", nameof (PARCELABLE_WRITE_RETURN_VALUE));
       }
     }
 
@@ -65,72 +65,72 @@ namespace Com.Google.Android.Gms.Common.Api
 
     public bool equals(object arg_object_1)
     {
-      return this.InvokeCall<bool>("equals", "(Ljava/lang/Object;)Z", arg_object_1);
+      return this.InvokeCall<bool>(nameof (equals), "(Ljava/lang/Object;)Z", arg_object_1);
     }
 
     public string toString()
     {
-      return this.InvokeCall<string>("toString", "()Ljava/lang/String;");
+      return this.InvokeCall<string>(nameof (toString), "()Ljava/lang/String;");
     }
 
     public int hashCode()
     {
-      return this.InvokeCall<int>("hashCode", "()I");
+      return this.InvokeCall<int>(nameof (hashCode), "()I");
     }
 
     public bool isInterrupted()
     {
-      return this.InvokeCall<bool>("isInterrupted", "()Z");
+      return this.InvokeCall<bool>(nameof (isInterrupted), "()Z");
     }
 
     public Status getStatus()
     {
-      return this.InvokeCall<Status>("getStatus", "()Lcom/google/android/gms/common/api/Status;");
+      return this.InvokeCall<Status>(nameof (getStatus), "()Lcom/google/android/gms/common/api/Status;");
     }
 
     public bool isCanceled()
     {
-      return this.InvokeCall<bool>("isCanceled", "()Z");
+      return this.InvokeCall<bool>(nameof (isCanceled), "()Z");
     }
 
     public int describeContents()
     {
-      return this.InvokeCall<int>("describeContents", "()I");
+      return this.InvokeCall<int>(nameof (describeContents), "()I");
     }
 
     public object getResolution()
     {
-      return this.InvokeCall<object>("getResolution", "()Landroid/app/PendingIntent;");
+      return this.InvokeCall<object>(nameof (getResolution), "()Landroid/app/PendingIntent;");
     }
 
     public int getStatusCode()
     {
-      return this.InvokeCall<int>("getStatusCode", "()I");
+      return this.InvokeCall<int>(nameof (getStatusCode), "()I");
     }
 
     public string getStatusMessage()
     {
-      return this.InvokeCall<string>("getStatusMessage", "()Ljava/lang/String;");
+      return this.InvokeCall<string>(nameof (getStatusMessage), "()Ljava/lang/String;");
     }
 
     public bool hasResolution()
     {
-      return this.InvokeCall<bool>("hasResolution", "()Z");
+      return this.InvokeCall<bool>(nameof (hasResolution), "()Z");
     }
 
     public void startResolutionForResult(object arg_object_1, int arg_int_2)
     {
-      this.InvokeCallVoid("startResolutionForResult", "(Landroid/app/Activity;I)V", arg_object_1, (object) arg_int_2);
+      this.InvokeCallVoid(nameof (startResolutionForResult), "(Landroid/app/Activity;I)V", arg_object_1, (object) arg_int_2);
     }
 
     public void writeToParcel(object arg_object_1, int arg_int_2)
     {
-      this.InvokeCallVoid("writeToParcel", "(Landroid/os/Parcel;I)V", arg_object_1, (object) arg_int_2);
+      this.InvokeCallVoid(nameof (writeToParcel), "(Landroid/os/Parcel;I)V", arg_object_1, (object) arg_int_2);
     }
 
     public bool isSuccess()
     {
-      return this.InvokeCall<bool>("isSuccess", "()Z");
+      return this.InvokeCall<bool>(nameof (isSuccess), "()Z");
     }
   }
 }

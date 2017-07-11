@@ -19,12 +19,12 @@ namespace Com.Google.Android.Gms.Games.Stats
 
     public PlayerStats getPlayerStats()
     {
-      return (PlayerStats) new PlayerStatsObject(this.InvokeCall<IntPtr>("getPlayerStats", "()Lcom/google/android/gms/games/stats/PlayerStats;"));
+      return (PlayerStats) new PlayerStatsObject(this.InvokeCall<IntPtr>(nameof (getPlayerStats), "()Lcom/google/android/gms/games/stats/PlayerStats;"));
     }
 
     public Status getStatus()
     {
-      return new Status(this.InvokeCall<IntPtr>("getStatus", "()Lcom/google/android/gms/common/api/Status;"));
+      return new Status(this.InvokeCall<IntPtr>(nameof (getStatus), "()Lcom/google/android/gms/common/api/Status;"));
     }
   }
 }

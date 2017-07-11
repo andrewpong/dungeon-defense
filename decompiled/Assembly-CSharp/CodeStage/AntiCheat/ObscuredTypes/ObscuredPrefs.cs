@@ -714,7 +714,13 @@ namespace CodeStage.AntiCheat.ObscuredTypes
       byte[] numArray = ObscuredPrefs.DecryptData(key, encryptedInput);
       if (numArray == null)
         return defaultValue;
-      return new Rect() { x = BitConverter.ToSingle(numArray, 0), y = BitConverter.ToSingle(numArray, 4), width = BitConverter.ToSingle(numArray, 8), height = BitConverter.ToSingle(numArray, 12) };
+      return new Rect()
+      {
+        x = BitConverter.ToSingle(numArray, 0),
+        y = BitConverter.ToSingle(numArray, 4),
+        width = BitConverter.ToSingle(numArray, 8),
+        height = BitConverter.ToSingle(numArray, 12)
+      };
     }
 
     public static void SetRawValue(string key, string encryptedValue)
@@ -793,7 +799,13 @@ namespace CodeStage.AntiCheat.ObscuredTypes
       int length1 = cleanBytes.Length;
       byte[] numArray1 = ObscuredPrefs.EncryptDecryptBytes(cleanBytes, length1, key + ObscuredPrefs.cryptoKey);
       uint hash = xxHash.CalculateHash(cleanBytes, length1, 0U);
-      byte[] numArray2 = new byte[4]{ (byte) (hash & (uint) byte.MaxValue), (byte) (hash >> 8 & (uint) byte.MaxValue), (byte) (hash >> 16 & (uint) byte.MaxValue), (byte) (hash >> 24 & (uint) byte.MaxValue) };
+      byte[] numArray2 = new byte[4]
+      {
+        (byte) (hash & (uint) byte.MaxValue),
+        (byte) (hash >> 8 & (uint) byte.MaxValue),
+        (byte) (hash >> 16 & (uint) byte.MaxValue),
+        (byte) (hash >> 24 & (uint) byte.MaxValue)
+      };
       byte[] numArray3 = (byte[]) null;
       int length2;
       if (ObscuredPrefs.lockToDevice != ObscuredPrefs.DeviceLockLevel.None)
