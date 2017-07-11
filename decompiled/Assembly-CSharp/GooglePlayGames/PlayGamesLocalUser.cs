@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: GooglePlayGames.PlayGamesLocalUser
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
-// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
+// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using GooglePlayGames.BasicApi;
 using System;
@@ -171,14 +171,23 @@ namespace GooglePlayGames
 
     public void GetStats(Action<CommonStatusCodes, PlayerStats> callback)
     {
+      // ISSUE: object of a compiler-generated type is created
+      // ISSUE: variable of a compiler-generated type
+      PlayGamesLocalUser.\u003CGetStats\u003Ec__AnonStorey0 statsCAnonStorey0 = new PlayGamesLocalUser.\u003CGetStats\u003Ec__AnonStorey0();
+      // ISSUE: reference to a compiler-generated field
+      statsCAnonStorey0.callback = callback;
+      // ISSUE: reference to a compiler-generated field
+      statsCAnonStorey0.\u0024this = this;
       if (this.mStats == null || !this.mStats.Valid)
-        this.mPlatform.GetPlayerStats((Action<CommonStatusCodes, PlayerStats>) ((rc, stats) =>
-        {
-          this.mStats = stats;
-          callback(rc, stats);
-        }));
+      {
+        // ISSUE: reference to a compiler-generated method
+        this.mPlatform.GetPlayerStats(new Action<CommonStatusCodes, PlayerStats>(statsCAnonStorey0.\u003C\u003Em__0));
+      }
       else
-        callback(CommonStatusCodes.Success, this.mStats);
+      {
+        // ISSUE: reference to a compiler-generated field
+        statsCAnonStorey0.callback(CommonStatusCodes.Success, this.mStats);
+      }
     }
   }
 }

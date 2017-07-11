@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: PopupWeaponSelect
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
-// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
+// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using CC;
 using CodeStage.AntiCheat.ObscuredTypes;
@@ -1063,15 +1063,7 @@ public class PopupWeaponSelect : UIPage
     }
     if (!flag3)
       str1 += "</color>";
-    return new string[6]
-    {
-      BData.GetString(weapon.strName),
-      Info.GetGradeString((byte) pData.byGrade, false) + " (" + pData.fPower.ToString("P2") + ")",
-      BData.GetString("UI0009") + " " + (object) pData.nLv,
-      (!flag1 ? PopupWeaponSelect.red : PopupWeaponSelect.white) + BData.GetString(BData.GetSkill(weapon.eMastery).strName) + "</color>" + (!flag2 ? PopupWeaponSelect.red : PopupWeaponSelect.white) + " Lv." + battleItem1.nMastery.ToString("N0") + "</color>",
-      "<size='28'>" + BData.GetString("UI0091") + "</size>\n" + BData.GetString("UI0013") + "\n" + BData.GetString("UI0014") + "\n" + BData.GetString("UI0015") + "\n" + BData.GetString("UI0012") + "\n" + BData.GetString("UI0101") + "\n" + BData.GetString("UI0102") + "\n" + BData.GetString("MOD010") + "\n" + BData.GetString("UI0093") + "\n" + str1,
-      "<size='28'>" + (!flagArray[0] ? string.Empty : PopupWeaponSelect.strGood) + battleItem1.fDPS.ToString("######0.#") + strArray[0] + "</size>\n" + (!flagArray[1] ? string.Empty : PopupWeaponSelect.strGood) + battleItem1.fDmg.ToString("######0.#") + (battleItem1.nSpread <= 1 ? string.Empty : "x" + (object) battleItem1.nSpread) + strArray[1] + "\n" + (!flagArray[2] ? string.Empty : PopupWeaponSelect.strGood) + (1f / battleItem1.fRate).ToString("##0.##") + strArray[2] + "\n" + (!flagArray[3] ? string.Empty : PopupWeaponSelect.strGood) + battleItem1.fReload.ToString("##0.##") + strArray[3] + "\n" + (!flagArray[5] ? string.Empty : PopupWeaponSelect.strGood) + (object) battleItem1.nAmmo + strArray[5] + "\n" + (!flagArray[6] ? string.Empty : PopupWeaponSelect.strGood) + (battleItem1.fvsArmor * 100f).ToString("##0.##") + strArray[6] + "%\n" + (!flagArray[7] ? string.Empty : PopupWeaponSelect.strGood) + (battleItem1.fvsMagic * 100f).ToString("##0.##") + strArray[7] + "%\n" + (!flagArray[8] ? string.Empty : PopupWeaponSelect.strGood) + battleItem1.fSpd.ToString("N0") + strArray[8] + "\n" + (object) num + " / " + (object) pData.nMod + strArray[9]
-    };
+    return new string[6]{ BData.GetString(weapon.strName), Info.GetGradeString((byte) pData.byGrade, false) + " (" + pData.fPower.ToString("P2") + ")", BData.GetString("UI0009") + " " + (object) pData.nLv, (!flag1 ? PopupWeaponSelect.red : PopupWeaponSelect.white) + BData.GetString(BData.GetSkill(weapon.eMastery).strName) + "</color>" + (!flag2 ? PopupWeaponSelect.red : PopupWeaponSelect.white) + " Lv." + battleItem1.nMastery.ToString("N0") + "</color>", "<size='28'>" + BData.GetString("UI0091") + "</size>\n" + BData.GetString("UI0013") + "\n" + BData.GetString("UI0014") + "\n" + BData.GetString("UI0015") + "\n" + BData.GetString("UI0012") + "\n" + BData.GetString("UI0101") + "\n" + BData.GetString("UI0102") + "\n" + BData.GetString("MOD010") + "\n" + BData.GetString("UI0093") + "\n" + str1, "<size='28'>" + (!flagArray[0] ? string.Empty : PopupWeaponSelect.strGood) + battleItem1.fDPS.ToString("######0.#") + strArray[0] + "</size>\n" + (!flagArray[1] ? string.Empty : PopupWeaponSelect.strGood) + battleItem1.fDmg.ToString("######0.#") + (battleItem1.nSpread <= 1 ? string.Empty : "x" + (object) battleItem1.nSpread) + strArray[1] + "\n" + (!flagArray[2] ? string.Empty : PopupWeaponSelect.strGood) + (1f / battleItem1.fRate).ToString("##0.##") + strArray[2] + "\n" + (!flagArray[3] ? string.Empty : PopupWeaponSelect.strGood) + battleItem1.fReload.ToString("##0.##") + strArray[3] + "\n" + (!flagArray[5] ? string.Empty : PopupWeaponSelect.strGood) + (object) battleItem1.nAmmo + strArray[5] + "\n" + (!flagArray[6] ? string.Empty : PopupWeaponSelect.strGood) + (battleItem1.fvsArmor * 100f).ToString("##0.##") + strArray[6] + "%\n" + (!flagArray[7] ? string.Empty : PopupWeaponSelect.strGood) + (battleItem1.fvsMagic * 100f).ToString("##0.##") + strArray[7] + "%\n" + (!flagArray[8] ? string.Empty : PopupWeaponSelect.strGood) + battleItem1.fSpd.ToString("N0") + strArray[8] + "\n" + (object) num + " / " + (object) pData.nMod + strArray[9] };
   }
 
   private void RefreshHighlight()

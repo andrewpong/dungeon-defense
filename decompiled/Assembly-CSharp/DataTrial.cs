@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: DataTrial
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
-// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
+// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using System;
 using System.Collections.Generic;
@@ -45,10 +45,5 @@ public class DataTrial : ScriptableObject
     public int Hell8;
     public int Hell9;
     public int Hell10;
-    public int Hell11;
-    public int Hell12;
-    public int Hell13;
-    public int Hell14;
-    public int Hell15;
   }
 }

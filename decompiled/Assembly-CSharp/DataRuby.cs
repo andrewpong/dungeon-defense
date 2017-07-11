@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: DataRuby
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
-// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
+// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using System;
 using System.Collections.Generic;
@@ -39,11 +39,6 @@ public class DataRuby : ScriptableObject
     public float Hell8;
     public float Hell9;
     public float Hell10;
-    public float Hell11;
-    public float Hell12;
-    public float Hell13;
-    public float Hell14;
-    public float Hell15;
     public float Mul;
   }
 }

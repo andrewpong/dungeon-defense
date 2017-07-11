@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: GooglePlayGames.OurUtils.PlayGamesHelperObject
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
-// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
+// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using System;
 using System.Collections;
@@ -52,15 +52,21 @@ namespace GooglePlayGames.OurUtils
 
     public static void RunCoroutine(IEnumerator action)
     {
+      // ISSUE: object of a compiler-generated type is created
+      // ISSUE: variable of a compiler-generated type
+      PlayGamesHelperObject.\u003CRunCoroutine\u003Ec__AnonStorey0 coroutineCAnonStorey0 = new PlayGamesHelperObject.\u003CRunCoroutine\u003Ec__AnonStorey0();
+      // ISSUE: reference to a compiler-generated field
+      coroutineCAnonStorey0.action = action;
       if (!((UnityEngine.Object) PlayGamesHelperObject.instance != (UnityEngine.Object) null))
         return;
-      PlayGamesHelperObject.RunOnGameThread((Action) (() => PlayGamesHelperObject.instance.StartCoroutine(action)));
+      // ISSUE: reference to a compiler-generated method
+      PlayGamesHelperObject.RunOnGameThread(new Action(coroutineCAnonStorey0.\u003C\u003Em__0));
     }
 
     public static void RunOnGameThread(Action action)
     {
       if (action == null)
-        throw new ArgumentNullException(nameof (action));
+        throw new ArgumentNullException("action");
       if (PlayGamesHelperObject.sIsDummy)
         return;
       lock ((object) PlayGamesHelperObject.sQueue)

@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: Com.Google.Android.Gms.Games.Stats.Stats_LoadPlayerStatsResultObject
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
-// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
+// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using Com.Google.Android.Gms.Common.Api;
 using Google.Developers;
@@ -21,12 +21,12 @@ namespace Com.Google.Android.Gms.Games.Stats
 
     public PlayerStats getPlayerStats()
     {
-      return (PlayerStats) new PlayerStatsObject(this.InvokeCall<IntPtr>(nameof (getPlayerStats), "()Lcom/google/android/gms/games/stats/PlayerStats;"));
+      return (PlayerStats) new PlayerStatsObject(this.InvokeCall<IntPtr>("getPlayerStats", "()Lcom/google/android/gms/games/stats/PlayerStats;"));
     }
 
     public Status getStatus()
     {
-      return new Status(this.InvokeCall<IntPtr>(nameof (getStatus), "()Lcom/google/android/gms/common/api/Status;"));
+      return new Status(this.InvokeCall<IntPtr>("getStatus", "()Lcom/google/android/gms/common/api/Status;"));
     }
   }
 }

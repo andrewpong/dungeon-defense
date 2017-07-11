@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: Google.Developers.JavaObjWrapper
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
-// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
+// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using System;
 using System.Reflection;
@@ -85,15 +85,9 @@ namespace Google.Developers
       IntPtr staticMethodId = AndroidJNI.GetStaticMethodID(clazz, name, sig);
       jvalue[] args1 = JavaObjWrapper.ConstructArgArray(args);
       IntPtr num = AndroidJNI.CallStaticObjectMethod(clazz, staticMethodId, args1);
-      ConstructorInfo constructor = typeof (T).GetConstructor(new System.Type[1]
-      {
-        num.GetType()
-      });
+      ConstructorInfo constructor = typeof (T).GetConstructor(new System.Type[1]{ num.GetType() });
       if (constructor != null)
-        return (T) constructor.Invoke(new object[1]
-        {
-          (object) num
-        });
+        return (T) constructor.Invoke(new object[1]{ (object) num });
       if (typeof (T).IsArray)
         return AndroidJNIHelper.ConvertFromJNIArray<T>(num);
       Debug.Log((object) "Trying cast....");
@@ -114,15 +108,9 @@ namespace Google.Developers
       IntPtr clazz = AndroidJNI.FindClass(clsName);
       IntPtr staticFieldId = AndroidJNI.GetStaticFieldID(clazz, name, sig);
       IntPtr staticObjectField = AndroidJNI.GetStaticObjectField(clazz, staticFieldId);
-      ConstructorInfo constructor = typeof (T).GetConstructor(new System.Type[1]
-      {
-        staticObjectField.GetType()
-      });
+      ConstructorInfo constructor = typeof (T).GetConstructor(new System.Type[1]{ staticObjectField.GetType() });
       if (constructor != null)
-        return (T) constructor.Invoke(new object[1]
-        {
-          (object) staticObjectField
-        });
+        return (T) constructor.Invoke(new object[1]{ (object) staticObjectField });
       System.Type structureType = typeof (T);
       return (T) Marshal.PtrToStructure(staticObjectField, structureType);
     }
@@ -216,15 +204,9 @@ namespace Google.Developers
       IntPtr ptr = AndroidJNI.CallObjectMethod(this.raw, AndroidJNI.GetMethodID(this.RawClass, name, sig), JavaObjWrapper.ConstructArgArray(theArgs));
       if (ptr.Equals((object) IntPtr.Zero))
         return default (T);
-      ConstructorInfo constructor = typeof (T).GetConstructor(new System.Type[1]
-      {
-        ptr.GetType()
-      });
+      ConstructorInfo constructor = typeof (T).GetConstructor(new System.Type[1]{ ptr.GetType() });
       if (constructor != null)
-        return (T) constructor.Invoke(new object[1]
-        {
-          (object) ptr
-        });
+        return (T) constructor.Invoke(new object[1]{ (object) ptr });
       System.Type structureType = typeof (T);
       return (T) Marshal.PtrToStructure(ptr, structureType);
     }

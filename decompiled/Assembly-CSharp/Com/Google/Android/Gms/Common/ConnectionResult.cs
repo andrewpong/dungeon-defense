@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: Com.Google.Android.Gms.Common.ConnectionResult
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
-// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
+// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using Google.Developers;
 using System;
@@ -17,7 +17,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", nameof (SUCCESS));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", "SUCCESS");
       }
     }
 
@@ -25,7 +25,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", nameof (SERVICE_MISSING));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", "SERVICE_MISSING");
       }
     }
 
@@ -33,7 +33,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", nameof (SERVICE_VERSION_UPDATE_REQUIRED));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", "SERVICE_VERSION_UPDATE_REQUIRED");
       }
     }
 
@@ -41,7 +41,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", nameof (SERVICE_DISABLED));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", "SERVICE_DISABLED");
       }
     }
 
@@ -49,7 +49,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", nameof (SIGN_IN_REQUIRED));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", "SIGN_IN_REQUIRED");
       }
     }
 
@@ -57,7 +57,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", nameof (INVALID_ACCOUNT));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", "INVALID_ACCOUNT");
       }
     }
 
@@ -65,7 +65,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", nameof (RESOLUTION_REQUIRED));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", "RESOLUTION_REQUIRED");
       }
     }
 
@@ -73,7 +73,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", nameof (NETWORK_ERROR));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", "NETWORK_ERROR");
       }
     }
 
@@ -81,7 +81,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", nameof (INTERNAL_ERROR));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", "INTERNAL_ERROR");
       }
     }
 
@@ -89,7 +89,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", nameof (SERVICE_INVALID));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", "SERVICE_INVALID");
       }
     }
 
@@ -97,7 +97,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", nameof (DEVELOPER_ERROR));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", "DEVELOPER_ERROR");
       }
     }
 
@@ -105,7 +105,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", nameof (LICENSE_CHECK_FAILED));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", "LICENSE_CHECK_FAILED");
       }
     }
 
@@ -113,7 +113,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", nameof (CANCELED));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", "CANCELED");
       }
     }
 
@@ -121,7 +121,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", nameof (TIMEOUT));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", "TIMEOUT");
       }
     }
 
@@ -129,7 +129,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", nameof (INTERRUPTED));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", "INTERRUPTED");
       }
     }
 
@@ -137,7 +137,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", nameof (API_UNAVAILABLE));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", "API_UNAVAILABLE");
       }
     }
 
@@ -145,7 +145,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", nameof (SIGN_IN_FAILED));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", "SIGN_IN_FAILED");
       }
     }
 
@@ -153,7 +153,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", nameof (SERVICE_UPDATING));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", "SERVICE_UPDATING");
       }
     }
 
@@ -161,7 +161,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", nameof (SERVICE_MISSING_PERMISSION));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", "SERVICE_MISSING_PERMISSION");
       }
     }
 
@@ -169,7 +169,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", nameof (DRIVE_EXTERNAL_STORAGE_REQUIRED));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", "DRIVE_EXTERNAL_STORAGE_REQUIRED");
       }
     }
 
@@ -177,7 +177,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticObjectField<object>("com/google/android/gms/common/ConnectionResult", nameof (CREATOR), "Landroid/os/Parcelable$Creator;");
+        return JavaObjWrapper.GetStaticObjectField<object>("com/google/android/gms/common/ConnectionResult", "CREATOR", "Landroid/os/Parcelable$Creator;");
       }
     }
 
@@ -185,7 +185,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticStringField("com/google/android/gms/common/ConnectionResult", nameof (NULL));
+        return JavaObjWrapper.GetStaticStringField("com/google/android/gms/common/ConnectionResult", "NULL");
       }
     }
 
@@ -193,7 +193,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", nameof (CONTENTS_FILE_DESCRIPTOR));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", "CONTENTS_FILE_DESCRIPTOR");
       }
     }
 
@@ -201,7 +201,7 @@ namespace Com.Google.Android.Gms.Common
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", nameof (PARCELABLE_WRITE_RETURN_VALUE));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/common/ConnectionResult", "PARCELABLE_WRITE_RETURN_VALUE");
       }
     }
 
@@ -227,57 +227,57 @@ namespace Com.Google.Android.Gms.Common
 
     public bool equals(object arg_object_1)
     {
-      return this.InvokeCall<bool>(nameof (equals), "(Ljava/lang/Object;)Z", arg_object_1);
+      return this.InvokeCall<bool>("equals", "(Ljava/lang/Object;)Z", arg_object_1);
     }
 
     public string toString()
     {
-      return this.InvokeCall<string>(nameof (toString), "()Ljava/lang/String;");
+      return this.InvokeCall<string>("toString", "()Ljava/lang/String;");
     }
 
     public int hashCode()
     {
-      return this.InvokeCall<int>(nameof (hashCode), "()I");
+      return this.InvokeCall<int>("hashCode", "()I");
     }
 
     public int describeContents()
     {
-      return this.InvokeCall<int>(nameof (describeContents), "()I");
+      return this.InvokeCall<int>("describeContents", "()I");
     }
 
     public object getResolution()
     {
-      return this.InvokeCall<object>(nameof (getResolution), "()Landroid/app/PendingIntent;");
+      return this.InvokeCall<object>("getResolution", "()Landroid/app/PendingIntent;");
     }
 
     public bool hasResolution()
     {
-      return this.InvokeCall<bool>(nameof (hasResolution), "()Z");
+      return this.InvokeCall<bool>("hasResolution", "()Z");
     }
 
     public void startResolutionForResult(object arg_object_1, int arg_int_2)
     {
-      this.InvokeCallVoid(nameof (startResolutionForResult), "(Landroid/app/Activity;I)V", arg_object_1, (object) arg_int_2);
+      this.InvokeCallVoid("startResolutionForResult", "(Landroid/app/Activity;I)V", arg_object_1, (object) arg_int_2);
     }
 
     public void writeToParcel(object arg_object_1, int arg_int_2)
     {
-      this.InvokeCallVoid(nameof (writeToParcel), "(Landroid/os/Parcel;I)V", arg_object_1, (object) arg_int_2);
+      this.InvokeCallVoid("writeToParcel", "(Landroid/os/Parcel;I)V", arg_object_1, (object) arg_int_2);
     }
 
     public int getErrorCode()
     {
-      return this.InvokeCall<int>(nameof (getErrorCode), "()I");
+      return this.InvokeCall<int>("getErrorCode", "()I");
     }
 
     public string getErrorMessage()
     {
-      return this.InvokeCall<string>(nameof (getErrorMessage), "()Ljava/lang/String;");
+      return this.InvokeCall<string>("getErrorMessage", "()Ljava/lang/String;");
     }
 
     public bool isSuccess()
     {
-      return this.InvokeCall<bool>(nameof (isSuccess), "()Z");
+      return this.InvokeCall<bool>("isSuccess", "()Z");
     }
   }
 }

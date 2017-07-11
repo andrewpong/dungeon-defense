@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: GooglePlayGames.Native.NativeRealtimeMultiplayerClient
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
-// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
+// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using GooglePlayGames.BasicApi.Multiplayer;
 using GooglePlayGames.Native.Cwrapper;
@@ -107,7 +107,16 @@ namespace GooglePlayGames.Native
 
     private static GooglePlayGames.Native.PInvoke.RealTimeEventListenerHelper HelperForSession(NativeRealtimeMultiplayerClient.RoomSession session)
     {
-      return GooglePlayGames.Native.PInvoke.RealTimeEventListenerHelper.Create().SetOnDataReceivedCallback((Action<NativeRealTimeRoom, GooglePlayGames.Native.PInvoke.MultiplayerParticipant, byte[], bool>) ((room, participant, data, isReliable) => session.OnDataReceived(room, participant, data, isReliable))).SetOnParticipantStatusChangedCallback((Action<NativeRealTimeRoom, GooglePlayGames.Native.PInvoke.MultiplayerParticipant>) ((room, participant) => session.OnParticipantStatusChanged(room, participant))).SetOnRoomConnectedSetChangedCallback((Action<NativeRealTimeRoom>) (room => session.OnConnectedSetChanged(room))).SetOnRoomStatusChangedCallback((Action<NativeRealTimeRoom>) (room => session.OnRoomStatusChanged(room)));
+      // ISSUE: object of a compiler-generated type is created
+      // ISSUE: variable of a compiler-generated type
+      NativeRealtimeMultiplayerClient.\u003CHelperForSession\u003Ec__AnonStorey3 sessionCAnonStorey3 = new NativeRealtimeMultiplayerClient.\u003CHelperForSession\u003Ec__AnonStorey3();
+      // ISSUE: reference to a compiler-generated field
+      sessionCAnonStorey3.session = session;
+      // ISSUE: reference to a compiler-generated method
+      // ISSUE: reference to a compiler-generated method
+      // ISSUE: reference to a compiler-generated method
+      // ISSUE: reference to a compiler-generated method
+      return GooglePlayGames.Native.PInvoke.RealTimeEventListenerHelper.Create().SetOnDataReceivedCallback(new Action<NativeRealTimeRoom, GooglePlayGames.Native.PInvoke.MultiplayerParticipant, byte[], bool>(sessionCAnonStorey3.\u003C\u003Em__0)).SetOnParticipantStatusChangedCallback(new Action<NativeRealTimeRoom, GooglePlayGames.Native.PInvoke.MultiplayerParticipant>(sessionCAnonStorey3.\u003C\u003Em__1)).SetOnRoomConnectedSetChangedCallback(new Action<NativeRealTimeRoom>(sessionCAnonStorey3.\u003C\u003Em__2)).SetOnRoomStatusChangedCallback(new Action<NativeRealTimeRoom>(sessionCAnonStorey3.\u003C\u003Em__3));
     }
 
     private void HandleAppPausing(bool paused)
@@ -161,24 +170,12 @@ namespace GooglePlayGames.Native
 
     public void GetAllInvitations(Action<Invitation[]> callback)
     {
-      this.mRealtimeManager.FetchInvitations((Action<RealtimeManager.FetchInvitationsResponse>) (response =>
+      // ISSUE: object of a compiler-generated type is created
+      // ISSUE: reference to a compiler-generated method
+      this.mRealtimeManager.FetchInvitations(new Action<RealtimeManager.FetchInvitationsResponse>(new NativeRealtimeMultiplayerClient.\u003CGetAllInvitations\u003Ec__AnonStorey8()
       {
-        if (!response.RequestSucceeded())
-        {
-          Logger.e("Couldn't load invitations.");
-          callback(new Invitation[0]);
-        }
-        else
-        {
-          List<Invitation> invitationList = new List<Invitation>();
-          foreach (GooglePlayGames.Native.PInvoke.MultiplayerInvitation invitation in response.Invitations())
-          {
-            using (invitation)
-              invitationList.Add(invitation.AsInvitation());
-          }
-          callback(invitationList.ToArray());
-        }
-      }));
+        callback = callback
+      }.\u003C\u003Em__0));
     }
 
     public void AcceptFromInbox(RealTimeMultiplayerListener listener)
@@ -295,24 +292,13 @@ namespace GooglePlayGames.Native
 
     public void DeclineInvitation(string invitationId)
     {
-      this.mRealtimeManager.FetchInvitations((Action<RealtimeManager.FetchInvitationsResponse>) (response =>
+      // ISSUE: object of a compiler-generated type is created
+      // ISSUE: reference to a compiler-generated method
+      this.mRealtimeManager.FetchInvitations(new Action<RealtimeManager.FetchInvitationsResponse>(new NativeRealtimeMultiplayerClient.\u003CDeclineInvitation\u003Ec__AnonStorey10()
       {
-        if (!response.RequestSucceeded())
-        {
-          Logger.e("Couldn't load invitations.");
-        }
-        else
-        {
-          foreach (GooglePlayGames.Native.PInvoke.MultiplayerInvitation invitation in response.Invitations())
-          {
-            using (invitation)
-            {
-              if (invitation.Id().Equals(invitationId))
-                this.mRealtimeManager.DeclineInvitation(invitation);
-            }
-          }
-        }
-      }));
+        invitationId = invitationId,
+        \u0024this = this
+      }.\u003C\u003Em__0));
     }
 
     private static T WithDefault<T>(T presented, T defaultValue) where T : class
@@ -561,12 +547,24 @@ namespace GooglePlayGames.Native
 
       public void RoomSetupProgress(float percent)
       {
-        PlayGamesHelperObject.RunOnGameThread((Action) (() => this.mListener.OnRoomSetupProgress(percent)));
+        // ISSUE: object of a compiler-generated type is created
+        // ISSUE: reference to a compiler-generated method
+        PlayGamesHelperObject.RunOnGameThread(new Action(new NativeRealtimeMultiplayerClient.OnGameThreadForwardingListener.\u003CRoomSetupProgress\u003Ec__AnonStorey0()
+        {
+          percent = percent,
+          \u0024this = this
+        }.\u003C\u003Em__0));
       }
 
       public void RoomConnected(bool success)
       {
-        PlayGamesHelperObject.RunOnGameThread((Action) (() => this.mListener.OnRoomConnected(success)));
+        // ISSUE: object of a compiler-generated type is created
+        // ISSUE: reference to a compiler-generated method
+        PlayGamesHelperObject.RunOnGameThread(new Action(new NativeRealtimeMultiplayerClient.OnGameThreadForwardingListener.\u003CRoomConnected\u003Ec__AnonStorey1()
+        {
+          success = success,
+          \u0024this = this
+        }.\u003C\u003Em__0));
       }
 
       public void LeftRoom()
@@ -576,22 +574,48 @@ namespace GooglePlayGames.Native
 
       public void PeersConnected(string[] participantIds)
       {
-        PlayGamesHelperObject.RunOnGameThread((Action) (() => this.mListener.OnPeersConnected(participantIds)));
+        // ISSUE: object of a compiler-generated type is created
+        // ISSUE: reference to a compiler-generated method
+        PlayGamesHelperObject.RunOnGameThread(new Action(new NativeRealtimeMultiplayerClient.OnGameThreadForwardingListener.\u003CPeersConnected\u003Ec__AnonStorey2()
+        {
+          participantIds = participantIds,
+          \u0024this = this
+        }.\u003C\u003Em__0));
       }
 
       public void PeersDisconnected(string[] participantIds)
       {
-        PlayGamesHelperObject.RunOnGameThread((Action) (() => this.mListener.OnPeersDisconnected(participantIds)));
+        // ISSUE: object of a compiler-generated type is created
+        // ISSUE: reference to a compiler-generated method
+        PlayGamesHelperObject.RunOnGameThread(new Action(new NativeRealtimeMultiplayerClient.OnGameThreadForwardingListener.\u003CPeersDisconnected\u003Ec__AnonStorey3()
+        {
+          participantIds = participantIds,
+          \u0024this = this
+        }.\u003C\u003Em__0));
       }
 
       public void RealTimeMessageReceived(bool isReliable, string senderId, byte[] data)
       {
-        PlayGamesHelperObject.RunOnGameThread((Action) (() => this.mListener.OnRealTimeMessageReceived(isReliable, senderId, data)));
+        // ISSUE: object of a compiler-generated type is created
+        // ISSUE: reference to a compiler-generated method
+        PlayGamesHelperObject.RunOnGameThread(new Action(new NativeRealtimeMultiplayerClient.OnGameThreadForwardingListener.\u003CRealTimeMessageReceived\u003Ec__AnonStorey4()
+        {
+          isReliable = isReliable,
+          senderId = senderId,
+          data = data,
+          \u0024this = this
+        }.\u003C\u003Em__0));
       }
 
       public void ParticipantLeft(Participant participant)
       {
-        PlayGamesHelperObject.RunOnGameThread((Action) (() => this.mListener.OnParticipantLeft(participant)));
+        // ISSUE: object of a compiler-generated type is created
+        // ISSUE: reference to a compiler-generated method
+        PlayGamesHelperObject.RunOnGameThread(new Action(new NativeRealtimeMultiplayerClient.OnGameThreadForwardingListener.\u003CParticipantLeft\u003Ec__AnonStorey5()
+        {
+          participant = participant,
+          \u0024this = this
+        }.\u003C\u003Em__0));
       }
     }
 
@@ -819,11 +843,7 @@ namespace GooglePlayGames.Native
 
     private class ConnectingState : NativeRealtimeMultiplayerClient.MessagingEnabledState
     {
-      private static readonly HashSet<Types.ParticipantStatus> FailedStatuses = new HashSet<Types.ParticipantStatus>()
-      {
-        Types.ParticipantStatus.DECLINED,
-        Types.ParticipantStatus.LEFT
-      };
+      private static readonly HashSet<Types.ParticipantStatus> FailedStatuses = new HashSet<Types.ParticipantStatus>() { Types.ParticipantStatus.DECLINED, Types.ParticipantStatus.LEFT };
       private HashSet<string> mConnectedParticipants = new HashSet<string>();
       private float mPercentComplete = 20f;
       private const float InitialPercentComplete = 20f;

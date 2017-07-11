@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: Com.Google.Android.Gms.Games.Stats.PlayerStatsObject
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
-// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
+// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using Google.Developers;
 using System;
@@ -17,7 +17,7 @@ namespace Com.Google.Android.Gms.Games.Stats
     {
       get
       {
-        return JavaObjWrapper.GetStaticFloatField("com/google/android/gms/games/stats/PlayerStats", nameof (UNSET_VALUE));
+        return JavaObjWrapper.GetStaticFloatField("com/google/android/gms/games/stats/PlayerStats", "UNSET_VALUE");
       }
     }
 
@@ -25,7 +25,7 @@ namespace Com.Google.Android.Gms.Games.Stats
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/games/stats/PlayerStats", nameof (CONTENTS_FILE_DESCRIPTOR));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/games/stats/PlayerStats", "CONTENTS_FILE_DESCRIPTOR");
       }
     }
 
@@ -33,7 +33,7 @@ namespace Com.Google.Android.Gms.Games.Stats
     {
       get
       {
-        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/games/stats/PlayerStats", nameof (PARCELABLE_WRITE_RETURN_VALUE));
+        return JavaObjWrapper.GetStaticIntField("com/google/android/gms/games/stats/PlayerStats", "PARCELABLE_WRITE_RETURN_VALUE");
       }
     }
 
@@ -44,52 +44,52 @@ namespace Com.Google.Android.Gms.Games.Stats
 
     public float getAverageSessionLength()
     {
-      return this.InvokeCall<float>(nameof (getAverageSessionLength), "()F");
+      return this.InvokeCall<float>("getAverageSessionLength", "()F");
     }
 
     public float getChurnProbability()
     {
-      return this.InvokeCall<float>(nameof (getChurnProbability), "()F");
+      return this.InvokeCall<float>("getChurnProbability", "()F");
     }
 
     public int getDaysSinceLastPlayed()
     {
-      return this.InvokeCall<int>(nameof (getDaysSinceLastPlayed), "()I");
+      return this.InvokeCall<int>("getDaysSinceLastPlayed", "()I");
     }
 
     public int getNumberOfPurchases()
     {
-      return this.InvokeCall<int>(nameof (getNumberOfPurchases), "()I");
+      return this.InvokeCall<int>("getNumberOfPurchases", "()I");
     }
 
     public int getNumberOfSessions()
     {
-      return this.InvokeCall<int>(nameof (getNumberOfSessions), "()I");
+      return this.InvokeCall<int>("getNumberOfSessions", "()I");
     }
 
     public float getSessionPercentile()
     {
-      return this.InvokeCall<float>(nameof (getSessionPercentile), "()F");
+      return this.InvokeCall<float>("getSessionPercentile", "()F");
     }
 
     public float getSpendPercentile()
     {
-      return this.InvokeCall<float>(nameof (getSpendPercentile), "()F");
+      return this.InvokeCall<float>("getSpendPercentile", "()F");
     }
 
     public float getSpendProbability()
     {
-      return this.InvokeCall<float>(nameof (getSpendProbability), "()F");
+      return this.InvokeCall<float>("getSpendProbability", "()F");
     }
 
     public float getHighSpenderProbability()
     {
-      return this.InvokeCall<float>(nameof (getHighSpenderProbability), "()F");
+      return this.InvokeCall<float>("getHighSpenderProbability", "()F");
     }
 
     public float getTotalSpendNext28Days()
     {
-      return this.InvokeCall<float>(nameof (getTotalSpendNext28Days), "()F");
+      return this.InvokeCall<float>("getTotalSpendNext28Days", "()F");
     }
   }
 }

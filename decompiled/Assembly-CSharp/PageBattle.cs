@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: PageBattle
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
-// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
+// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using CC;
 using CodeStage.AntiCheat.ObscuredTypes;
@@ -73,8 +73,6 @@ public class PageBattle : UIMgr
   private ObscuredFloat fDungeonDef = (ObscuredFloat) 1f;
   private ObscuredFloat fNatureShell = (ObscuredFloat) 1f;
   protected Dictionary<int, Dictionary<SkillKey, float[]>> dictSkillFac = new Dictionary<int, Dictionary<SkillKey, float[]>>();
-  protected Dictionary<int, Dictionary<MonTraitID, float[]>> dictMonTraitFac = new Dictionary<int, Dictionary<MonTraitID, float[]>>();
-  protected Dictionary<MonTraitID, float[]> dictMonTraitPartyFac = new Dictionary<MonTraitID, float[]>();
   private Rect rtBox = new Rect(0.0f, 0.0f, 1f, 24f);
   private Vector3 vFirePos = new Vector3(8f, 16f);
   private Vector3 vLaserPos = new Vector3(2f, 24f);
@@ -82,7 +80,7 @@ public class PageBattle : UIMgr
   private int nLaserOrder = 1;
   private RaycastHit2D[] arrRayHits = new RaycastHit2D[50];
   private Vector3 vHitPos = new Vector3();
-  private int[] nStoneOrder = new int[5];
+  private int[] nStoneOrder = new int[6];
   public static PageBattle obj;
   public AudioSource _asMusic;
   public List<Monster> listMonster;
@@ -401,7 +399,7 @@ public class PageBattle : UIMgr
         TrialData trial = BData.GetTrial(Info.GetTrialClear(Info.currentSave.uRebirthID) + 1);
         this.eTrial = trial.eID;
         this.nDiff = Info.currentSave.nDiff;
-        this.nDay = (double) Info.fDiffTrialDiffFac[(int) Info.nDiffTrial] <= 1.0 ? (ObscuredInt) Mathf.RoundToInt(Mathf.Max((float) trial.nDay, (float) (int) Info.currentSave.nDay * 0.9f) * Info.fDiffTrialDiffFac[(int) Info.nDiffTrial]) : (ObscuredInt) (Mathf.RoundToInt(Mathf.Max((float) trial.nDay * Info.fDiffTrialDiffFac[(int) Info.nDiffTrial], (float) (int) Info.currentSave.nDay * 0.9f)) + Info.nDiffTrialDiffDay[(int) Info.nDiffTrial]);
+        this.nDay = (ObscuredInt) Mathf.RoundToInt(Mathf.Max((float) trial.nDay, (float) (int) Info.currentSave.nDay * 0.9f) * Info.fDiffTrialDiffFac[(int) Info.nDiffTrial]);
         Info.fEmAtkBonus = (ObscuredFloat) ((float) Info.fEmAtkBonus * Info.fDiffTrialDiffDmg[(int) Info.nDiffTrial]);
         for (int index = 0; index < Info.fTrialCharge.Length; ++index)
           Info.fTrialCharge[index] = (ObscuredFloat) 0.0f;
@@ -739,9 +737,6 @@ public class PageBattle : UIMgr
     this.eltAwakenBot.SetSkill(0, SkillKey.eNone);
     this.eltAwakenLeft.SetSkill(0, SkillKey.eNone);
     this.dictSkillFac.Clear();
-    this.dictMonTraitFac.Clear();
-    this.dictMonTraitPartyFac.Clear();
-    int num1 = 0;
     for (int index1 = 0; index1 < 5; ++index1)
     {
       SkillKey _eSkill = SkillKey.eNone;
@@ -754,36 +749,6 @@ public class PageBattle : UIMgr
         if (index1 == 0)
           this.nMainMon = byBatch;
         this.dictSkillFac.Add(index1, new Dictionary<SkillKey, float[]>());
-        this.dictMonTraitFac.Add(index1, new Dictionary<MonTraitID, float[]>());
-        num1 = Info.GetMonTrait((short) playerMon.sID, MonTraitID.eNone);
-        foreach (KeyValuePair<MonTraitID, ObscuredInt> keyValuePair in Info.rebirth.dictMonTrait[playerMon.sID])
-        {
-          MonTraitData monTrait1 = BData.GetMonTrait(keyValuePair.Key);
-          int monTrait2 = Info.GetMonTrait((short) playerMon.sID, keyValuePair.Key);
-          this.dictMonTraitFac[index1].Add(keyValuePair.Key, new float[3]
-          {
-            (float) ((double) monTrait1.fFac1 + (double) monTrait1.fGrow1 * (double) monTrait2),
-            (float) ((double) monTrait1.fFac2 + (double) monTrait1.fGrow2 * (double) monTrait2),
-            (float) ((double) monTrait1.fFac3 + (double) monTrait1.fGrow3 * (double) monTrait2)
-          });
-          if (keyValuePair.Key == MonTraitID.eRageCharDmg || keyValuePair.Key == MonTraitID.eRageCritDmg || (keyValuePair.Key == MonTraitID.ePartyAssasinate || keyValuePair.Key == MonTraitID.eBasicRicochet) || (keyValuePair.Key == MonTraitID.eHarvestPlus || keyValuePair.Key == MonTraitID.eChainSoul))
-          {
-            if (!this.dictMonTraitPartyFac.ContainsKey(keyValuePair.Key))
-              this.dictMonTraitPartyFac.Add(keyValuePair.Key, new float[3]
-              {
-                (float) ((double) monTrait1.fFac1 + (double) monTrait1.fGrow1 * (double) monTrait2),
-                (float) ((double) monTrait1.fFac2 + (double) monTrait1.fGrow2 * (double) monTrait2),
-                (float) ((double) monTrait1.fFac3 + (double) monTrait1.fGrow3 * (double) monTrait2)
-              });
-            else if ((double) this.dictMonTraitPartyFac[keyValuePair.Key][0] < (double) monTrait1.fFac1 + (double) monTrait1.fGrow1 * (double) monTrait2)
-              this.dictMonTraitPartyFac[keyValuePair.Key] = new float[3]
-              {
-                (float) ((double) monTrait1.fFac1 + (double) monTrait1.fGrow1 * (double) monTrait2),
-                (float) ((double) monTrait1.fFac2 + (double) monTrait1.fGrow2 * (double) monTrait2),
-                (float) ((double) monTrait1.fFac3 + (double) monTrait1.fGrow3 * (double) monTrait2)
-              };
-          }
-        }
         foreach (KeyValuePair<SkillKey, ObscuredInt> keyValuePair in playerMon.dictSkill)
           this.dictSkillFac[index1].Add(keyValuePair.Key, new float[3]
           {
@@ -910,16 +875,16 @@ public class PageBattle : UIMgr
     this.bCanRevive = (ObscuredBool) ((double) Info.GetElementalFac(ElementalID.eLightProtector, 0) > 0.0);
     if ((double) Info.GetElementalFac(ElementalID.eNatureBigShield, 0) > 0.0)
       this.fBigShieldHP = (ObscuredFloat) ((float) ((double) (float) Info.fDunMaxHP * (double) Info.GetElementalFac(ElementalID.eNatureBigShield, 0) * 0.00999999977648258));
-    float num2 = 0.0f;
+    float num1 = 0.0f;
     for (int index = 0; index < 5; ++index)
     {
       if (this.listMonster[index].isActiveAndEnabled)
-        num2 += this.listMonster[index].fCriRate;
+        num1 += this.listMonster[index].fCriRate;
     }
-    if ((double) num2 > 500.0)
-      num2 = 500f;
+    if ((double) num1 > 500.0)
+      num1 = 500f;
     PageBattle pageBattle9 = this;
-    ObscuredFloat obscuredFloat9 = (ObscuredFloat) ((float) pageBattle9.fDungeonDef * (float) (1.0 - (double) Info.GetElementalFac(ElementalID.eFireCrDef, 0) * 0.00999999977648258 * (double) num2));
+    ObscuredFloat obscuredFloat9 = (ObscuredFloat) ((float) pageBattle9.fDungeonDef * (float) (1.0 - (double) Info.GetElementalFac(ElementalID.eFireCrDef, 0) * 0.00999999977648258 * (double) num1));
     pageBattle9.fDungeonDef = obscuredFloat9;
     Time.timeScale = (float) ((!Info.option.bDoubleSpeed ? 1.0 : 2.0) * (1.0 + (double) Info.GetElementalFac(ElementalID.eFireHaste, 0) * 0.00999999977648258 + (double) Info.GetPartySkillFac(SkillKey.eHaste) * 0.00999999977648258));
     Time.fixedDeltaTime = !Info.option.bOptimize ? 0.02f : 0.033f;
@@ -954,106 +919,46 @@ public class PageBattle : UIMgr
     return this.dictSkillFac[i][eKey][2];
   }
 
-  public float GetMonTrait(int i, MonTraitID eKey)
-  {
-    if (!this.dictMonTraitFac.ContainsKey(i) || !this.dictMonTraitFac[i].ContainsKey(eKey))
-      return 0.0f;
-    return this.dictMonTraitFac[i][eKey][0];
-  }
-
-  public float GetMonTrait2(int i, MonTraitID eKey)
-  {
-    if (!this.dictMonTraitFac.ContainsKey(i) || !this.dictMonTraitFac[i].ContainsKey(eKey))
-      return 0.0f;
-    return this.dictMonTraitFac[i][eKey][1];
-  }
-
-  public float GetMonTrait3(int i, MonTraitID eKey)
-  {
-    if (!this.dictMonTraitFac.ContainsKey(i) || !this.dictMonTraitFac[i].ContainsKey(eKey))
-      return 0.0f;
-    return this.dictMonTraitFac[i][eKey][2];
-  }
-
-  public float GetPartyMonTrait(MonTraitID eKey)
-  {
-    if (!this.dictMonTraitPartyFac.ContainsKey(eKey))
-      return 0.0f;
-    return this.dictMonTraitPartyFac[eKey][0];
-  }
-
-  public float GetPartyMonTrait2(MonTraitID eKey)
-  {
-    if (!this.dictMonTraitPartyFac.ContainsKey(eKey))
-      return 0.0f;
-    return this.dictMonTraitPartyFac[eKey][1];
-  }
-
-  public float GetPartyMonTrait3(MonTraitID eKey)
-  {
-    if (!this.dictMonTraitPartyFac.ContainsKey(eKey))
-      return 0.0f;
-    return this.dictMonTraitPartyFac[eKey][2];
-  }
-
   [DebuggerHidden]
   private IEnumerator StartNatureMoat2()
   {
     // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CStartNatureMoat2\u003Ec__Iterator0()
-    {
-      \u0024this = this
-    };
+    return (IEnumerator) new PageBattle.\u003CStartNatureMoat2\u003Ec__Iterator0() { \u0024this = this };
   }
 
   [DebuggerHidden]
   private IEnumerator StartAutoHeal()
   {
     // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CStartAutoHeal\u003Ec__Iterator1()
-    {
-      \u0024this = this
-    };
+    return (IEnumerator) new PageBattle.\u003CStartAutoHeal\u003Ec__Iterator1() { \u0024this = this };
   }
 
   [DebuggerHidden]
   private IEnumerator StartWaterMoat()
   {
     // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CStartWaterMoat\u003Ec__Iterator2()
-    {
-      \u0024this = this
-    };
+    return (IEnumerator) new PageBattle.\u003CStartWaterMoat\u003Ec__Iterator2() { \u0024this = this };
   }
 
   [DebuggerHidden]
   private IEnumerator StartCountDown()
   {
     // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CStartCountDown\u003Ec__Iterator3()
-    {
-      \u0024this = this
-    };
+    return (IEnumerator) new PageBattle.\u003CStartCountDown\u003Ec__Iterator3() { \u0024this = this };
   }
 
   [DebuggerHidden]
   private IEnumerator StartNumQuiz()
   {
     // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CStartNumQuiz\u003Ec__Iterator4()
-    {
-      \u0024this = this
-    };
+    return (IEnumerator) new PageBattle.\u003CStartNumQuiz\u003Ec__Iterator4() { \u0024this = this };
   }
 
   [DebuggerHidden]
   private IEnumerator StartTFNumQuiz()
   {
     // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CStartTFNumQuiz\u003Ec__Iterator5()
-    {
-      \u0024this = this
-    };
+    return (IEnumerator) new PageBattle.\u003CStartTFNumQuiz\u003Ec__Iterator5() { \u0024this = this };
   }
 
   public void nChooseAnswer(int nNum)
@@ -1196,20 +1101,14 @@ public class PageBattle : UIMgr
   private IEnumerator UpdateTarget()
   {
     // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CUpdateTarget\u003Ec__Iterator6()
-    {
-      \u0024this = this
-    };
+    return (IEnumerator) new PageBattle.\u003CUpdateTarget\u003Ec__Iterator6() { \u0024this = this };
   }
 
   [DebuggerHidden]
   private IEnumerator UpdateWave()
   {
     // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CUpdateWave\u003Ec__Iterator7()
-    {
-      \u0024this = this
-    };
+    return (IEnumerator) new PageBattle.\u003CUpdateWave\u003Ec__Iterator7() { \u0024this = this };
   }
 
   public void MoveToDropItem()
@@ -1343,11 +1242,6 @@ public class PageBattle : UIMgr
             case TrailType.eIce:
               ParticleMgr.Play("HitIce", bul.transform);
               em.SetSlow(50f);
-              if ((bool) ((Object) bul.pMon))
-              {
-                ++bul.pMon.nCharge;
-                break;
-              }
               break;
             case TrailType.eWind:
             case TrailType.eEnergy:
@@ -1377,8 +1271,7 @@ public class PageBattle : UIMgr
       case BulletType.eExplosionCir:
         float fAddSize1 = (float) (1.0 + (!((Object) bul.pMon != (Object) null) ? 0.0 : (double) Info.GetAccModFac(bul.pMon.nPos, ModType.eFireBallRange) * 0.00999999977648258 + (double) this.GetSkillFac2(bul.pMon.nPos, SkillKey.eBigFireBall) * 0.00999999977648258));
         UIMgr.PlaySound("Explosion" + (object) Random.Range(0, 2), false);
-        if (!Info.option.bOptimize)
-          CameraShake.instance.Shake(CameraShake.ShakeType.LocalPosition, 2, PageBattle.vShakePos, Vector3.zero, 1f, 90f, 0.9f, 0.0f, true);
+        CameraShake.instance.Shake(CameraShake.ShakeType.LocalPosition, 2, PageBattle.vShakePos, Vector3.zero, 1f, 90f, 0.9f, 0.0f, true);
         if ((Object) bul.pMon != (Object) null)
           nNum = (double) this.GetSkillFac(bul.pMon.nPos, SkillKey.eChainFireBall) <= (double) Random.Range(0.0f, 100f) ? 1 : 5;
         this.StartCoroutine(this.CheckFireBall(nNum, (Vector2) bul.transform.localPosition, fAddSize1, em, bul));
@@ -1386,14 +1279,9 @@ public class PageBattle : UIMgr
       case BulletType.eExplosionDir:
         UIMgr.PlaySound("Explosion" + (object) Random.Range(0, 2), false);
         float fAddSize2 = (float) (1.0 + (!((Object) bul.pMon != (Object) null) ? 0.0 : (double) Info.GetAccModFac(bul.pMon.nPos, ModType.eFireLanceRange) * 0.00999999977648258 + (double) this.GetSkillFac2(bul.pMon.nPos, SkillKey.eBigFireLance) * 0.00999999977648258));
-        if (!Info.option.bOptimize)
-          CameraShake.instance.Shake(CameraShake.ShakeType.LocalPosition, 2, PageBattle.vShakePos, Vector3.zero, 1f, 90f, 0.9f, 0.0f, true);
+        CameraShake.instance.Shake(CameraShake.ShakeType.LocalPosition, 2, PageBattle.vShakePos, Vector3.zero, 1f, 90f, 0.9f, 0.0f, true);
         if ((Object) bul.pMon != (Object) null)
-        {
-          nNum = (double) this.GetSkillFac(bul.pMon.nPos, SkillKey.eCornFireLance) + (double) this.GetMonTrait(bul.pMon.nPos, MonTraitID.eConeFlameRate) <= (double) Random.Range(0.0f, 100f) ? 1 : 5;
-          if (nNum == 5)
-            bul.fPow *= (float) (1.0 + (double) this.GetMonTrait(bul.pMon.nPos, MonTraitID.eConeFlameDmg) * 0.00999999977648258);
-        }
+          nNum = (double) this.GetSkillFac(bul.pMon.nPos, SkillKey.eCornFireLance) <= (double) Random.Range(0.0f, 100f) ? 1 : 5;
         this.StartCoroutine(this.CheckFireLance(nNum, (Vector2) bul.transform.localPosition, fAddSize2, em, bul));
         break;
       case BulletType.eFrostExplosionCir:
@@ -1402,18 +1290,8 @@ public class PageBattle : UIMgr
         this.StartCoroutine(this.CheckSnowBall(nNum, (Vector2) bul.transform.localPosition, fAddSize3, em, bul));
         break;
       case BulletType.eSoulBomb:
-        this.StartCoroutine(this.OnSoulExplosion(bul.fPow, bul.transform.position, 1f));
+        this.OnSoulExplosion(bul.fPow, bul.transform.position);
         break;
-      case BulletType.eLittleSoulBomb:
-        this.StartCoroutine(this.OnSoulExplosion(bul.fPow, bul.transform.position, 0.3f));
-        break;
-    }
-    if ((Object) bul.pMon != (Object) null && (double) this.GetMonTrait(bul.pMon.nPos, MonTraitID.eSoulDrain) > 0.0)
-    {
-      if (Info.option.bOptimize)
-        this.OnItemReach(BattleCoinElt.Type.eHP, -1f);
-      else
-        this.MakeCoin(BattleCoinElt.Type.eHP, 0.0f, em.transform.position, 1f);
     }
     if (num == 0)
       return;
@@ -1429,61 +1307,24 @@ public class PageBattle : UIMgr
   }
 
   [DebuggerHidden]
-  private IEnumerator ShootFireLift(Monster mon, bool bCri, Vector2 vStart, Vector2 vDiff, float fDmg)
-  {
-    // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CShootFireLift\u003Ec__Iterator8()
-    {
-      mon = mon,
-      vDiff = vDiff,
-      vStart = vStart,
-      fDmg = fDmg,
-      bCri = bCri,
-      \u0024this = this
-    };
-  }
-
-  [DebuggerHidden]
   private IEnumerator CheckFireBall(int nNum, Vector2 vPos, float fAddSize, Enemy em, Bullet bul)
   {
     // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CCheckFireBall\u003Ec__Iterator9()
-    {
-      vPos = vPos,
-      nNum = nNum,
-      fAddSize = fAddSize,
-      bul = bul,
-      \u0024this = this
-    };
+    return (IEnumerator) new PageBattle.\u003CCheckFireBall\u003Ec__Iterator8() { vPos = vPos, nNum = nNum, fAddSize = fAddSize, bul = bul, \u0024this = this };
   }
 
   [DebuggerHidden]
   private IEnumerator CheckSnowBall(int nNum, Vector2 vPos, float fAddSize, Enemy em, Bullet bul)
   {
     // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CCheckSnowBall\u003Ec__IteratorA()
-    {
-      vPos = vPos,
-      nNum = nNum,
-      fAddSize = fAddSize,
-      bul = bul,
-      \u0024this = this
-    };
+    return (IEnumerator) new PageBattle.\u003CCheckSnowBall\u003Ec__Iterator9() { vPos = vPos, nNum = nNum, fAddSize = fAddSize, bul = bul, \u0024this = this };
   }
 
   [DebuggerHidden]
   private IEnumerator CheckFireLance(int nNum, Vector2 vPos, float fAddSize, Enemy em, Bullet bul)
   {
     // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CCheckFireLance\u003Ec__IteratorB()
-    {
-      bul = bul,
-      nNum = nNum,
-      fAddSize = fAddSize,
-      vPos = vPos,
-      em = em,
-      \u0024this = this
-    };
+    return (IEnumerator) new PageBattle.\u003CCheckFireLance\u003Ec__IteratorA() { bul = bul, nNum = nNum, fAddSize = fAddSize, vPos = vPos, em = em, \u0024this = this };
   }
 
   public void OnShooting(Monster mon, Vector3 targetPos, long nEquip, bool bAuto, int nAtkTime)
@@ -1502,9 +1343,9 @@ public class PageBattle : UIMgr
     if (bDmg)
     {
       float num2 = num1 * (float) nAtkTime;
-      if (weapon.eWeapon == WeaponType.eShriken || (double) this.GetMonTrait(mon.nPos, MonTraitID.eSwapWeapon) > 0.0 && weapon.eWeapon == WeaponType.eSpear)
+      if (weapon.eWeapon == WeaponType.eShriken)
         nShot += (int) this.GetSkillFac(mon.nPos, SkillKey.eShriken);
-      if (weapon.eWeapon == WeaponType.eSpear || (double) this.GetMonTrait(mon.nPos, MonTraitID.eSwapWeapon) > 0.0 && weapon.eWeapon == WeaponType.eShriken)
+      else if (weapon.eWeapon == WeaponType.eSpear)
         num2 *= (float) (1.0 + (double) this.GetSkillFac(mon.nPos, SkillKey.eSpearMaster) * 0.00999999977648258);
       if (bAuto)
       {
@@ -1514,9 +1355,9 @@ public class PageBattle : UIMgr
           num2 *= 0.6f;
       }
       if ((int) mon.nAmmo == 1)
-        num2 = num2 * (float) (1.0 + (double) this.GetSkillFac(mon.nPos, SkillKey.eLastShot) * 0.00999999977648258) * (float) (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eLastShotPlus) * 0.00999999977648258);
+        num2 *= (float) (1.0 + (double) this.GetSkillFac(mon.nPos, SkillKey.eLastShot) * 0.00999999977648258);
       if ((int) mon.nAmmo == (int) mon.nMaxAmmo)
-        num2 = num2 * (float) (1.0 + (double) this.GetSkillFac(mon.nPos, SkillKey.eFirstShot) * 0.00999999977648258) * (float) (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eFirstShotPlus) * 0.00999999977648258);
+        num2 *= (float) (1.0 + (double) this.GetSkillFac(mon.nPos, SkillKey.eFirstShot) * 0.00999999977648258);
       if (Info.GetSkill(mon.nPos, SkillKey.eKillPower) > 0)
         num2 *= 1f + mon.fAssinatePower;
       if (Info.GetSkill(mon.nPos, SkillKey.eRicochetPower) > 0)
@@ -1556,12 +1397,7 @@ public class PageBattle : UIMgr
       if ((double) this.fSuperLaserTime > 0.0)
       {
         fSize1 *= (float) (1.0 + (double) this.GetSkillFac(mon.nPos, SkillKey.eSuperLaser) * 0.00999999977648258);
-        fPlus = fPlus * (float) (1.0 + (double) this.GetSkillFac2(mon.nPos, SkillKey.eSuperLaser) * 0.00999999977648258) * (float) (1.0 + (double) this.GetMonTrait2(mon.nPos, MonTraitID.eSuperLaserPlus) * 0.00999999977648258);
-      }
-      if (bDmg && (double) Random.Range(0.0f, 100f) < (double) this.GetMonTrait(mon.nPos, MonTraitID.eHugeLaser))
-      {
-        fSize1 *= (float) (2.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eHugeLaserWidth) * 0.0199999995529652);
-        fPlus = fPlus * (float) (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eHugeLaserPlus) * 0.00999999977648258) * (float) (1.0 + (double) this.GetMonTrait2(mon.nPos, MonTraitID.eHugeLaser) * 0.00999999977648258);
+        fPlus *= (float) (1.0 + (double) this.GetSkillFac2(mon.nPos, SkillKey.eSuperLaser) * 0.00999999977648258);
       }
       this.OnShootLaser(mon, mon.transform.position + this.vLaserPos, targetPos, fSize1, fPlus, 0, bDmg, flag2);
       if (bDmg)
@@ -1572,8 +1408,7 @@ public class PageBattle : UIMgr
         if (mon.isSubLaser)
         {
           num3 += 1 + Info.GetAccModFacToInt(mon.nPos, ModType.eAddSubLaser);
-          fPlus = fPlus * (1f + this.GetSkillFac3(mon.nPos, SkillKey.eSubLaser)) * (float) (1.0 + (double) (int) mon.nCharge * (double) this.GetMonTrait(mon.nPos, MonTraitID.eLaserCharge) * 0.00999999977648258);
-          mon.nCharge = (ObscuredInt) 0;
+          fPlus *= 1f + this.GetSkillFac3(mon.nPos, SkillKey.eSubLaser);
         }
         if ((double) Random.Range(0.0f, 100f) < (double) this.GetSkillFac(mon.nPos, SkillKey.eAnotherLaser))
         {
@@ -1605,20 +1440,16 @@ public class PageBattle : UIMgr
       Vector2 normalized = (vLastPos - origin).normalized;
       if ((double) this.fSuperLightningTime > 0.0)
       {
-        fPlus = fPlus * (float) (1.0 + (double) this.GetSkillFac(mon.nPos, SkillKey.eBlueLightning) * 0.00999999977648258) * (float) (1.0 + (double) this.GetMonTrait2(mon.nPos, MonTraitID.eBlueLightningPlus) * 0.00999999977648258);
+        fPlus *= (float) (1.0 + (double) this.GetSkillFac(mon.nPos, SkillKey.eBlueLightning) * 0.00999999977648258);
         this.pLightning.GlowTintColor = Color.blue;
         this.pLightning.TrunkWidthRange.Maximum = this.pLightning.TrunkWidthRange.Minimum = 9f;
       }
       bool bThunder = (double) Random.Range(0.0f, 100f) < (double) this.GetSkillFac(mon.nPos, SkillKey.eThunder);
-      bool isChainLightning = mon.isChainLightning;
-      bool bBig = bThunder && (double) Random.Range(0.0f, 100f) < (double) this.GetMonTrait(mon.nPos, MonTraitID.eBigThunder);
-      if (bBig)
-        fPlus = fPlus * (1f + this.GetMonTrait3(mon.nPos, MonTraitID.eBigThunder)) * (1f + this.GetMonTrait(mon.nPos, MonTraitID.eBigThunderPlus));
-      int nTimes = Mathf.FloorToInt(this.GetSkillFac2(mon.nPos, SkillKey.eChainLightning) + this.GetMonTrait(mon.nPos, MonTraitID.ePowerTrasmission));
-      if (isChainLightning)
+      bool flag3 = mon.isChainLightning;
+      if (flag3)
         fPlus = fPlus * (float) (1.0 + (double) Info.GetRebirthFac(RebirthID.eChainLightning) * 0.00999999977648258) * (1f + this.GetSkillFac3(mon.nPos, SkillKey.eChainLightning));
       this.arrRayHits = Physics2D.RaycastAll(origin, normalized, 900f, 256);
-      bool flag3 = false;
+      bool flag4 = false;
       Enemy em = (Enemy) null;
       for (int index = 0; index < this.arrRayHits.Length; ++index)
       {
@@ -1629,15 +1460,18 @@ public class PageBattle : UIMgr
           {
             if (bDmg)
             {
-              if (isChainLightning && ((Object) this.GetRandomEnemy(em) == (Object) null || (double) Random.Range(0.0f, 100f) < (double) this.GetMonTrait(mon.nPos, MonTraitID.eLaekagePlus)))
-                fPlus = fPlus * (float) (1.0 + (double) nTimes * (double) this.GetSkillFac(mon.nPos, SkillKey.eAmplify) * 0.00999999977648258) * (float) (1.0 + (double) nTimes * (double) this.GetMonTrait(mon.nPos, MonTraitID.eLeakage) * 0.00999999977648258);
+              if (flag3 && (Object) this.GetRandomEnemy(em) == (Object) null)
+              {
+                flag3 = false;
+                fPlus *= (float) (1.0 + (double) Mathf.FloorToInt(this.GetSkillFac2(mon.nPos, SkillKey.eChainLightning)) * (double) this.GetSkillFac(mon.nPos, SkillKey.eAmplify) * 0.00999999977648258);
+              }
               if (bThunder || (double) Info.GetAccModFac(ModType.eFirstThunder) > 0.0)
               {
-                this.HitThunder((Vector2) em.vPos, mon, battleItem, fPlus, flag2, bBig);
+                this.HitThunder((Vector2) em.vPos, mon, battleItem, fPlus, flag2);
               }
               else
               {
-                flag3 = em.isDead;
+                flag4 = em.isDead;
                 this.MonsterDamage(em, Info.GetDamage(mon, em, battleItem) * fPlus, flag2, mon, false, true);
                 if (!Info.option.bOptimize)
                   ParticleMgr.Play("HitLightning", em.vPos);
@@ -1650,8 +1484,8 @@ public class PageBattle : UIMgr
       }
       if (!Info.option.bAllFXOff)
         this.pLightning.Trigger(new Vector3?((Vector3) origin), new Vector3?((Vector3) vLastPos));
-      if (bDmg && isChainLightning)
-        this.StartCoroutine(this.StartChainLightning(mon, em, battleItem, vLastPos, fPlus, bThunder, flag2, nTimes, bBig));
+      if (bDmg && flag3)
+        this.StartCoroutine(this.StartChainLightning(mon, em, battleItem, vLastPos, fPlus, bThunder, flag2, Mathf.FloorToInt(this.GetSkillFac2(mon.nPos, SkillKey.eChainLightning))));
     }
     else if (Info.GetSkill(mon.nPos, SkillKey.eDimensionKick) > 0)
     {
@@ -1667,12 +1501,6 @@ public class PageBattle : UIMgr
         num2 = num2 * (float) (1.0 + (double) this.GetSkillFac2(mon.nPos, SkillKey.eHighKick) * 0.00999999977648258) * (float) (1.0 + (double) Info.GetRebirthFac(RebirthID.eStrongKick) * 0.00999999977648258) * (1f + this.GetSkillFac3(mon.nPos, SkillKey.eHighKick));
         fHitSize = 80f;
         fAddSize = 1f;
-        if ((double) Random.Range(0.0f, 100f) < (double) this.GetMonTrait(mon.nPos, MonTraitID.eHugeKick))
-        {
-          num2 = num2 * (float) (1.0 + (double) this.GetMonTrait3(mon.nPos, MonTraitID.eHugeKick) * 0.00999999977648258) * (float) (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eHugeKickPlus) * 0.00999999977648258);
-          fHitSize *= (float) (1.0 + (double) this.GetMonTrait2(mon.nPos, MonTraitID.eHugeKick) * 0.00999999977648258);
-          fAddSize *= (float) (1.0 + (double) this.GetMonTrait2(mon.nPos, MonTraitID.eHugeKick) * 0.00999999977648258);
-        }
       }
       if ((double) this.GetSkillFac(mon.nPos, SkillKey.eTripleKick) > (double) Random.Range(0.0f, 100f))
       {
@@ -1686,15 +1514,11 @@ public class PageBattle : UIMgr
         nShot *= 2;
         num2 *= 1f + this.GetSkillFac3(mon.nPos, SkillKey.eDoubleKick);
       }
-      bool flag3 = (double) Random.Range(0.0f, 100f) < (double) this.GetMonTrait(mon.nPos, MonTraitID.eDimensionAmbush);
-      if (flag3)
-        num2 = num2 * (float) (1.0 + (double) this.GetMonTrait2(mon.nPos, MonTraitID.eDimensionAmbush) * 0.00999999977648258) * (float) (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eDimensionAmbushPlus) * 0.00999999977648258);
       if (this.eTrial == MutateType.eJustOne)
         nShot = 1;
-      float num3 = num2 * (float) (1.0 + (double) nShot * (double) this.GetSkillFac(mon.nPos, SkillKey.eManyWeapon) * 0.00999999977648258);
+      fPlus = num2 * (float) (1.0 + (double) nShot * (double) this.GetSkillFac(mon.nPos, SkillKey.eManyWeapon) * 0.00999999977648258);
       float max2 = (float) ((double) (float) mon.fRecoil * (3.0 / 500.0) * 100.0);
-      float num4 = (double) this.GetMonTrait(mon.nPos, MonTraitID.eInstantKick) <= 0.0 ? Info.GetBattleItem(nEquip).fRate * 0.3334f : 0.0f;
-      fPlus = num3 * (float) (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eInstantKickPlus) * 0.00999999977648258);
+      float num3 = Info.GetBattleItem(nEquip).fRate * 0.3334f;
       for (int index = 0; index < nShot; ++index)
       {
         Vector2 v2Pos = (Vector2) targetPos;
@@ -1716,28 +1540,15 @@ public class PageBattle : UIMgr
               fPlus = fPlus * (float) (1.0 + (double) this.GetSkillFac2(mon.nPos, SkillKey.eHighKick) * 0.00999999977648258) * (float) (1.0 + (double) Info.GetAccModFac(mon.nPos, ModType.eLastStrongKick) * 0.00999999977648258) * (float) (1.0 + (double) Info.GetRebirthFac(RebirthID.eStrongKick) * 0.00999999977648258) * (1f + this.GetSkillFac3(mon.nPos, SkillKey.eHighKick));
               fHitSize = 80f;
               fAddSize = 1f;
-              if ((double) Random.Range(0.0f, 100f) < (double) this.GetMonTrait(mon.nPos, MonTraitID.eHugeKick))
-              {
-                fPlus = fPlus * (float) (1.0 + (double) this.GetMonTrait3(mon.nPos, MonTraitID.eHugeKick) * 0.00999999977648258) * (float) (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eHugeKickPlus) * 0.00999999977648258);
-                fHitSize *= (float) (1.0 + (double) this.GetMonTrait2(mon.nPos, MonTraitID.eHugeKick) * 0.00999999977648258);
-                fAddSize *= (float) (1.0 + (double) this.GetMonTrait2(mon.nPos, MonTraitID.eHugeKick) * 0.00999999977648258);
-              }
             }
           }
         }
-        this.StartCoroutine(this.HitArea(v2Pos, mon, nEquip, fPlus, flag2, strFX, fHitSize, fAddSize, num4 * (float) index, bBig, false));
-        if (flag3)
-        {
-          Enemy randomEnemy = this.GetRandomEnemy(new List<Enemy>());
-          if ((Object) randomEnemy != (Object) null)
-            this.StartCoroutine(this.HitArea((Vector2) randomEnemy.vPos, mon, nEquip, fPlus, flag2, strFX, fHitSize, fAddSize, num4 * (float) index, bBig, false));
-        }
+        this.StartCoroutine(this.HitArea(v2Pos, mon, nEquip, fPlus, flag2, strFX, fHitSize, fAddSize, num3 * (float) index, bBig, false));
       }
     }
     else if (Info.GetSkill(mon.nPos, SkillKey.eDimensionSlash) > 0)
     {
       float num2 = num1 * (this.GetSkillFac(mon.nPos, SkillKey.eDimensionSlash) * 0.01f);
-      float num3 = 1f;
       bool bBig = false;
       string strFX = "DimSlashBlue";
       float fHitSize = 28f;
@@ -1747,20 +1558,11 @@ public class PageBattle : UIMgr
         num2 = num2 * (float) (1.0 + (double) this.GetSkillFac2(mon.nPos, SkillKey.eBigSlash) * 0.00999999977648258) * (1f + this.GetSkillFac3(mon.nPos, SkillKey.eBigSlash)) * (float) (1.0 + (double) Info.GetRebirthFac(RebirthID.eMoonSlash) * 0.00999999977648258);
         fHitSize = 100f;
         bBig = true;
-        if ((double) Random.Range(0.0f, 100f) < (double) this.GetMonTrait(mon.nPos, MonTraitID.eUniversalSlash))
-        {
-          num2 = num2 * (float) (1.0 + (double) this.GetMonTrait3(mon.nPos, MonTraitID.eUniversalSlash) * 0.00999999977648258) * (float) (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eUniversalSlashPlus) * 0.00999999977648258);
-          fHitSize *= (float) (1.0 + (double) this.GetMonTrait2(mon.nPos, MonTraitID.eUniversalSlash) * 0.00999999977648258);
-          num3 *= (float) (1.0 + (double) this.GetMonTrait2(mon.nPos, MonTraitID.eUniversalSlash) * 0.00999999977648258);
-        }
       }
-      bool flag3 = (double) Random.Range(0.0f, 100f) < (double) this.GetMonTrait(mon.nPos, MonTraitID.eDimensionAmbush);
-      if (flag3)
-        num2 = num2 * (float) (1.0 + (double) this.GetMonTrait2(mon.nPos, MonTraitID.eDimensionAmbush) * 0.00999999977648258) * (float) (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eDimensionAmbushPlus) * 0.00999999977648258);
       if ((double) this.fSuperBladeTime > 0.0)
       {
         strFX = strFX.Replace("Blue", "Red");
-        num2 = num2 * (float) (1.0 + (double) this.GetSkillFac(mon.nPos, SkillKey.eBladeStorm) * 0.00999999977648258) * (float) (1.0 + (double) this.GetMonTrait2(mon.nPos, MonTraitID.eBladeStormPlus) * 0.00999999977648258);
+        num2 *= (float) (1.0 + (double) this.GetSkillFac(mon.nPos, SkillKey.eBladeStorm) * 0.00999999977648258);
       }
       if (Info.GetSkill(mon.nPos, SkillKey.eHexaSlash) > 0)
       {
@@ -1769,17 +1571,16 @@ public class PageBattle : UIMgr
       }
       if (this.eTrial == MutateType.eJustOne)
         nShot = 1;
-      float num4 = num2 * (float) (1.0 + (double) nShot * (double) this.GetSkillFac(mon.nPos, SkillKey.eManyWeapon) * 0.00999999977648258);
+      fPlus = num2 * (float) (1.0 + (double) nShot * (double) this.GetSkillFac(mon.nPos, SkillKey.eManyWeapon) * 0.00999999977648258);
       float max2 = (float) ((double) (float) mon.fRecoil * (3.0 / 500.0) * 100.0);
-      float num5 = (double) this.GetMonTrait(mon.nPos, MonTraitID.eInstantKick) <= 0.0 ? Info.GetBattleItem(nEquip).fRate * 0.16667f : 0.0f;
-      fPlus = num4 * (float) (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eInstantKickPlus) * 0.00999999977648258);
+      float num3 = Info.GetBattleItem(nEquip).fRate * 0.16667f;
       Vector2 zero = Vector2.zero;
       for (int index = 0; index < nShot; ++index)
       {
         Vector2 v2Pos = (Vector2) targetPos;
         v2Pos.x += Random.Range(-max2, max2);
         v2Pos.y += Random.Range(-max2, max2);
-        float num6 = (float) (1.0 + (double) Info.GetAccModFac(mon.nPos, ModType.eStrongerSlash) * 0.00999999977648258 * (double) index);
+        float fAddSize = (float) (1.0 + (double) Info.GetAccModFac(mon.nPos, ModType.eStrongerSlash) * 0.00999999977648258 * (double) index);
         if (index == nShot - 1 && (double) Info.GetAccModFac(mon.nPos, ModType.eLastBigSlash) > 0.0)
         {
           if (!bBig)
@@ -1787,22 +1588,10 @@ public class PageBattle : UIMgr
             strFX = "BigSlash" + ((double) this.fSuperBladeTime <= 0.0 ? "Blue" : "Red");
             fPlus = fPlus * (float) (1.0 + (double) this.GetSkillFac2(mon.nPos, SkillKey.eBigSlash) * 0.00999999977648258) * (1f + this.GetSkillFac3(mon.nPos, SkillKey.eBigSlash));
             fHitSize = 100f;
-            if ((double) Random.Range(0.0f, 100f) < (double) this.GetMonTrait(mon.nPos, MonTraitID.eUniversalSlash))
-            {
-              fPlus = fPlus * (float) (1.0 + (double) this.GetMonTrait3(mon.nPos, MonTraitID.eUniversalSlash) * 0.00999999977648258) * (float) (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eUniversalSlashPlus) * 0.00999999977648258);
-              fHitSize *= (float) (1.0 + (double) this.GetMonTrait2(mon.nPos, MonTraitID.eUniversalSlash) * 0.00999999977648258);
-              num3 *= (float) (1.0 + (double) this.GetMonTrait2(mon.nPos, MonTraitID.eUniversalSlash) * 0.00999999977648258);
-            }
           }
           fPlus *= (float) (1.0 + (double) Info.GetAccModFac(mon.nPos, ModType.eLastBigSlash) * 0.00999999977648258);
         }
-        this.StartCoroutine(this.HitArea(v2Pos, mon, nEquip, fPlus * (float) (1.0 + (double) Info.GetAccModFac(mon.nPos, ModType.eStrongerSlash) * 0.00999999977648258 * (double) index), flag2, strFX, fHitSize, num3 * num6, num5 * (float) index, bBig, true));
-        if (flag3)
-        {
-          Enemy randomEnemy = this.GetRandomEnemy(new List<Enemy>());
-          if ((Object) randomEnemy != (Object) null)
-            this.StartCoroutine(this.HitArea((Vector2) randomEnemy.vPos, mon, nEquip, fPlus * (float) (1.0 + (double) Info.GetAccModFac(mon.nPos, ModType.eStrongerSlash) * 0.00999999977648258 * (double) index), flag2, strFX, fHitSize, num3 * num6, num5 * (float) index, bBig, true));
-        }
+        this.StartCoroutine(this.HitArea(v2Pos, mon, nEquip, fPlus * (float) (1.0 + (double) Info.GetAccModFac(mon.nPos, ModType.eStrongerSlash) * 0.00999999977648258 * (double) index), flag2, strFX, fHitSize, fAddSize, num3 * (float) index, bBig, true));
       }
     }
     else if (Info.GetSkill(mon.nPos, SkillKey.eElementalShot) > 0)
@@ -1811,24 +1600,14 @@ public class PageBattle : UIMgr
       Vector2 zero = Vector2.zero;
       string strFX = "DimSlashBlue";
       bool isExplosion = mon.isExplosion;
-      bool flag3 = (double) Random.Range(0.0f, 100f) < (double) this.GetMonTrait(mon.nPos, MonTraitID.eImplosion);
       float fHitSize = !isExplosion ? 36f : 100f;
       float fAddSize = (float) (1.0 + (double) Info.GetResearchFac(ResearchID.eElementalShot) * 0.00999999977648258);
       fPlus = num1 * (this.GetSkillFac(mon.nPos, SkillKey.eElementalShot) * 0.01f);
-      if (flag3)
-        fPlus = fPlus * (float) (1.0 + (double) this.GetMonTrait2(mon.nPos, MonTraitID.eImplosion) * 0.00999999977648258) * (float) (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eImplosionPlus) * 0.00999999977648258);
       if (isExplosion)
       {
-        fPlus = fPlus * (float) (1.0 + (double) this.GetSkillFac2(mon.nPos, SkillKey.eElementalBomb) * 0.00999999977648258) * (float) (1.0 + (double) Info.GetRebirthFac(RebirthID.eElementalBomb) * 0.00999999977648258) * (1f + this.GetSkillFac3(mon.nPos, SkillKey.eElementalBomb)) * (float) (1.0 + (double) (int) mon.nCharge * (double) this.GetMonTrait(mon.nPos, MonTraitID.eElementalCharge) * 0.00999999977648258);
-        mon.nCharge = (ObscuredInt) 0;
+        fPlus = fPlus * (float) (1.0 + (double) this.GetSkillFac2(mon.nPos, SkillKey.eElementalBomb) * 0.00999999977648258) * (float) (1.0 + (double) Info.GetRebirthFac(RebirthID.eElementalBomb) * 0.00999999977648258) * (1f + this.GetSkillFac3(mon.nPos, SkillKey.eElementalBomb));
         if ((double) Info.GetAccModFac(mon.nPos, ModType.eElementalBombDmg) > 0.0)
           fPlus *= (float) (1.0 + (double) Random.Range(0.0f, Info.GetAccModFac(mon.nPos, ModType.eElementalBombDmg)) * 0.00999999977648258);
-      }
-      float num2 = 0.1f;
-      if ((double) this.GetMonTrait(mon.nPos, MonTraitID.eBigBomb) > 0.0)
-      {
-        num2 = 0.0f;
-        fPlus *= (float) (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eBigBomb) * 0.00999999977648258);
       }
       switch (mon.sID)
       {
@@ -1848,10 +1627,10 @@ public class PageBattle : UIMgr
           strFX = !isExplosion ? "DarkShot" : "DarkBomb";
           break;
       }
-      if ((double) Random.Range(0.0f, 100f) < (double) this.GetSkillFac(mon.nPos, SkillKey.eChainBomb) + (double) this.GetMonTrait(mon.nPos, MonTraitID.eChainBombRate))
+      if ((double) Random.Range(0.0f, 100f) < (double) this.GetSkillFac(mon.nPos, SkillKey.eChainBomb))
       {
-        nShot += (int) ((double) this.GetSkillFac2(mon.nPos, SkillKey.eChainBomb) + (double) this.GetMonTrait(mon.nPos, MonTraitID.eChainBombCount));
-        fPlus = fPlus * (1f + this.GetSkillFac3(mon.nPos, SkillKey.eChainBomb)) * (float) (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eChainBombDmg) * 0.00999999977648258);
+        nShot += (int) this.GetSkillFac2(mon.nPos, SkillKey.eChainBomb);
+        fPlus *= 1f + this.GetSkillFac3(mon.nPos, SkillKey.eChainBomb);
       }
       for (int index = 0; index < nShot; ++index)
       {
@@ -1866,13 +1645,7 @@ public class PageBattle : UIMgr
           v2Pos.x += Random.Range((float) (-(double) fHitSize * 0.600000023841858), fHitSize * 0.6f);
           v2Pos.y += Random.Range((float) (-(double) fHitSize * 0.600000023841858), fHitSize * 0.6f);
         }
-        this.StartCoroutine(this.HitArea(v2Pos, mon, nEquip, fPlus, flag2, strFX, fHitSize, fAddSize, (float) index * num2, isExplosion, false));
-        if (flag3)
-        {
-          Enemy randomEnemy = this.GetRandomEnemy(new List<Enemy>());
-          if ((bool) ((Object) randomEnemy))
-            this.StartCoroutine(this.HitArea((Vector2) randomEnemy.vPos, mon, nEquip, fPlus, flag2, strFX, fHitSize, fAddSize, (float) index * num2, isExplosion, false));
-        }
+        this.StartCoroutine(this.HitArea(v2Pos, mon, nEquip, fPlus, flag2, strFX, fHitSize, fAddSize, (float) index * 0.1f, isExplosion, false));
         fPlus *= (float) (1.0 + (double) Info.GetAccModFac(mon.nPos, ModType.eChainBombDmg) * 0.00999999977648258);
       }
     }
@@ -1903,82 +1676,42 @@ public class PageBattle : UIMgr
     }
     else
     {
-      bool flag3 = false;
       if (weapon.eWeapon == WeaponType.eBow)
-      {
         nShot += Info.GetAccModFacToInt(mon.nPos, ModType.eAddArrow);
-        if ((double) Random.Range(0.0f, 100f) < (double) this.GetMonTrait(mon.nPos, MonTraitID.eHugeArrow))
-        {
-          num1 = num1 * (float) (1.0 + (double) this.GetMonTrait2(mon.nPos, MonTraitID.eHugeArrow) * 0.00999999977648258) * (float) (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eHugeArrowPlus) * 0.00999999977648258);
-          _bHuge = true;
-        }
-        if ((double) Random.Range(0.0f, 100f) < (double) this.GetMonTrait(mon.nPos, MonTraitID.eArrowBomb))
-        {
-          num1 *= (float) (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eArrowBombPlus) * 0.00999999977648258);
-          nShot += (int) this.GetMonTrait2(mon.nPos, MonTraitID.eArrowBomb);
-          flag3 = true;
-        }
-      }
-      if (weapon.eWeapon == WeaponType.eSpear || (double) this.GetMonTrait(mon.nPos, MonTraitID.eSwapWeapon) > 0.0 && weapon.eWeapon == WeaponType.eShriken)
+      if (weapon.eWeapon == WeaponType.eSpear)
         nShot += Info.GetAccModFacToInt(mon.nPos, ModType.eJavelinAddShot);
-      bool _bCursed = (double) Random.Range(0.0f, 100f) < (double) this.GetMonTrait(mon.nPos, MonTraitID.eCursedWeapon);
-      if (_bCursed)
-        num1 *= (float) (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eCursedWeaponPlus) * 0.00999999977648258);
       if (mon.isMultiShot)
       {
         nShot += 4 + Info.GetResearchFacInt(ResearchID.eMultiShot);
-        num1 = num1 * (1f + this.GetSkillFac3(mon.nPos, SkillKey.eMultiShot)) * (float) (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eMultiShotPlus) * 0.00999999977648258);
+        num1 *= 1f + this.GetSkillFac3(mon.nPos, SkillKey.eMultiShot);
       }
       if ((double) this.GetSkillFac(mon.nPos, SkillKey.eAddShot) > (double) Random.Range(0.0f, 100f))
       {
         nShot += 2;
-        num1 = num1 * (float) (1.0 + (double) Info.GetResearchFac(ResearchID.eAddShot) * 0.00999999977648258) * (1f + this.GetSkillFac3(mon.nPos, SkillKey.eAddShot)) * (float) (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eAddShotPlus) * 0.00999999977648258);
+        num1 = num1 * (float) (1.0 + (double) Info.GetResearchFac(ResearchID.eAddShot) * 0.00999999977648258) * (1f + this.GetSkillFac3(mon.nPos, SkillKey.eAddShot));
       }
       if (mon.isHugeWeapon)
       {
         _bHuge = true;
         num1 = num1 * (this.GetSkillFac2(mon.nPos, SkillKey.eBigShot) * 0.01f) * (1f + this.GetSkillFac3(mon.nPos, SkillKey.eBigShot)) * (float) (1.0 + (double) Info.GetResearchFac(ResearchID.eBigShot) * 0.00999999977648258) * (float) (1.0 + (double) this.GetSkillFac2(mon.nPos, SkillKey.eMarchWeapon) * 0.00999999977648258) * (float) (1.0 + (double) Info.GetRebirthFac(RebirthID.eHugeWeapon) * 0.00999999977648258);
       }
-      bool flag4 = false;
-      if ((double) this.GetMonTrait(mon.nPos, MonTraitID.eFireLift) > 0.0)
-      {
-        flag4 = (double) Random.Range(0.0f, 100f) < (double) this.GetMonTrait(mon.nPos, MonTraitID.eFireLift);
-        num1 *= (float) (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eFireLiftPlus) * 0.00999999977648258);
-      }
-      if (mon.isFireBall || flag4)
+      if (mon.isFireBall)
       {
         _eTrail = TrailType.eFireBall;
         _eType = BulletType.eExplosionCir;
         num1 = num1 * (float) (1.0 + (double) this.GetSkillFac2(mon.nPos, SkillKey.eFireBall) * 0.00999999977648258) * (1f + this.GetSkillFac3(mon.nPos, SkillKey.eFireBall)) * (float) (1.0 + (double) Info.GetAccModFac(mon.nPos, ModType.eFireBallDmg) * 0.00999999977648258) * (float) (1.0 + (double) this.GetSkillFac(mon.nPos, SkillKey.eBigFireBall) * 0.00999999977648258) * (float) (1.0 + (double) Info.GetRebirthFac(RebirthID.eFireBall) * 0.00999999977648258);
-        if ((double) this.GetMonTrait(mon.nPos, MonTraitID.eFireCharge) > 0.0 && (int) mon.nCharge > 0)
-        {
-          num1 *= (float) (1.0 + (double) (int) mon.nCharge * (double) this.GetMonTrait(mon.nPos, MonTraitID.eFireCharge) * 0.00999999977648258);
-          mon.nCharge = (ObscuredInt) 0;
-        }
       }
       else if (mon.isFireLance)
       {
         _eTrail = TrailType.eFireLance;
         _eType = BulletType.eExplosionDir;
         num1 = num1 * (float) (1.0 + (double) this.GetSkillFac2(mon.nPos, SkillKey.eFireLance) * 0.00999999977648258) * (1f + this.GetSkillFac3(mon.nPos, SkillKey.eFireLance)) * (float) (1.0 + (double) Info.GetResearchFac(ResearchID.eFireLance) * 0.00999999977648258) * (float) (1.0 + (double) Info.GetAccModFac(mon.nPos, ModType.eFireLanceDmg) * 0.00999999977648258) * (float) (1.0 + (double) Info.GetRebirthFac(RebirthID.eFireLance) * 0.00999999977648258);
-        if ((double) this.GetMonTrait(mon.nPos, MonTraitID.eFlameCharge) > 0.0 && (int) mon.nCharge > 0)
-        {
-          num1 *= (float) (1.0 + (double) (int) mon.nCharge * (double) this.GetMonTrait(mon.nPos, MonTraitID.eFlameCharge) * 0.00999999977648258);
-          mon.nCharge = (ObscuredInt) 0;
-        }
       }
       else if (mon.isSoulBomb)
       {
         _eTrail = TrailType.eSoulBomb;
         _eType = BulletType.eSoulBomb;
         num1 = num1 * (this.GetSkillFac2(mon.nPos, SkillKey.eSoulBomb) * 0.01f) * (1f + this.GetSkillFac3(mon.nPos, SkillKey.eSoulBall)) * (float) (1.0 + (double) Info.GetRebirthFac(RebirthID.eSoulBomb) * 0.00999999977648258);
-      }
-      if ((double) this.GetMonTrait(mon.nPos, MonTraitID.eLittleSoulBomb) > 0.0)
-      {
-        _eTrail = TrailType.eSoulBomb;
-        if (_eType != BulletType.eSoulBomb)
-          _eType = BulletType.eLittleSoulBomb;
-        num1 *= (float) (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eLittleSoulBomb) * 0.00999999977648258);
       }
       if ((double) this.GetSkillFac(mon.nPos, SkillKey.eIceBolt) > (double) Random.Range(0.0f, 100f) || (double) Info.GetAccModFac(mon.nPos, ModType.eAlwaysIce) > 0.0)
       {
@@ -1989,76 +1722,52 @@ public class PageBattle : UIMgr
       {
         _eTrail = TrailType.eFrost;
         _eType = BulletType.eFrostExplosionCir;
-        num1 = num1 * (this.GetSkillFac2(mon.nPos, SkillKey.eFrostBall) * 0.01f) * (float) (1.0 + (double) Info.GetRebirthFac(RebirthID.eFrostBall) * 0.00999999977648258) * (float) (1.0 + (double) Info.GetAccModFac(mon.nPos, ModType.eBigSnowBall) * 0.00999999977648258) * (1f + this.GetSkillFac3(mon.nPos, SkillKey.eFrostBall)) * (float) (1.0 + (double) (int) mon.nCharge * (double) this.GetMonTrait(mon.nPos, MonTraitID.eIceCharge) * 0.00999999977648258);
-        mon.nCharge = (ObscuredInt) 0;
+        num1 = num1 * (this.GetSkillFac2(mon.nPos, SkillKey.eFrostBall) * 0.01f) * (float) (1.0 + (double) Info.GetRebirthFac(RebirthID.eFrostBall) * 0.00999999977648258) * (float) (1.0 + (double) Info.GetAccModFac(mon.nPos, ModType.eBigSnowBall) * 0.00999999977648258) * (1f + this.GetSkillFac3(mon.nPos, SkillKey.eFrostBall));
       }
-      int num2 = 0;
+      int _nRicochet = 0;
       if (mon.isRicochet)
       {
-        num2 = (int) this.GetSkillFac2(mon.nPos, SkillKey.eRicochet);
+        _nRicochet = (int) this.GetSkillFac2(mon.nPos, SkillKey.eRicochet);
         num1 *= 1f + this.GetSkillFac3(mon.nPos, SkillKey.eRicochet);
       }
       if ((double) Info.GetPartySkillFac(SkillKey.eRicochetParty) > 0.0 && (double) Random.Range(0.0f, 100f) < (double) Info.GetPartySkillFac(SkillKey.eRicochetParty))
-        num2 += 3;
-      int _nRicochet = num2 + (int) this.GetPartyMonTrait(MonTraitID.eBasicRicochet);
+        _nRicochet += 3;
       bool bAssasin = (double) Random.Range(0.0f, 100f) < (double) this.GetSkillFac(mon.nPos, SkillKey.eAssasinate) + (double) Info.GetAccModFac(mon.nPos, ModType.eCriAssasinate) * 0.00999999977648258 * (double) mon.fCriRate;
       if (bAssasin)
-        num1 = num1 * (float) (30.0 * (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eAssasinatePlus) * 0.00999999977648258)) * (float) (1.0 + (double) Info.GetRebirthFac(RebirthID.eAssasinate) * 0.00999999977648258) * (1f + this.GetSkillFac3(mon.nPos, SkillKey.eAssasinate));
-      else if ((double) Random.Range(0.0f, 100f) < (double) this.GetPartyMonTrait(MonTraitID.ePartyAssasinate))
-        num1 *= 30f;
+        num1 = num1 * 25f * (float) (1.0 + (double) Info.GetRebirthFac(RebirthID.eAssasinate) * 0.00999999977648258) * (1f + this.GetSkillFac3(mon.nPos, SkillKey.eAssasinate));
       if (this.eTrial == MutateType.eJustOne)
         nShot = battleItem.nSpread;
       fPlus = num1 * (float) (1.0 + (double) nShot * (double) this.GetSkillFac(mon.nPos, SkillKey.eManyWeapon) * 0.00999999977648258);
-      float fDmg1 = Info.GetBattleItem(nEquip).fDmg * fPlus;
-      if (flag3)
+      float fDmg = Info.GetBattleItem(nEquip).fDmg * fPlus;
+      float[] numArray = new float[nShot];
+      float num2 = Random.Range(-max1, max1);
+      if (nShot != 1)
       {
-        float num3 = (float) (360 / nShot);
-        for (int index = 0; index < nShot; ++index)
-          this.GetBullet(targetPos).SetTarget(mon, _eTrail, _eType, (Vector2) (Quaternion.Euler(0.0f, 0.0f, num3 * (float) index) * (Vector3) Vector2.one).normalized, battleItem, fDmg1, flag2, _bHuge, bAssasin, _bCursed, false, _nRicochet, 1f);
-        if ((double) this.GetSkillFac(mon.nPos, SkillKey.eCloneArrow) > (double) Random.Range(0.0f, 100f))
+        if (nShot == 2)
         {
-          float fDmg2 = fDmg1 * (float) (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eClonArrowPlus) * 0.00999999977648258);
-          for (int index = 0; index < nShot; ++index)
-            this.GetBullet(targetPos).SetTarget(mon, _eTrail, _eType, (Vector2) (Quaternion.Euler(0.0f, 0.0f, num3 * (float) index) * (Vector3) Vector2.one).normalized, battleItem, fDmg2, flag2, _bHuge, bAssasin, _bCursed, false, _nRicochet, (float) (0.699999988079071 * (1.0 + (double) this.GetMonTrait2(mon.nPos, MonTraitID.eClonArrowPlus) * 0.00999999977648258)));
-        }
-      }
-      else if (flag4)
-      {
-        this.StartCoroutine(this.ShootFireLift(mon, flag2, (Vector2) (mon.transform.localPosition + this.vFirePos), (Vector2) (targetPos - (mon.transform.localPosition + this.vFirePos)), fDmg1));
-      }
-      else
-      {
-        float[] numArray = new float[nShot];
-        float num3 = Random.Range(-max1, max1);
-        if (nShot != 1)
-        {
-          if (nShot == 2)
-          {
-            numArray[0] = num3 - 2.5f;
-            numArray[1] = num3 + 2.5f;
-          }
-          else
-          {
-            float num4 = (float) Mathf.Max(6 - (int) ((double) nShot * 0.5), 3);
-            float num5 = (float) ((double) num3 + (double) (nShot - 1) * 0.5 * -(double) num4 + (nShot % 2 != 0 ? 0.0 : -(double) num4 * 0.5));
-            for (int index = 0; index < nShot; ++index)
-              numArray[index] = num5 + (float) index * num4;
-          }
+          numArray[0] = num2 - 2.5f;
+          numArray[1] = num2 + 2.5f;
         }
         else
-          numArray[0] = num3;
-        Vector2 vector2 = (Vector2) (targetPos - (mon.transform.localPosition + this.vFirePos));
-        for (int index = 0; index < numArray.Length; ++index)
-          this.GetBullet(mon.transform.position + this.vFirePos).SetTarget(mon, _eTrail, _eType, (Vector2) (Quaternion.Euler(0.0f, 0.0f, numArray[index]) * (Vector3) vector2).normalized, battleItem, fDmg1, flag2, _bHuge, bAssasin, _bCursed, false, _nRicochet, 1f);
-        if ((double) this.GetSkillFac(mon.nPos, SkillKey.eCloneArrow) > (double) Random.Range(0.0f, 100f))
         {
-          fDmg1 *= (float) (1.0 + (double) this.GetMonTrait(mon.nPos, MonTraitID.eClonArrowPlus) * 0.00999999977648258);
-          for (int index = 0; index < numArray.Length; ++index)
-            this.GetBullet(mon.transform.position + this.vFirePos).SetTarget(mon, _eTrail, _eType, (Vector2) (Quaternion.Euler(0.0f, 0.0f, numArray[index]) * (Vector3) vector2).normalized, battleItem, fDmg1, flag2, _bHuge, bAssasin, _bCursed, false, _nRicochet, (float) (0.699999988079071 * (1.0 + (double) this.GetMonTrait2(mon.nPos, MonTraitID.eClonArrowPlus) * 0.00999999977648258)));
+          float num3 = (float) Mathf.Max(6 - (int) ((double) nShot * 0.5), 3);
+          float num4 = (float) ((double) num2 + (double) (nShot - 1) * 0.5 * -(double) num3 + (nShot % 2 != 0 ? 0.0 : -(double) num3 * 0.5));
+          for (int index = 0; index < nShot; ++index)
+            numArray[index] = num4 + (float) index * num3;
         }
-        if (Info.GetAccModFacToInt(mon.nPos, ModType.eRandomShot) > 0)
-          this.GetBullet(mon.transform.position + this.vFirePos).SetTarget(mon, _eTrail, _eType, (Vector2) (Quaternion.Euler(0.0f, 0.0f, (float) Random.Range(-35, 35)) * (Vector3) vector2).normalized, battleItem, fDmg1, flag2, _bHuge, bAssasin, _bCursed, false, _nRicochet, 1f);
       }
+      else
+        numArray[0] = num2;
+      Vector2 vector2 = (Vector2) (targetPos - (mon.transform.localPosition + this.vFirePos));
+      for (int index = 0; index < numArray.Length; ++index)
+        this.GetBullet(mon.transform.position + this.vFirePos).SetTarget(mon, _eTrail, _eType, (Vector2) (Quaternion.Euler(0.0f, 0.0f, numArray[index]) * (Vector3) vector2).normalized, battleItem, fDmg, flag2, _bHuge, bAssasin, _nRicochet, 1f);
+      if ((double) this.GetSkillFac(mon.nPos, SkillKey.eCloneArrow) > (double) Random.Range(0.0f, 100f))
+      {
+        for (int index = 0; index < numArray.Length; ++index)
+          this.GetBullet(mon.transform.position + this.vFirePos).SetTarget(mon, _eTrail, _eType, (Vector2) (Quaternion.Euler(0.0f, 0.0f, numArray[index]) * (Vector3) vector2).normalized, battleItem, fDmg, flag2, _bHuge, bAssasin, _nRicochet, 0.7f);
+      }
+      if (Info.GetAccModFacToInt(mon.nPos, ModType.eRandomShot) > 0)
+        this.GetBullet(mon.transform.position + this.vFirePos).SetTarget(mon, _eTrail, _eType, (Vector2) (Quaternion.Euler(0.0f, 0.0f, (float) Random.Range(-35, 35)) * (Vector3) vector2).normalized, battleItem, fDmg, flag2, _bHuge, bAssasin, _nRicochet, 1f);
     }
     if (bDmg && (double) Random.Range(0.0f, 100f) < (double) Info.GetElementalFac(ElementalID.eFireStorm, 0))
     {
@@ -2102,33 +1811,18 @@ public class PageBattle : UIMgr
   }
 
   [DebuggerHidden]
-  private IEnumerator StartChainLightning(Monster mon, Enemy em, BattleItemData bData, Vector2 vLastPos, float fPlus, bool bThunder, bool bCri, int nTimes, bool bBig)
+  private IEnumerator StartChainLightning(Monster mon, Enemy em, BattleItemData bData, Vector2 vLastPos, float fPlus, bool bThunder, bool bCri, int nTimes)
   {
     // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CStartChainLightning\u003Ec__IteratorC()
-    {
-      em = em,
-      nTimes = nTimes,
-      mon = mon,
-      fPlus = fPlus,
-      bThunder = bThunder,
-      bData = bData,
-      bCri = bCri,
-      bBig = bBig,
-      vLastPos = vLastPos,
-      \u0024this = this
-    };
+    return (IEnumerator) new PageBattle.\u003CStartChainLightning\u003Ec__IteratorB() { em = em, nTimes = nTimes, mon = mon, fPlus = fPlus, bThunder = bThunder, bData = bData, bCri = bCri, vLastPos = vLastPos, \u0024this = this };
   }
 
-  private void HitThunder(Vector2 v2Pos, Monster mon, BattleItemData bData, float fPlus, bool bCri, bool bBig)
+  private void HitThunder(Vector2 v2Pos, Monster mon, BattleItemData bData, float fPlus, bool bCri)
   {
     float num1 = (float) (1.0 + (double) Info.GetResearchFac(ResearchID.eThunder) * 0.00999999977648258);
-    if (bBig)
-      num1 *= (float) (1.0 + (double) this.GetMonTrait2(mon.nPos, MonTraitID.eBigThunder) * 0.00999999977648258);
     Vector3 vSca = Vector3.one * num1;
     UIMgr.PlaySound("Explosion" + (object) Random.Range(0, 2), false);
-    if (!Info.option.bOptimize)
-      CameraShake.instance.Shake(CameraShake.ShakeType.LocalPosition, 2, PageBattle.vShakePos, Vector3.zero, 1f, 90f, 0.9f, 0.0f, true);
+    CameraShake.instance.Shake(CameraShake.ShakeType.LocalPosition, 2, PageBattle.vShakePos, Vector3.zero, 1f, 90f, 0.9f, 0.0f, true);
     ParticleMgr.Play("Thunder", (Vector3) v2Pos, Quaternion.identity, vSca);
     fPlus *= (float) (1.0 + (double) this.GetSkillFac2(mon.nPos, SkillKey.eThunder) * 0.00999999977648258);
     fPlus *= (float) (1.0 + (double) Info.GetAccModFac(ModType.eFirstThunder) * 0.00999999977648258);
@@ -2155,33 +1849,14 @@ public class PageBattle : UIMgr
   private IEnumerator StartUnlimitedSword(Monster mon, BattleItemData bData, float fDmg, int nTimes)
   {
     // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CStartUnlimitedSword\u003Ec__IteratorD()
-    {
-      nTimes = nTimes,
-      mon = mon,
-      bData = bData,
-      fDmg = fDmg,
-      \u0024this = this
-    };
+    return (IEnumerator) new PageBattle.\u003CStartUnlimitedSword\u003Ec__IteratorC() { nTimes = nTimes, mon = mon, bData = bData, fDmg = fDmg, \u0024this = this };
   }
 
   [DebuggerHidden]
   private IEnumerator StartSummonSword(Monster mon, Vector3 vTgtPos, BattleItemData bData, float fDmg, int nShot, bool bCri, bool bThree, bool bLeft, bool bGap)
   {
     // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CStartSummonSword\u003Ec__IteratorE()
-    {
-      nShot = nShot,
-      mon = mon,
-      fDmg = fDmg,
-      bLeft = bLeft,
-      bThree = bThree,
-      vTgtPos = vTgtPos,
-      bData = bData,
-      bCri = bCri,
-      bGap = bGap,
-      \u0024this = this
-    };
+    return (IEnumerator) new PageBattle.\u003CStartSummonSword\u003Ec__IteratorD() { nShot = nShot, bLeft = bLeft, bThree = bThree, mon = mon, vTgtPos = vTgtPos, bData = bData, fDmg = fDmg, bCri = bCri, bGap = bGap, \u0024this = this };
   }
 
   private void RefreshAmmo()
@@ -2194,21 +1869,7 @@ public class PageBattle : UIMgr
   private IEnumerator HitArea(Vector2 v2Pos, Monster mon, long nEquip, float fPlus, bool bCri, string strFX, float fHitSize, float fAddSize, float fTimeGap, bool bBig, bool bSlash = false)
   {
     // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CHitArea\u003Ec__IteratorF()
-    {
-      fTimeGap = fTimeGap,
-      fAddSize = fAddSize,
-      fHitSize = fHitSize,
-      bBig = bBig,
-      bCri = bCri,
-      bSlash = bSlash,
-      strFX = strFX,
-      v2Pos = v2Pos,
-      mon = mon,
-      nEquip = nEquip,
-      fPlus = fPlus,
-      \u0024this = this
-    };
+    return (IEnumerator) new PageBattle.\u003CHitArea\u003Ec__IteratorE() { fTimeGap = fTimeGap, fAddSize = fAddSize, fHitSize = fHitSize, bBig = bBig, bCri = bCri, bSlash = bSlash, strFX = strFX, v2Pos = v2Pos, mon = mon, nEquip = nEquip, fPlus = fPlus, \u0024this = this };
   }
 
   public void OnShootLaser(Monster mon, Vector3 vStart, Vector3 vEnd, float fSize, float fPlus, int nLaserNum, bool bDmg, bool bCri)
@@ -2240,8 +1901,6 @@ public class PageBattle : UIMgr
         {
           flag = component.isDead;
           this.MonsterDamage(component, Info.GetDamage(mon, component, battleItem) * fPlus * num2, bCri, mon, false, true);
-          if (nLaserNum == 0)
-            ++mon.nCharge;
         }
       }
     }
@@ -2331,20 +1990,8 @@ public class PageBattle : UIMgr
       num *= (float) (1.0 - (double) PageBattle.GetMutation1(MutateType.eBlock) * 0.00999999977648258);
     if (PageBattle.CheckMutation(MutateType.eBarrier) && !flag)
       num *= (float) (1.0 - (double) PageBattle.GetMutation1(MutateType.eBarrier) * 0.00999999977648258);
-    if ((Object) bul.pMon != (Object) null)
-    {
-      if (bul.nHit == 1 && bul.bHuge)
-        num *= (float) (1.0 + (double) this.GetSkillFac(bul.pMon.nPos, SkillKey.eDeathStrike) * 0.00999999977648258);
-      if (bul.nRicochet > 0 && (double) Random.Range(0.0f, 100f) < (double) this.GetMonTrait(bul.pMon.nPos, MonTraitID.eLastBounce) && (Object) this.GetRandomEnemy(em) == (Object) null)
-        num *= (float) (1.0 + (double) this.GetMonTrait(bul.pMon.nPos, MonTraitID.eLastBounce) * 0.00999999977648258);
-      if (bul.bAssasinate)
-        num *= (float) (1.0 + (1.0 - (double) em.fHPRate) * (double) this.GetMonTrait(bul.pMon.nPos, MonTraitID.eLastAssasinate) * 0.00999999977648258);
-      if (bul.nPen > 1 && (double) Random.Range(0.0f, 100f) < (double) this.GetMonTrait(bul.pMon.nPos, MonTraitID.ePenetrateBomb))
-      {
-        num *= (float) (1.0 + (double) this.GetMonTrait(bul.pMon.nPos, MonTraitID.ePenetrateBomb) * 0.00999999977648258);
-        bul.nPen = 0;
-      }
-    }
+    if ((Object) bul.pMon != (Object) null && bul.nHit == 1 && bul.bHuge)
+      num *= (float) (1.0 + (double) this.GetSkillFac(bul.pMon.nPos, SkillKey.eDeathStrike) * 0.00999999977648258);
     bool isDead = em.isDead;
     this.MonsterDamage(em, num * fDmgPlus, bul.bCri, bul.pMon, false, true);
     if (em.bBoss && bul.gameObject.activeInHierarchy && (PageBattle.CheckMutation(MutateType.eAbsorb) && (double) Random.Range(0.0f, 100f) < (double) PageBattle.GetMutation1(MutateType.eAbsorb)))
@@ -2357,17 +2004,32 @@ public class PageBattle : UIMgr
     return bul.bCri;
   }
 
-  [DebuggerHidden]
-  private IEnumerator OnSoulExplosion(float fDmg, Vector3 vPos, float fSize = 1f)
+  private void OnSoulExplosion(float fDmg, Vector3 vPos)
   {
-    // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003COnSoulExplosion\u003Ec__Iterator10()
+    UIMgr.PlaySound("Explosion" + (object) Random.Range(0, 2), false);
+    ParticleMgr.Play("ExplosionCirGreen", vPos);
+    CameraShake.instance.Shake(CameraShake.ShakeType.LocalPosition, 2, PageBattle.vShakePos, Vector3.zero, 1f, 90f, 0.9f, 0.0f, true);
+    int num = Physics2D.CircleCastNonAlloc((Vector2) vPos, 90f, Vector2.zero, this.hits);
+    if (num == 0)
+      return;
+    for (int index = 0; index < num; ++index)
     {
-      vPos = vPos,
-      fDmg = fDmg,
-      fSize = fSize,
-      \u0024this = this
-    };
+      if (!(this.hits[index].transform.tag != "Enemy"))
+      {
+        Enemy component = this.hits[index].transform.GetComponent<Enemy>();
+        if (!((Object) component == (Object) null) && component.gameObject.activeInHierarchy && !component.isDead)
+        {
+          this.MonsterDamage(component, fDmg, false, this.pSoulMon, false, true);
+          if (component.isDead && Info.CheckResearch(ResearchID.eSoulBomb))
+          {
+            if (Info.option.bOptimize)
+              this.OnItemReach(BattleCoinElt.Type.eHP, -1f);
+            else
+              this.MakeCoin(BattleCoinElt.Type.eHP, 0.0f, component.transform.position, 1f);
+          }
+        }
+      }
+    }
   }
 
   private void MonsterDamage(Enemy em, float fDmg, bool bCri, Monster pMon = null, bool bForce = false, bool bCalc = true)
@@ -2379,7 +2041,6 @@ public class PageBattle : UIMgr
         fDmg *= (float) (1.0 + (double) Info.GetRebirthFac(RebirthID.eBossDmg) * 0.00999999977648258);
         fDmg *= (float) (1.0 + (double) Info.GetRebirthFac(RebirthID.eRubyBossDmg) * 0.00999999977648258);
       }
-      fDmg *= !em.bCursed ? 1f : 0.67f;
       fDmg *= em.fTakeDmg * em.fTakeDmg2;
       if ((double) Info.GetElementalFac(ElementalID.eDarkLowHPDmg, 0) > 0.0)
         fDmg *= (float) (1.0 + (double) Info.GetElementalFac(ElementalID.eDarkLowHPDmg, 0) * (1.0 - (double) (float) this.fHPRate) * 0.00999999977648258);
@@ -2393,10 +2054,6 @@ public class PageBattle : UIMgr
         fDmg *= (float) ((1.0 - (double) Mathf.Abs((float) ((double) this.fCurrentBalanceGuage * 2.0 - 1.0))) * 3.0);
       if ((Object) pMon != (Object) null)
       {
-        if (em.bBoss)
-          fDmg *= (float) (1.0 + (double) this.GetMonTrait(pMon.nPos, MonTraitID.eDragonSlayer) * 0.00999999977648258);
-        if ((double) this.GetMonTrait(pMon.nPos, MonTraitID.eWeakSpotSelf) > 0.0)
-          fDmg *= (float) (1.0 + (double) em.fTakeDmg * ((double) this.GetMonTrait(pMon.nPos, MonTraitID.eWeakSpotSelf) * 0.00999999977648258 - 1.0));
         float num1 = (float) ((double) this.GetSkillFac(pMon.nPos, SkillKey.eExcute) * 0.00999999977648258 * (1.0 - (double) em.fHPRate));
         if ((double) num1 > 0.0)
           fDmg += fDmg * num1;
@@ -2420,10 +2077,8 @@ public class PageBattle : UIMgr
     }
     if ((Object) pMon != (Object) null && bCalc)
     {
-      if ((double) Random.Range(0.0f, 100f) < (double) Info.GetElementalFac(ElementalID.eWaterHitStun, 0) + (double) this.GetMonTrait(pMon.nPos, MonTraitID.eFreeze))
+      if ((double) Random.Range(0.0f, 100f) < (double) Info.GetElementalFac(ElementalID.eWaterHitStun, 0))
       {
-        fDmg *= (float) (1.0 + (double) this.GetMonTrait(pMon.nPos, MonTraitID.eFreezePlus) * 0.00999999977648258);
-        fDmg *= (float) (1.0 + (double) this.GetMonTrait2(pMon.nPos, MonTraitID.eFreeze) * 0.00999999977648258);
         em.SetStun(1f);
         if (!Info.option.bOptimize)
           ParticleMgr.Play("HitIce", em.transform);
@@ -2440,13 +2095,9 @@ public class PageBattle : UIMgr
       if ((double) Random.Range(0.0f, 100f) < (double) Info.GetElementalFac(ElementalID.eWaterCrushWave, 0))
         fDmg *= (float) (1.0 + (double) Info.GetElementalFac(ElementalID.eWaterCrushWave, 1) * 0.00999999977648258);
       if (em.isStun)
-      {
         fDmg *= (float) (1.0 + (double) Info.GetElementalFac(ElementalID.eWaterStunDmg, 0) * 0.00999999977648258);
-        fDmg *= (float) (1.0 + (double) this.GetMonTrait(pMon.nPos, MonTraitID.eIceShard) * 0.00999999977648258);
-      }
       if ((double) Info.GetElementalFac(ElementalID.eWaterSlowCr, 0) > 0.0)
         fDmg *= (float) (1.0 + (double) Info.GetElementalFac(ElementalID.eWaterSlowCr, 0) * (double) Mathf.Max(0.0f, 1f - em.fSlowRate) * 0.00999999977648258);
-      fDmg *= (float) (1.0 + (double) Mathf.Max(0.0f, 1f - em.fSlowRate) * (double) this.GetMonTrait(pMon.nPos, MonTraitID.eVerb) * 0.00999999977648258);
       if (!em.bBoss && (double) fDmg > 0.0)
         fDmg += (float) (em.hp * (double) this.GetSkillFac(pMon.nPos, SkillKey.eHpRateStrike) * 0.00999999977648258);
     }
@@ -2505,7 +2156,7 @@ public class PageBattle : UIMgr
           this.arrActiveSkill[pMon.nPos].UpdateGuage(5f, false, false);
         bool flag4 = 0.0 < (double) this.GetSkillFac(pMon.nPos, SkillKey.eSoulBomb);
         if (flag4 || (double) this.fSoulBombDps > 0.0)
-          this.StartCoroutine(this.OnSoulExplosion(!flag4 ? this.fSoulBombDps : (float) ((double) Info.GetDamage(pMon) * (double) this.GetSkillFac2(pMon.nPos, SkillKey.eSoulBomb) * 0.00999999977648258), em.transform.localPosition, 1f));
+          this.OnSoulExplosion(!flag4 ? this.fSoulBombDps : (float) ((double) Info.GetDamage(pMon) * (double) this.GetSkillFac2(pMon.nPos, SkillKey.eSoulBomb) * 0.00999999977648258), em.transform.localPosition);
       }
     }
     else if ((double) fDmg > 0.0)
@@ -2519,7 +2170,7 @@ public class PageBattle : UIMgr
         if (bCri && Info.GetSkill(pMon.nPos, SkillKey.eHunting) > 0)
           em.SetTakeDmg2(Mathf.Min(em.fTakeDmg2 + this.GetSkillFac(pMon.nPos, SkillKey.eHunting) * 0.01f, this.GetSkillFac2(pMon.nPos, SkillKey.eHunting) * 0.01f));
         if ((double) this.GetSkillFac(pMon.nPos, SkillKey.eWeakSpot) > 0.0)
-          em.SetTakeDmg(Mathf.Clamp(em.fTakeDmg + (float) ((double) this.GetSkillFac(pMon.nPos, SkillKey.eWeakSpot) * 0.00999999977648258 * (1.0 + (double) this.GetMonTrait(pMon.nPos, MonTraitID.eWeakSpotPlus))), 1f, 2f));
+          em.SetTakeDmg(Mathf.Clamp(em.fTakeDmg + this.GetSkillFac(pMon.nPos, SkillKey.eWeakSpot) * 0.01f, 1f, 2f));
         if ((double) this.GetSkillFac(pMon.nPos, SkillKey.eWeakShot) > 0.0)
           em.fGiveDmg = Mathf.Max(em.fGiveDmg * (float) (1.0 - (double) this.GetSkillFac(pMon.nPos, SkillKey.eWeakShot) * (!em.bBoss ? 0.00999999977648258 : 0.00499999988824129)), (float) (1.0 - (double) this.GetSkillFac2(pMon.nPos, SkillKey.eWeakShot) * 0.00999999977648258));
       }
@@ -2662,8 +2313,7 @@ public class PageBattle : UIMgr
       this.fPainKillerCool = (ObscuredFloat) Info.GetElementalFac(ElementalID.eLightPainkiller, 2);
     }
     ++this.nDamagedNum;
-    if (!Info.option.bOptimize)
-      CameraShake.instance.Shake(CameraShake.ShakeType.LocalPosition, 3, PageBattle.vShakePos, Vector3.zero, 2f, 140f, 0.7f, 0.0f, true);
+    CameraShake.instance.Shake(CameraShake.ShakeType.LocalPosition, 3, PageBattle.vShakePos, Vector3.zero, 2f, 140f, 0.7f, 0.0f, true);
     PageBattle pageBattle = this;
     ObscuredFloat obscuredFloat = (ObscuredFloat) ((float) pageBattle.fHP - fDmg);
     pageBattle.fHP = obscuredFloat;
@@ -2734,18 +2384,18 @@ public class PageBattle : UIMgr
 
   public void OnEnemyBulletCollision(EnemyBullet bul)
   {
-    float num1 = this.GetReducedDamage(bul.em, bul.fDmg) * (!((Object) bul.em != (Object) null) || !bul.em.bCursed ? 1f : 0.67f);
-    float num2 = (float) (1.0 - (double) PageBattle.GetMutation1(MutateType.ePrecision) * 0.00999999977648258);
+    float reducedDamage = this.GetReducedDamage(bul.em, bul.fDmg);
+    float num = (float) (1.0 - (double) PageBattle.GetMutation1(MutateType.ePrecision) * 0.00999999977648258);
     bool flag1 = false;
-    bool flag2 = (double) Random.Range(0.0f, 100f) < (double) Info.GetPartySkillFac(SkillKey.eNegativeAttack) * (double) num2;
+    bool flag2 = (double) Random.Range(0.0f, 100f) < (double) Info.GetPartySkillFac(SkillKey.eNegativeAttack) * (double) num;
     if (!flag2)
-      flag2 = (double) Random.Range(0.0f, 100f) < (double) Info.GetAcvReward(AcvRewardType.eEvade) * (double) num2;
+      flag2 = (double) Random.Range(0.0f, 100f) < (double) Info.GetAcvReward(AcvRewardType.eEvade) * (double) num;
     if (!flag2)
-      flag2 = (double) Random.Range(0.0f, 100f) < (double) Info.GetResearchFac(ResearchID.eAcientWall) * (double) num2;
+      flag2 = (double) Random.Range(0.0f, 100f) < (double) Info.GetResearchFac(ResearchID.eAcientWall) * (double) num;
     for (int nPos = 0; nPos < 5; ++nPos)
     {
       if (!flag2)
-        flag2 = (double) Random.Range(0.0f, 100f) < (double) Info.GetAccModFac(nPos, ModType.eEvade) * (double) num2;
+        flag2 = (double) Random.Range(0.0f, 100f) < (double) Info.GetAccModFac(nPos, ModType.eEvade) * (double) num;
     }
     if (!flag2)
       flag2 = (double) Random.Range(0.0f, 100f) < (double) Info.GetElementalFac(ElementalID.eLightShine, 0);
@@ -2758,9 +2408,9 @@ public class PageBattle : UIMgr
       flag1 = this.isInvincible;
     if (!flag2 && !flag1)
     {
-      this.ShowText(bul.transform.position, Mathf.Max(1f, num1).ToString("N0"), Color.red, -80f);
+      this.ShowText(bul.transform.position, Mathf.Max(1f, reducedDamage).ToString("N0"), Color.red, -80f);
       ParticleMgr.Play("HitFire", bul.transform);
-      this.DungeonDamage(num1);
+      this.DungeonDamage(reducedDamage);
       if ((Object) bul.em != (Object) null)
       {
         if ((double) Info.GetElementalFac(ElementalID.eDarkObs2, 0) > 0.0)
@@ -2788,16 +2438,16 @@ public class PageBattle : UIMgr
     this.vHitPos = em.transform.position;
     this.vHitPos.x -= 20f;
     bool flag1 = false;
-    float num1 = (float) (1.0 - (double) PageBattle.GetMutation1(MutateType.ePrecision) * 0.00999999977648258);
-    bool flag2 = (double) Random.Range(0.0f, 100f) < (double) Info.GetPartySkillFac(SkillKey.eNegativeAttack) * (double) num1;
+    float num = (float) (1.0 - (double) PageBattle.GetMutation1(MutateType.ePrecision) * 0.00999999977648258);
+    bool flag2 = (double) Random.Range(0.0f, 100f) < (double) Info.GetPartySkillFac(SkillKey.eNegativeAttack) * (double) num;
     if (!flag2)
-      flag2 = (double) Random.Range(0.0f, 100f) < (double) Info.GetAcvReward(AcvRewardType.eEvade) * (double) num1;
+      flag2 = (double) Random.Range(0.0f, 100f) < (double) Info.GetAcvReward(AcvRewardType.eEvade) * (double) num;
     if (!flag2)
-      flag2 = (double) Random.Range(0.0f, 100f) < (double) Info.GetResearchFac(ResearchID.eAcientWall) * (double) num1;
+      flag2 = (double) Random.Range(0.0f, 100f) < (double) Info.GetResearchFac(ResearchID.eAcientWall) * (double) num;
     for (int nPos = 0; nPos < 5; ++nPos)
     {
       if (!flag2)
-        flag2 = (double) Random.Range(0.0f, 100f) < (double) Info.GetAccModFac(nPos, ModType.eEvade) * (double) num1;
+        flag2 = (double) Random.Range(0.0f, 100f) < (double) Info.GetAccModFac(nPos, ModType.eEvade) * (double) num;
     }
     if (!flag2 && (bool) this.bLightShield)
     {
@@ -2808,9 +2458,9 @@ public class PageBattle : UIMgr
       flag1 = this.isInvincible;
     if (!flag2 && !flag1)
     {
-      float num2 = this.GetReducedDamage(em, em.fDmg * em.fGiveDmg) * (!em.bCursed ? 1f : 0.67f);
-      this.DungeonDamage(num2);
-      this.ShowText(this.vHitPos, Mathf.Max(1f, num2).ToString("N0"), Color.red, -80f);
+      float reducedDamage = this.GetReducedDamage(em, em.fDmg * em.fGiveDmg);
+      this.DungeonDamage(reducedDamage);
+      this.ShowText(this.vHitPos, Mathf.Max(1f, reducedDamage).ToString("N0"), Color.red, -80f);
       if ((double) Info.GetElementalFac(ElementalID.eDarkObs1, 0) > 0.0 || (double) Info.GetElementalFac(ElementalID.eDarkObs2, 0) > 0.0)
         em.SetStun(Info.GetElementalFac(ElementalID.eDarkObs1, 0) + Info.GetElementalFac(ElementalID.eDarkObs2, 0));
       if ((double) Info.GetElementalFac(ElementalID.eLightObs2, 0) > 0.0)
@@ -2932,11 +2582,7 @@ public class PageBattle : UIMgr
         }
         UIMgr.PlaySound("PowerSlam", false);
         this.SetFlash(0.5f, 0.0f, 0.0f, 0.25f, 2f);
-        if (!Info.option.bOptimize)
-        {
-          CameraShake.instance.Shake(CameraShake.ShakeType.LocalPosition, 3, PageBattle.vShakePos, Vector3.zero, 4f, 100f, 0.25f, 0.0f, true);
-          break;
-        }
+        CameraShake.instance.Shake(CameraShake.ShakeType.LocalPosition, 3, PageBattle.vShakePos, Vector3.zero, 4f, 100f, 0.25f, 0.0f, true);
         break;
       case SkillKey.eSwift:
         this.listMonster[byBatch].OnSwiftBuff(num1, num2 * 0.01f);
@@ -3078,13 +2724,13 @@ public class PageBattle : UIMgr
                     if (eSkill == SkillKey.eBlueLightning)
                     {
                       this.SetFlash(1f, 0.0f, 0.0f, 0.25f, 2f);
-                      this.fSuperLightningTime = (float) (7.0 * (1.0 + (double) Info.GetAccModFac(ModType.eSpecialDuration) * 0.00999999977648258) * (1.0 - (double) this.GetMonTrait(monster.nPos, MonTraitID.eBlueLightningPlus) * 0.00999999977648258));
+                      this.fSuperLightningTime = (float) (7.0 * (1.0 + (double) Info.GetAccModFac(ModType.eSpecialDuration) * 0.00999999977648258));
                       break;
                     }
                     break;
                   }
                   this.SetFlash(1f, 0.0f, 0.0f, 0.25f, 2f);
-                  this.fSuperBladeTime = (float) (7.0 * (1.0 - (double) this.GetMonTrait(monster.nPos, MonTraitID.eBladeStormPlus) * 0.00999999977648258));
+                  this.fSuperBladeTime = 7f;
                   break;
                 }
                 float fDmg4 = (float) ((double) monDps * (double) num1 * 0.00999999977648258) * monster.fFixAtkBonus;
@@ -3101,7 +2747,7 @@ public class PageBattle : UIMgr
                 break;
               }
               this.SetFlash(1f, 0.0f, 1f, 0.25f, 2f);
-              this.fSuperLaserTime = (float) (8.0 * (1.0 + (double) Info.GetAccModFac(ModType.eSuperLaserDur) * 0.00999999977648258) * (1.0 - (double) this.GetMonTrait(monster.nPos, MonTraitID.eSuperLaserPlus) * 0.00999999977648258));
+              this.fSuperLaserTime = (float) (8.0 * (1.0 + (double) Info.GetAccModFac(ModType.eSuperLaserDur) * 0.00999999977648258));
               break;
             }
             float fDmg5 = (float) ((double) monDps * (double) num1 * 0.00999999977648258);
@@ -3199,34 +2845,21 @@ public class PageBattle : UIMgr
   private IEnumerator ShowFireStorm(string strFX)
   {
     // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CShowFireStorm\u003Ec__Iterator11()
-    {
-      strFX = strFX,
-      \u0024this = this
-    };
+    return (IEnumerator) new PageBattle.\u003CShowFireStorm\u003Ec__IteratorF() { strFX = strFX, \u0024this = this };
   }
 
   [DebuggerHidden]
   private IEnumerator ShowMoonCrystal()
   {
     // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CShowMoonCrystal\u003Ec__Iterator12()
-    {
-      \u0024this = this
-    };
+    return (IEnumerator) new PageBattle.\u003CShowMoonCrystal\u003Ec__Iterator10() { \u0024this = this };
   }
 
   [DebuggerHidden]
   private IEnumerator StartPoisonMyst(Monster mon, float fDmg, float fDur)
   {
     // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CStartPoisonMyst\u003Ec__Iterator13()
-    {
-      fDmg = fDmg,
-      mon = mon,
-      fDur = fDur,
-      \u0024this = this
-    };
+    return (IEnumerator) new PageBattle.\u003CStartPoisonMyst\u003Ec__Iterator11() { fDmg = fDmg, mon = mon, fDur = fDur, \u0024this = this };
   }
 
   [DebuggerHidden]
@@ -3234,21 +2867,15 @@ public class PageBattle : UIMgr
   {
     // ISSUE: object of a compiler-generated type is created
     // ISSUE: variable of a compiler-generated type
-    PageBattle.\u003CShowPoisonMyst\u003Ec__Iterator14 poisonMystCIterator14 = new PageBattle.\u003CShowPoisonMyst\u003Ec__Iterator14();
-    return (IEnumerator) poisonMystCIterator14;
+    PageBattle.\u003CShowPoisonMyst\u003Ec__Iterator12 poisonMystCIterator12 = new PageBattle.\u003CShowPoisonMyst\u003Ec__Iterator12();
+    return (IEnumerator) poisonMystCIterator12;
   }
 
   [DebuggerHidden]
   private IEnumerator ThrowBoneParty(Monster mon, int nNum, float fDmg)
   {
     // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CThrowBoneParty\u003Ec__Iterator15()
-    {
-      nNum = nNum,
-      mon = mon,
-      fDmg = fDmg,
-      \u0024this = this
-    };
+    return (IEnumerator) new PageBattle.\u003CThrowBoneParty\u003Ec__Iterator13() { nNum = nNum, mon = mon, fDmg = fDmg, \u0024this = this };
   }
 
   public void SetAlarm(string strTitle, string strSub, float fFadeIn, float fShow, float fFadeOut)
@@ -3277,50 +2904,28 @@ public class PageBattle : UIMgr
   private IEnumerator ShowBalanceGuage()
   {
     // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CShowBalanceGuage\u003Ec__Iterator16()
-    {
-      \u0024this = this
-    };
+    return (IEnumerator) new PageBattle.\u003CShowBalanceGuage\u003Ec__Iterator14() { \u0024this = this };
   }
 
   [DebuggerHidden]
   private IEnumerator ShowAlarm(CanvasGroup cg, float fFadeIn, float fShow, float fFadeOut)
   {
     // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CShowAlarm\u003Ec__Iterator17()
-    {
-      cg = cg,
-      fFadeIn = fFadeIn,
-      fShow = fShow,
-      fFadeOut = fFadeOut
-    };
+    return (IEnumerator) new PageBattle.\u003CShowAlarm\u003Ec__Iterator15() { cg = cg, fFadeIn = fFadeIn, fShow = fShow, fFadeOut = fFadeOut };
   }
 
   [DebuggerHidden]
   private IEnumerator HighSlash(bool bAll, int nPos, int nMax, float fDmg)
   {
     // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CHighSlash\u003Ec__Iterator18()
-    {
-      nPos = nPos,
-      nMax = nMax,
-      bAll = bAll,
-      fDmg = fDmg,
-      \u0024this = this
-    };
+    return (IEnumerator) new PageBattle.\u003CHighSlash\u003Ec__Iterator16() { nPos = nPos, nMax = nMax, bAll = bAll, fDmg = fDmg, \u0024this = this };
   }
 
   [DebuggerHidden]
   private IEnumerator StartFireExplosion(Monster mon, int nMax, float fPlus)
   {
     // ISSUE: object of a compiler-generated type is created
-    return (IEnumerator) new PageBattle.\u003CStartFireExplosion\u003Ec__Iterator19()
-    {
-      fPlus = fPlus,
-      nMax = nMax,
-      mon = mon,
-      \u0024this = this
-    };
+    return (IEnumerator) new PageBattle.\u003CStartFireExplosion\u003Ec__Iterator17() { fPlus = fPlus, nMax = nMax, mon = mon, \u0024this = this };
   }
 
   private Enemy GetRandomEnemy(Enemy em)
@@ -3378,9 +2983,7 @@ public class PageBattle : UIMgr
         if (eType != BattleCoinElt.Type.eHP)
           return;
         ++this.nHarvestNum;
-        if ((bool) ((Object) this.pSoulMon))
-          ++this.pSoulMon.nCharge;
-        this.DungeonHeal((float) (1.0 * (1.0 + (double) Info.GetAccModFac(ModType.eHarvestHeal) * 0.00999999977648258) * (1.0 + (double) this.GetPartyMonTrait(MonTraitID.eHarvestPlus) * 0.00999999977648258)), false);
+        this.DungeonHeal((float) (1.0 * (1.0 + (double) Info.GetAccModFac(ModType.eHarvestHeal) * 0.00999999977648258)), false);
         if (!Info.option.bOptimize)
         {
           this.psHp.Play(false);
@@ -3484,8 +3087,7 @@ public class PageBattle : UIMgr
   {
     if ((bool) this.bBattleOver)
       return;
-    if (!Info.option.bOptimize)
-      CameraShake.instance.Shake(CameraShake.ShakeType.LocalPosition, 2, PageBattle.vShakePos, Vector3.zero, 1f, 90f, 0.9f, 0.0f, true);
+    CameraShake.instance.Shake(CameraShake.ShakeType.LocalPosition, 2, PageBattle.vShakePos, Vector3.zero, 1f, 90f, 0.9f, 0.0f, true);
     PageBattle.obj.SetFlash(1f, 0.0f, 0.0f, 0.4f, 2f);
     for (int index = 0; index < this.listMonster.Count; ++index)
     {
@@ -3505,8 +3107,7 @@ public class PageBattle : UIMgr
     {
       UIMgr.PlaySound("Negative", false);
       PageBattle.obj.SetFlash(1f, 0.0f, 0.0f, 0.4f, 2f);
-      if (!Info.option.bOptimize)
-        CameraShake.instance.Shake(CameraShake.ShakeType.LocalPosition, 2, PageBattle.vShakePos, Vector3.zero, 1f, 90f, 0.9f, 0.0f, true);
+      CameraShake.instance.Shake(CameraShake.ShakeType.LocalPosition, 2, PageBattle.vShakePos, Vector3.zero, 1f, 90f, 0.9f, 0.0f, true);
       this.nNowStoneOrder = 0;
     }
     this.RefreshStone();
@@ -3514,9 +3115,9 @@ public class PageBattle : UIMgr
 
   private void RefreshStone()
   {
-    for (int index = 0; index < 5; ++index)
+    for (int index = 0; index < 6; ++index)
       this.arrStoneActive[this.nStoneOrder[index]].SetActive(index < this.nNowStoneOrder);
-    if (this.nNowStoneOrder < 5)
+    if (this.nNowStoneOrder < 6)
       return;
     this.goStone.SetActive(false);
     if (this.emTrialBoss.Length <= 0)

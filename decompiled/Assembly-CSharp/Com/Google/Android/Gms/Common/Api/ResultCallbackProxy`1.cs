@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: Com.Google.Android.Gms.Common.Api.ResultCallbackProxy`1
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
-// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
+// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using Google.Developers;
 using System;
@@ -31,10 +31,7 @@ namespace Com.Google.Android.Gms.Common.Api
     public void onResult(AndroidJavaObject arg_Result_1)
     {
       IntPtr rawObject = arg_Result_1.GetRawObject();
-      ConstructorInfo constructor = typeof (R).GetConstructor(new System.Type[1]
-      {
-        rawObject.GetType()
-      });
+      ConstructorInfo constructor = typeof (R).GetConstructor(new System.Type[1]{ rawObject.GetType() });
       R arg_Result_1_1;
       if (constructor != null)
       {

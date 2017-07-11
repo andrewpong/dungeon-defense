@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: DigitalRuby.ThunderAndLightning.LightningSpellScript
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
-// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
+// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using System.Collections;
 using System.Diagnostics;
@@ -23,11 +23,7 @@ namespace DigitalRuby.ThunderAndLightning
     [Tooltip("The layers that the spell should collide with")]
     public LayerMask CollisionMask = (LayerMask) -1;
     [Tooltip("Collision sound volume range.")]
-    public RangeOfFloats CollisionVolumeRange = new RangeOfFloats()
-    {
-      Minimum = 0.4f,
-      Maximum = 0.6f
-    };
+    public RangeOfFloats CollisionVolumeRange = new RangeOfFloats() { Minimum = 0.4f, Maximum = 0.6f };
     [Header("Direction and distance")]
     [Tooltip("The start point of the spell. Set this to a muzzle end or hand.")]
     public GameObject SpellStart;
@@ -79,11 +75,7 @@ namespace DigitalRuby.ThunderAndLightning
     private IEnumerator StopAfterSecondsCoRoutine(float seconds)
     {
       // ISSUE: object of a compiler-generated type is created
-      return (IEnumerator) new LightningSpellScript.\u003CStopAfterSecondsCoRoutine\u003Ec__Iterator0()
-      {
-        seconds = seconds,
-        \u0024this = this
-      };
+      return (IEnumerator) new LightningSpellScript.\u003CStopAfterSecondsCoRoutine\u003Ec__Iterator0() { seconds = seconds, \u0024this = this };
     }
 
     protected void ApplyCollisionForce(Vector3 point)

@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: PopupTrialBrief
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
-// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
+// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using CC;
 using CodeStage.AntiCheat.ObscuredTypes;
@@ -22,7 +22,6 @@ public class PopupTrialBrief : UIPage
   public Text textDiffEasy;
   public Text textDiffNormal;
   public Text textDiffHard;
-  public Text textDiffInsane;
   public Button btnStart;
   public GameObject goLeft;
   public GameObject goRight;
@@ -41,7 +40,6 @@ public class PopupTrialBrief : UIPage
     this.textDiffEasy.text = BData.GetString("UI0034").Replace("[1]", string.Empty);
     this.textDiffNormal.text = BData.GetString("UI0033").Replace("[1]", string.Empty);
     this.textDiffHard.text = BData.GetString("UI0035").Replace("[1]", string.Empty);
-    this.textDiffInsane.text = BData.GetString("UI0036").Replace("[1]", string.Empty);
     this.nFloor = 0;
     this.MoveTrial(Info.GetTrialClear(Info.currentSave.uRebirthID) + 1);
   }
@@ -50,27 +48,16 @@ public class PopupTrialBrief : UIPage
   {
     TrialData trial = BData.GetTrial(this.nFloor);
     MutationData mutate = BData.GetMutate(trial.eID);
-    Mathf.Max((int) Info.currentSave.nDay, trial.nDay);
-    Mathf.RoundToInt((float) trial.nDay * Info.fDiffTrialDiffFac[(int) Info.nDiffTrial]);
-    int num1;
-    int num2;
-    if ((double) Info.fDiffTrialDiffFac[(int) Info.nDiffTrial] > 1.0)
-    {
-      num1 = Mathf.RoundToInt(Mathf.Max((float) trial.nDay * Info.fDiffTrialDiffFac[(int) Info.nDiffTrial], (float) (int) Info.currentSave.nDay * Info.fDiffTrialDayFac)) + Info.nDiffTrialDiffDay[(int) Info.nDiffTrial];
-      num2 = Mathf.RoundToInt((float) trial.nDay * Info.fDiffTrialDiffFac[(int) Info.nDiffTrial]) + Info.nDiffTrialDiffDay[(int) Info.nDiffTrial];
-    }
-    else
-    {
-      num1 = Mathf.RoundToInt(Mathf.Max((float) trial.nDay, (float) (int) Info.currentSave.nDay * Info.fDiffTrialDayFac) * Info.fDiffTrialDiffFac[(int) Info.nDiffTrial]);
-      num2 = Mathf.RoundToInt((float) trial.nDay * Info.fDiffTrialDiffFac[(int) Info.nDiffTrial]);
-    }
+    int num1 = Mathf.Max((int) Info.currentSave.nDay, trial.nDay);
+    int num2 = Mathf.RoundToInt((float) trial.nDay * Info.fDiffTrialDiffFac[(int) Info.nDiffTrial]);
     bool flag = (int) Info.nDiffTrial >= 2 && (int) Info.currentSave.nDay <= num2;
+    int num3 = Mathf.RoundToInt(Info.fDiffTrialDiffFac[(int) Info.nDiffTrial] * (float) num1);
     this.textName.text = BData.GetString(mutate.strName);
     this.textDesc.text = "- " + BData.GetString(mutate.strDesc);
     this.textStart.text = Info.GetTrialClear(Info.currentSave.uRebirthID) < this.nFloor ? BData.GetString("UI0140") : BData.GetString("UI0222");
     this.btnStart.interactable = Info.GetTrialClear(Info.currentSave.uRebirthID) < this.nFloor;
-    int num3 = Mathf.RoundToInt((float) (trial.dictMedal[(int) Info.currentSave.nDiff] * (!flag ? 1 : 2)) * Info.fDiffTrialReward[(int) Info.nDiffTrial]);
-    int num4 = Mathf.RoundToInt((float) (Info.GetStone(100 + trial.nDay, (int) Info.currentSave.nDiff) / 100L * (!flag ? 1L : 2L)) * Info.fDiffTrialReward[(int) Info.nDiffTrial]);
+    int num4 = Mathf.RoundToInt((float) (trial.dictMedal[(int) Info.currentSave.nDiff] * (!flag ? 1 : 2)) * Info.fDiffTrialReward[(int) Info.nDiffTrial]);
+    int num5 = Mathf.RoundToInt((float) (Info.GetStone(100 + trial.nDay, (int) Info.currentSave.nDiff) / 100 * (!flag ? 1 : 2)) * Info.fDiffTrialReward[(int) Info.nDiffTrial]);
     MutateType eId = trial.eID;
     switch (eId)
     {
@@ -81,7 +68,7 @@ public class PopupTrialBrief : UIPage
         break;
       case MutateType.eHusk:
         Text textDesc2 = this.textDesc;
-        string str2 = textDesc2.text + "\n- " + Info.GetMutationDescCustom(MutateType.eDivine, (float) (10 + num1 / 10), 0.0f);
+        string str2 = textDesc2.text + "\n- " + Info.GetMutationDescCustom(MutateType.eDivine, (float) (10 + num3 / 10), 0.0f);
         textDesc2.text = str2;
         Text textDesc3 = this.textDesc;
         string str3 = textDesc3.text + "\n- " + Info.GetMutationDescCustom(MutateType.eBerserk, 20f, 0.0f);
@@ -176,7 +163,7 @@ public class PopupTrialBrief : UIPage
       this.goDiffChecker[index].SetActive(index == (int) Info.nDiffTrial);
     string str22 = !flag ? "<Color='white'>" : "<Color='#00EB2EFF'>";
     string str23 = "</color>";
-    this.textDrop.text = "- " + BData.GetString("UI0217") + " x " + str22 + (object) num3 + str23 + "\n- " + BData.GetString("UI0227") + " x " + str22 + (object) num4 + str23 + "\n- (" + str22 + (trial.fDropRate * (!flag ? 1f : 2f) * Info.fDiffTrialReward[(int) Info.nDiffTrial]).ToString("N0") + str23 + "%)" + (!trial.bDropRing ? BData.GetString("UI0218") : BData.GetString("UI0283")).Replace("[1]", Info.GetGradeString((byte) trial.nDropMin, false)).Replace("[2]", Info.GetGradeString((byte) trial.nDropMax, false)) + "\n" + ((int) Info.nDiffTrial < 2 ? string.Empty : "- " + BData.GetString("UI0219").Replace("[1]", num2.ToString()));
+    this.textDrop.text = "- " + BData.GetString("UI0217") + " x " + str22 + (object) num4 + str23 + "\n- " + BData.GetString("UI0227") + " x " + str22 + (object) num5 + str23 + "\n- (" + str22 + (trial.fDropRate * (!flag ? 1f : 2f) * Info.fDiffTrialReward[(int) Info.nDiffTrial]).ToString("N0") + str23 + "%)" + (!trial.bDropRing ? BData.GetString("UI0218") : BData.GetString("UI0283")).Replace("[1]", Info.GetGradeString((byte) trial.nDropMin, false)).Replace("[2]", Info.GetGradeString((byte) trial.nDropMax, false)) + "\n" + ((int) Info.nDiffTrial < 2 ? string.Empty : "- " + BData.GetString("UI0219").Replace("[1]", num2.ToString()));
   }
 
   public void BattleStart()

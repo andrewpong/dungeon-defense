@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: DigitalRuby.ThunderAndLightning.LightningBoltPathScript
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
-// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
+// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using System;
 using System.Collections.Generic;
@@ -16,11 +16,7 @@ namespace DigitalRuby.ThunderAndLightning
     [Range(0.01f, 1f)]
     public float Speed = 1f;
     [SingleLineClamp("When each new point is moved to, this can provide a random value to make the movement to the next point appear more staggered or random. Leave as 1 and 1 to have constant speed. Use a higher maximum to create more randomness.", 1.0, 500.0)]
-    public RangeOfFloats SpeedIntervalRange = new RangeOfFloats()
-    {
-      Minimum = 1f,
-      Maximum = 1f
-    };
+    public RangeOfFloats SpeedIntervalRange = new RangeOfFloats() { Minimum = 1f, Maximum = 1f };
     [Tooltip("Repeat when the path completes?")]
     public bool Repeat = true;
     private float nextInterval = 1f;

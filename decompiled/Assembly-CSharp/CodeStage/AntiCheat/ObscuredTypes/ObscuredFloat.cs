@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
-// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
+// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using CodeStage.AntiCheat.Common;
 using CodeStage.AntiCheat.Detectors;
@@ -110,10 +110,7 @@ namespace CodeStage.AntiCheat.ObscuredTypes
 
     public static float Decrypt(int value, int key)
     {
-      return new ObscuredFloat.FloatIntBytesUnion()
-      {
-        i = (value ^ key)
-      }.f;
+      return new ObscuredFloat.FloatIntBytesUnion() { i = (value ^ key) }.f;
     }
 
     public void ApplyNewCryptoKey()
@@ -138,10 +135,7 @@ namespace CodeStage.AntiCheat.ObscuredTypes
     public int GetEncrypted()
     {
       this.ApplyNewCryptoKey();
-      return new ObscuredFloat.FloatIntBytesUnion()
-      {
-        b4 = this.hiddenValue
-      }.i;
+      return new ObscuredFloat.FloatIntBytesUnion() { b4 = this.hiddenValue }.i;
     }
 
     public void SetEncrypted(int encrypted)

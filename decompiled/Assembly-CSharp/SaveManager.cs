@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: SaveManager
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
-// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
+// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using CC;
 using CodeStage.AntiCheat.ObscuredTypes;
@@ -30,6 +30,7 @@ public class SaveManager : MonoBehaviour
     string strSummary = Info.currentSave.strSummary;
     Info.currentSave.strSummary = string.Empty;
     SaveManager.Save(Info.currentSave.bySlot);
+    SaveManager.SaveBak(Info.currentSave.bySlot);
     Info.currentSave.strSummary = strSummary;
   }
 
@@ -101,13 +102,7 @@ public class SaveManager : MonoBehaviour
   public static SavedData Load(byte bySlot)
   {
     SavedData savedData1 = (SavedData) null;
-    string[] strArray = new string[4]
-    {
-      "/SavedData" + (object) bySlot + ".dat",
-      "/SavedData" + (object) bySlot + ".bakup",
-      "/SavedData" + (object) bySlot + "_bak.dat",
-      "/SavedData" + (object) bySlot + "_bak2.bak"
-    };
+    string[] strArray = new string[4]{ "/SavedData" + (object) bySlot + ".dat", "/SavedData" + (object) bySlot + ".bakup", "/SavedData" + (object) bySlot + "_bak.dat", "/SavedData" + (object) bySlot + "_bak2.bak" };
     bool flag1 = false;
     BinaryFormatter binaryFormatter = new BinaryFormatter();
     binaryFormatter.AssemblyFormat = FormatterAssemblyStyle.Simple;
@@ -304,12 +299,7 @@ public class SaveManager : MonoBehaviour
 
   public static void LoadRebirth()
   {
-    string[] strArray = new string[3]
-    {
-      Application.persistentDataPath + "/Rebirth.dat",
-      Application.persistentDataPath + "/Rebirth.bakup",
-      Application.persistentDataPath + "/Rebirth_bak.dat"
-    };
+    string[] strArray = new string[3]{ Application.persistentDataPath + "/Rebirth.dat", Application.persistentDataPath + "/Rebirth.bakup", Application.persistentDataPath + "/Rebirth_bak.dat" };
     BinaryFormatter binaryFormatter = new BinaryFormatter();
     binaryFormatter.AssemblyFormat = FormatterAssemblyStyle.Simple;
     bool flag = false;
@@ -379,10 +369,6 @@ public class SaveManager : MonoBehaviour
       Info.rebirth.dictElementalTrait = new Dictionary<ElementalID, ObscuredInt>();
     if (Info.rebirth.dictUnitPromote == null)
       Info.rebirth.dictUnitPromote = new Dictionary<ObscuredShort, ObscuredInt>();
-    if (Info.rebirth.dictMonTrait == null)
-      Info.rebirth.dictMonTrait = new Dictionary<ObscuredShort, Dictionary<MonTraitID, ObscuredInt>>();
-    if (Info.rebirth.dictMonRebirthExp == null)
-      Info.rebirth.dictMonRebirthExp = new Dictionary<ObscuredShort, ObscuredLong>();
     if ((long) Info.rebirth.uAccUID == 0L)
       Info.rebirth.uAccUID = (ObscuredLong) 1L;
     if ((int) Info.rebirth.nMedal != 0)
@@ -438,10 +424,7 @@ public class SaveManager : MonoBehaviour
     else
     {
       UIMgr.PlaySound("Hire", false);
-      CloudSavedData cloudSavedData = (CloudSavedData) new BinaryFormatter()
-      {
-        AssemblyFormat = FormatterAssemblyStyle.Simple
-      }.Deserialize((Stream) new MemoryStream(bytes));
+      CloudSavedData cloudSavedData = (CloudSavedData) new BinaryFormatter().Deserialize((Stream) new MemoryStream(bytes));
       Info.rebirth = cloudSavedData.rebirth;
       SaveManager.CheckRebirthInit();
       for (int index = 0; index < 9; ++index)

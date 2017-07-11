@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: GooglePlayGames.Native.NativeQuestClient
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
-// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
+// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using GooglePlayGames.BasicApi.Quests;
 using GooglePlayGames.Native.Cwrapper;
@@ -10,7 +10,6 @@ using GooglePlayGames.Native.PInvoke;
 using GooglePlayGames.OurUtils;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GooglePlayGames.Native
 {
@@ -25,31 +24,35 @@ namespace GooglePlayGames.Native
 
     public void Fetch(GooglePlayGames.BasicApi.DataSource source, string questId, Action<GooglePlayGames.BasicApi.ResponseStatus, IQuest> callback)
     {
+      // ISSUE: object of a compiler-generated type is created
+      // ISSUE: variable of a compiler-generated type
+      NativeQuestClient.\u003CFetch\u003Ec__AnonStorey0 fetchCAnonStorey0 = new NativeQuestClient.\u003CFetch\u003Ec__AnonStorey0();
+      // ISSUE: reference to a compiler-generated field
+      fetchCAnonStorey0.callback = callback;
       Misc.CheckNotNull<string>(questId);
-      Misc.CheckNotNull<Action<GooglePlayGames.BasicApi.ResponseStatus, IQuest>>(callback);
-      callback = CallbackUtils.ToOnGameThread<GooglePlayGames.BasicApi.ResponseStatus, IQuest>(callback);
-      this.mManager.Fetch(ConversionUtils.AsDataSource(source), questId, (Action<GooglePlayGames.Native.PInvoke.QuestManager.FetchResponse>) (response =>
-      {
-        GooglePlayGames.BasicApi.ResponseStatus responseStatus = ConversionUtils.ConvertResponseStatus(response.ResponseStatus());
-        if (!response.RequestSucceeded())
-          callback(responseStatus, (IQuest) null);
-        else
-          callback(responseStatus, (IQuest) response.Data());
-      }));
+      // ISSUE: reference to a compiler-generated field
+      Misc.CheckNotNull<Action<GooglePlayGames.BasicApi.ResponseStatus, IQuest>>(fetchCAnonStorey0.callback);
+      // ISSUE: reference to a compiler-generated field
+      // ISSUE: reference to a compiler-generated field
+      fetchCAnonStorey0.callback = CallbackUtils.ToOnGameThread<GooglePlayGames.BasicApi.ResponseStatus, IQuest>(fetchCAnonStorey0.callback);
+      // ISSUE: reference to a compiler-generated method
+      this.mManager.Fetch(ConversionUtils.AsDataSource(source), questId, new Action<GooglePlayGames.Native.PInvoke.QuestManager.FetchResponse>(fetchCAnonStorey0.\u003C\u003Em__0));
     }
 
     public void FetchMatchingState(GooglePlayGames.BasicApi.DataSource source, QuestFetchFlags flags, Action<GooglePlayGames.BasicApi.ResponseStatus, List<IQuest>> callback)
     {
-      Misc.CheckNotNull<Action<GooglePlayGames.BasicApi.ResponseStatus, List<IQuest>>>(callback);
-      callback = CallbackUtils.ToOnGameThread<GooglePlayGames.BasicApi.ResponseStatus, List<IQuest>>(callback);
-      this.mManager.FetchList(ConversionUtils.AsDataSource(source), (int) flags, (Action<GooglePlayGames.Native.PInvoke.QuestManager.FetchListResponse>) (response =>
-      {
-        GooglePlayGames.BasicApi.ResponseStatus responseStatus = ConversionUtils.ConvertResponseStatus(response.ResponseStatus());
-        if (!response.RequestSucceeded())
-          callback(responseStatus, (List<IQuest>) null);
-        else
-          callback(responseStatus, response.Data().Cast<IQuest>().ToList<IQuest>());
-      }));
+      // ISSUE: object of a compiler-generated type is created
+      // ISSUE: variable of a compiler-generated type
+      NativeQuestClient.\u003CFetchMatchingState\u003Ec__AnonStorey1 stateCAnonStorey1 = new NativeQuestClient.\u003CFetchMatchingState\u003Ec__AnonStorey1();
+      // ISSUE: reference to a compiler-generated field
+      stateCAnonStorey1.callback = callback;
+      // ISSUE: reference to a compiler-generated field
+      Misc.CheckNotNull<Action<GooglePlayGames.BasicApi.ResponseStatus, List<IQuest>>>(stateCAnonStorey1.callback);
+      // ISSUE: reference to a compiler-generated field
+      // ISSUE: reference to a compiler-generated field
+      stateCAnonStorey1.callback = CallbackUtils.ToOnGameThread<GooglePlayGames.BasicApi.ResponseStatus, List<IQuest>>(stateCAnonStorey1.callback);
+      // ISSUE: reference to a compiler-generated method
+      this.mManager.FetchList(ConversionUtils.AsDataSource(source), (int) flags, new Action<GooglePlayGames.Native.PInvoke.QuestManager.FetchListResponse>(stateCAnonStorey1.\u003C\u003Em__0));
     }
 
     public void ShowAllQuestsUI(Action<QuestUiResult, IQuest, IQuestMilestone> callback)
@@ -98,56 +101,36 @@ namespace GooglePlayGames.Native
 
     private static Action<GooglePlayGames.Native.PInvoke.QuestManager.QuestUIResponse> FromQuestUICallback(Action<QuestUiResult, IQuest, IQuestMilestone> callback)
     {
-      return (Action<GooglePlayGames.Native.PInvoke.QuestManager.QuestUIResponse>) (response =>
-      {
-        if (!response.RequestSucceeded())
-        {
-          callback(NativeQuestClient.UiErrorToQuestUiResult(response.RequestStatus()), (IQuest) null, (IQuestMilestone) null);
-        }
-        else
-        {
-          NativeQuest nativeQuest = response.AcceptedQuest();
-          NativeQuestMilestone claim = response.MilestoneToClaim();
-          if (nativeQuest != null)
-          {
-            callback(QuestUiResult.UserRequestsQuestAcceptance, (IQuest) nativeQuest, (IQuestMilestone) null);
-            claim.Dispose();
-          }
-          else if (claim != null)
-          {
-            callback(QuestUiResult.UserRequestsMilestoneClaiming, (IQuest) null, (IQuestMilestone) response.MilestoneToClaim());
-            nativeQuest.Dispose();
-          }
-          else
-          {
-            Logger.e("Quest UI succeeded without a quest acceptance or milestone claim.");
-            nativeQuest.Dispose();
-            claim.Dispose();
-            callback(QuestUiResult.InternalError, (IQuest) null, (IQuestMilestone) null);
-          }
-        }
-      });
+      // ISSUE: object of a compiler-generated type is created
+      // ISSUE: reference to a compiler-generated method
+      return new Action<GooglePlayGames.Native.PInvoke.QuestManager.QuestUIResponse>(new NativeQuestClient.\u003CFromQuestUICallback\u003Ec__AnonStorey2() { callback = callback }.\u003C\u003Em__0);
     }
 
     public void Accept(IQuest quest, Action<GooglePlayGames.BasicApi.Quests.QuestAcceptStatus, IQuest> callback)
     {
+      // ISSUE: object of a compiler-generated type is created
+      // ISSUE: variable of a compiler-generated type
+      NativeQuestClient.\u003CAccept\u003Ec__AnonStorey3 acceptCAnonStorey3 = new NativeQuestClient.\u003CAccept\u003Ec__AnonStorey3();
+      // ISSUE: reference to a compiler-generated field
+      acceptCAnonStorey3.callback = callback;
       Misc.CheckNotNull<IQuest>(quest);
-      Misc.CheckNotNull<Action<GooglePlayGames.BasicApi.Quests.QuestAcceptStatus, IQuest>>(callback);
-      callback = CallbackUtils.ToOnGameThread<GooglePlayGames.BasicApi.Quests.QuestAcceptStatus, IQuest>(callback);
+      // ISSUE: reference to a compiler-generated field
+      Misc.CheckNotNull<Action<GooglePlayGames.BasicApi.Quests.QuestAcceptStatus, IQuest>>(acceptCAnonStorey3.callback);
+      // ISSUE: reference to a compiler-generated field
+      // ISSUE: reference to a compiler-generated field
+      acceptCAnonStorey3.callback = CallbackUtils.ToOnGameThread<GooglePlayGames.BasicApi.Quests.QuestAcceptStatus, IQuest>(acceptCAnonStorey3.callback);
       NativeQuest quest1 = quest as NativeQuest;
       if (quest1 == null)
       {
         Logger.e("Encountered quest that was not generated by this IQuestClient");
-        callback(GooglePlayGames.BasicApi.Quests.QuestAcceptStatus.BadInput, (IQuest) null);
+        // ISSUE: reference to a compiler-generated field
+        acceptCAnonStorey3.callback(GooglePlayGames.BasicApi.Quests.QuestAcceptStatus.BadInput, (IQuest) null);
       }
       else
-        this.mManager.Accept(quest1, (Action<GooglePlayGames.Native.PInvoke.QuestManager.AcceptResponse>) (response =>
-        {
-          if (response.RequestSucceeded())
-            callback(GooglePlayGames.BasicApi.Quests.QuestAcceptStatus.Success, (IQuest) response.AcceptedQuest());
-          else
-            callback(NativeQuestClient.FromAcceptStatus(response.ResponseStatus()), (IQuest) null);
-        }));
+      {
+        // ISSUE: reference to a compiler-generated method
+        this.mManager.Accept(quest1, new Action<GooglePlayGames.Native.PInvoke.QuestManager.AcceptResponse>(acceptCAnonStorey3.\u003C\u003Em__0));
+      }
     }
 
     private static GooglePlayGames.BasicApi.Quests.QuestAcceptStatus FromAcceptStatus(CommonErrorStatus.QuestAcceptStatus status)
@@ -174,23 +157,29 @@ namespace GooglePlayGames.Native
 
     public void ClaimMilestone(IQuestMilestone milestone, Action<GooglePlayGames.BasicApi.Quests.QuestClaimMilestoneStatus, IQuest, IQuestMilestone> callback)
     {
+      // ISSUE: object of a compiler-generated type is created
+      // ISSUE: variable of a compiler-generated type
+      NativeQuestClient.\u003CClaimMilestone\u003Ec__AnonStorey4 milestoneCAnonStorey4 = new NativeQuestClient.\u003CClaimMilestone\u003Ec__AnonStorey4();
+      // ISSUE: reference to a compiler-generated field
+      milestoneCAnonStorey4.callback = callback;
       Misc.CheckNotNull<IQuestMilestone>(milestone);
-      Misc.CheckNotNull<Action<GooglePlayGames.BasicApi.Quests.QuestClaimMilestoneStatus, IQuest, IQuestMilestone>>(callback);
-      callback = CallbackUtils.ToOnGameThread<GooglePlayGames.BasicApi.Quests.QuestClaimMilestoneStatus, IQuest, IQuestMilestone>(callback);
+      // ISSUE: reference to a compiler-generated field
+      Misc.CheckNotNull<Action<GooglePlayGames.BasicApi.Quests.QuestClaimMilestoneStatus, IQuest, IQuestMilestone>>(milestoneCAnonStorey4.callback);
+      // ISSUE: reference to a compiler-generated field
+      // ISSUE: reference to a compiler-generated field
+      milestoneCAnonStorey4.callback = CallbackUtils.ToOnGameThread<GooglePlayGames.BasicApi.Quests.QuestClaimMilestoneStatus, IQuest, IQuestMilestone>(milestoneCAnonStorey4.callback);
       NativeQuestMilestone milestone1 = milestone as NativeQuestMilestone;
       if (milestone1 == null)
       {
         Logger.e("Encountered milestone that was not generated by this IQuestClient");
-        callback(GooglePlayGames.BasicApi.Quests.QuestClaimMilestoneStatus.BadInput, (IQuest) null, (IQuestMilestone) null);
+        // ISSUE: reference to a compiler-generated field
+        milestoneCAnonStorey4.callback(GooglePlayGames.BasicApi.Quests.QuestClaimMilestoneStatus.BadInput, (IQuest) null, (IQuestMilestone) null);
       }
       else
-        this.mManager.ClaimMilestone(milestone1, (Action<GooglePlayGames.Native.PInvoke.QuestManager.ClaimMilestoneResponse>) (response =>
-        {
-          if (response.RequestSucceeded())
-            callback(GooglePlayGames.BasicApi.Quests.QuestClaimMilestoneStatus.Success, (IQuest) response.Quest(), (IQuestMilestone) response.ClaimedMilestone());
-          else
-            callback(NativeQuestClient.FromClaimStatus(response.ResponseStatus()), (IQuest) null, (IQuestMilestone) null);
-        }));
+      {
+        // ISSUE: reference to a compiler-generated method
+        this.mManager.ClaimMilestone(milestone1, new Action<GooglePlayGames.Native.PInvoke.QuestManager.ClaimMilestoneResponse>(milestoneCAnonStorey4.\u003C\u003Em__0));
+      }
     }
 
     private static GooglePlayGames.BasicApi.Quests.QuestClaimMilestoneStatus FromClaimStatus(CommonErrorStatus.QuestClaimMilestoneStatus status)

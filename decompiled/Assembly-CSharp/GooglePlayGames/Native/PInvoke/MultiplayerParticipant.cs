@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: GooglePlayGames.Native.PInvoke.MultiplayerParticipant
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
-// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
+// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using GooglePlayGames.BasicApi.Multiplayer;
 using GooglePlayGames.Native.Cwrapper;
@@ -14,37 +14,7 @@ namespace GooglePlayGames.Native.PInvoke
 {
   internal class MultiplayerParticipant : BaseReferenceHolder
   {
-    private static readonly Dictionary<Types.ParticipantStatus, Participant.ParticipantStatus> StatusConversion = new Dictionary<Types.ParticipantStatus, Participant.ParticipantStatus>()
-    {
-      {
-        Types.ParticipantStatus.INVITED,
-        Participant.ParticipantStatus.Invited
-      },
-      {
-        Types.ParticipantStatus.JOINED,
-        Participant.ParticipantStatus.Joined
-      },
-      {
-        Types.ParticipantStatus.DECLINED,
-        Participant.ParticipantStatus.Declined
-      },
-      {
-        Types.ParticipantStatus.LEFT,
-        Participant.ParticipantStatus.Left
-      },
-      {
-        Types.ParticipantStatus.NOT_INVITED_YET,
-        Participant.ParticipantStatus.NotInvitedYet
-      },
-      {
-        Types.ParticipantStatus.FINISHED,
-        Participant.ParticipantStatus.Finished
-      },
-      {
-        Types.ParticipantStatus.UNRESPONSIVE,
-        Participant.ParticipantStatus.Unresponsive
-      }
-    };
+    private static readonly Dictionary<Types.ParticipantStatus, Participant.ParticipantStatus> StatusConversion = new Dictionary<Types.ParticipantStatus, Participant.ParticipantStatus>() { { Types.ParticipantStatus.INVITED, Participant.ParticipantStatus.Invited }, { Types.ParticipantStatus.JOINED, Participant.ParticipantStatus.Joined }, { Types.ParticipantStatus.DECLINED, Participant.ParticipantStatus.Declined }, { Types.ParticipantStatus.LEFT, Participant.ParticipantStatus.Left }, { Types.ParticipantStatus.NOT_INVITED_YET, Participant.ParticipantStatus.NotInvitedYet }, { Types.ParticipantStatus.FINISHED, Participant.ParticipantStatus.Finished }, { Types.ParticipantStatus.UNRESPONSIVE, Participant.ParticipantStatus.Unresponsive } };
 
     internal MultiplayerParticipant(IntPtr selfPointer)
       : base(selfPointer)

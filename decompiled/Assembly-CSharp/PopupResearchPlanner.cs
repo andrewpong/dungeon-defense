@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: PopupResearchPlanner
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
-// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
+// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using CC;
 using System.Collections.Generic;
@@ -78,12 +78,24 @@ public class PopupResearchPlanner : UIPage
 
   private void AddUpListener(Button b, int value)
   {
-    b.onClick.AddListener((UnityAction) (() => this.OnPlanUp(value)));
+    // ISSUE: object of a compiler-generated type is created
+    // ISSUE: reference to a compiler-generated method
+    b.onClick.AddListener(new UnityAction(new PopupResearchPlanner.\u003CAddUpListener\u003Ec__AnonStorey0()
+    {
+      value = value,
+      \u0024this = this
+    }.\u003C\u003Em__0));
   }
 
   private void AddDownListener(Button b, int value)
   {
-    b.onClick.AddListener((UnityAction) (() => this.OnPlanDown(value)));
+    // ISSUE: object of a compiler-generated type is created
+    // ISSUE: reference to a compiler-generated method
+    b.onClick.AddListener(new UnityAction(new PopupResearchPlanner.\u003CAddDownListener\u003Ec__AnonStorey1()
+    {
+      value = value,
+      \u0024this = this
+    }.\u003C\u003Em__0));
   }
 
   protected override void Update()

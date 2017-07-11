@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: GooglePlayGames.Native.NativeEventClient
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
-// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
+// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using GooglePlayGames.BasicApi;
 using GooglePlayGames.BasicApi.Events;
@@ -10,7 +10,6 @@ using GooglePlayGames.Native.PInvoke;
 using GooglePlayGames.OurUtils;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GooglePlayGames.Native
 {
@@ -25,30 +24,32 @@ namespace GooglePlayGames.Native
 
     public void FetchAllEvents(DataSource source, Action<ResponseStatus, List<IEvent>> callback)
     {
-      Misc.CheckNotNull<Action<ResponseStatus, List<IEvent>>>(callback);
-      callback = CallbackUtils.ToOnGameThread<ResponseStatus, List<IEvent>>(callback);
-      this.mEventManager.FetchAll(ConversionUtils.AsDataSource(source), (Action<EventManager.FetchAllResponse>) (response =>
-      {
-        ResponseStatus responseStatus = ConversionUtils.ConvertResponseStatus(response.ResponseStatus());
-        if (!response.RequestSucceeded())
-          callback(responseStatus, new List<IEvent>());
-        else
-          callback(responseStatus, response.Data().Cast<IEvent>().ToList<IEvent>());
-      }));
+      // ISSUE: object of a compiler-generated type is created
+      // ISSUE: variable of a compiler-generated type
+      NativeEventClient.\u003CFetchAllEvents\u003Ec__AnonStorey0 eventsCAnonStorey0 = new NativeEventClient.\u003CFetchAllEvents\u003Ec__AnonStorey0();
+      // ISSUE: reference to a compiler-generated field
+      eventsCAnonStorey0.callback = callback;
+      // ISSUE: reference to a compiler-generated field
+      Misc.CheckNotNull<Action<ResponseStatus, List<IEvent>>>(eventsCAnonStorey0.callback);
+      // ISSUE: reference to a compiler-generated field
+      // ISSUE: reference to a compiler-generated field
+      eventsCAnonStorey0.callback = CallbackUtils.ToOnGameThread<ResponseStatus, List<IEvent>>(eventsCAnonStorey0.callback);
+      // ISSUE: reference to a compiler-generated method
+      this.mEventManager.FetchAll(ConversionUtils.AsDataSource(source), new Action<EventManager.FetchAllResponse>(eventsCAnonStorey0.\u003C\u003Em__0));
     }
 
     public void FetchEvent(DataSource source, string eventId, Action<ResponseStatus, IEvent> callback)
     {
+      // ISSUE: object of a compiler-generated type is created
+      // ISSUE: variable of a compiler-generated type
+      NativeEventClient.\u003CFetchEvent\u003Ec__AnonStorey1 eventCAnonStorey1 = new NativeEventClient.\u003CFetchEvent\u003Ec__AnonStorey1();
+      // ISSUE: reference to a compiler-generated field
+      eventCAnonStorey1.callback = callback;
       Misc.CheckNotNull<string>(eventId);
-      Misc.CheckNotNull<Action<ResponseStatus, IEvent>>(callback);
-      this.mEventManager.Fetch(ConversionUtils.AsDataSource(source), eventId, (Action<EventManager.FetchResponse>) (response =>
-      {
-        ResponseStatus responseStatus = ConversionUtils.ConvertResponseStatus(response.ResponseStatus());
-        if (!response.RequestSucceeded())
-          callback(responseStatus, (IEvent) null);
-        else
-          callback(responseStatus, (IEvent) response.Data());
-      }));
+      // ISSUE: reference to a compiler-generated field
+      Misc.CheckNotNull<Action<ResponseStatus, IEvent>>(eventCAnonStorey1.callback);
+      // ISSUE: reference to a compiler-generated method
+      this.mEventManager.Fetch(ConversionUtils.AsDataSource(source), eventId, new Action<EventManager.FetchResponse>(eventCAnonStorey1.\u003C\u003Em__0));
     }
 
     public void IncrementEvent(string eventId, uint stepsToIncrement)
