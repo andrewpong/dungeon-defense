@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: DigitalRuby.ThunderAndLightning.LightningParticleSpellScript
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using System;
 using System.Collections.Generic;
@@ -16,9 +16,17 @@ namespace DigitalRuby.ThunderAndLightning
     [Tooltip("Whether to enable point lights for the particles")]
     public bool EnableParticleLights = true;
     [SingleLineClamp("Possible range for particle lights", 0.001, 100.0)]
-    public RangeOfFloats ParticleLightRange = new RangeOfFloats() { Minimum = 2f, Maximum = 5f };
+    public RangeOfFloats ParticleLightRange = new RangeOfFloats()
+    {
+      Minimum = 2f,
+      Maximum = 5f
+    };
     [SingleLineClamp("Possible range of intensity for particle lights", 0.00999999977648258, 8.0)]
-    public RangeOfFloats ParticleLightIntensity = new RangeOfFloats() { Minimum = 0.2f, Maximum = 0.3f };
+    public RangeOfFloats ParticleLightIntensity = new RangeOfFloats()
+    {
+      Minimum = 0.2f,
+      Maximum = 0.3f
+    };
     [Tooltip("Possible range of colors for particle lights")]
     public Color ParticleLightColor1 = Color.white;
     [Tooltip("Possible range of colors for particle lights")]

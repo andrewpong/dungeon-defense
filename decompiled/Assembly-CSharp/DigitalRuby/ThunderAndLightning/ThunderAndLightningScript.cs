@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: DigitalRuby.ThunderAndLightning.ThunderAndLightningScript
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using System.Collections;
 using System.Diagnostics;
@@ -13,7 +13,11 @@ namespace DigitalRuby.ThunderAndLightning
   public class ThunderAndLightningScript : MonoBehaviour
   {
     [SingleLine("Random interval between strikes.")]
-    public RangeOfFloats LightningIntervalTimeRange = new RangeOfFloats() { Minimum = 10f, Maximum = 25f };
+    public RangeOfFloats LightningIntervalTimeRange = new RangeOfFloats()
+    {
+      Minimum = 10f,
+      Maximum = 25f
+    };
     [Tooltip("Probability (0-1) of an intense lightning bolt that hits really close. Intense lightning has increased brightness and louder thunder compared to normal lightning, and the thunder sounds plays a lot sooner.")]
     [Range(0.0f, 1f)]
     public float LightningIntenseProbability = 0.2f;
@@ -137,7 +141,14 @@ namespace DigitalRuby.ThunderAndLightning
       public IEnumerator ProcessLightning(Vector3? _start, Vector3? _end, bool intense, bool visible)
       {
         // ISSUE: object of a compiler-generated type is created
-        return (IEnumerator) new ThunderAndLightningScript.LightningBoltHandler.\u003CProcessLightning\u003Ec__Iterator0() { intense = intense, _start = _start, _end = _end, visible = visible, \u0024this = this };
+        return (IEnumerator) new ThunderAndLightningScript.LightningBoltHandler.\u003CProcessLightning\u003Ec__Iterator0()
+        {
+          intense = intense,
+          _start = _start,
+          _end = _end,
+          visible = visible,
+          \u0024this = this
+        };
       }
 
       private void Strike(Vector3? _start, Vector3? _end, bool intense, float intensity, Camera camera, Camera visibleInCamera)

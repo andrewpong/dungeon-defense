@@ -1,10 +1,11 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: GooglePlayGames.OurUtils.Logger
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using System;
+using UnityEngine;
 
 namespace GooglePlayGames.OurUtils
 {
@@ -39,41 +40,23 @@ namespace GooglePlayGames.OurUtils
 
     public static void d(string msg)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      Logger.\u003Cd\u003Ec__AnonStorey0 dCAnonStorey0 = new Logger.\u003Cd\u003Ec__AnonStorey0();
-      // ISSUE: reference to a compiler-generated field
-      dCAnonStorey0.msg = msg;
       if (!Logger.debugLogEnabled)
         return;
-      // ISSUE: reference to a compiler-generated method
-      PlayGamesHelperObject.RunOnGameThread(new Action(dCAnonStorey0.\u003C\u003Em__0));
+      PlayGamesHelperObject.RunOnGameThread((Action) (() => Debug.Log((object) Logger.ToLogMessage(string.Empty, "DEBUG", msg))));
     }
 
     public static void w(string msg)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      Logger.\u003Cw\u003Ec__AnonStorey1 wCAnonStorey1 = new Logger.\u003Cw\u003Ec__AnonStorey1();
-      // ISSUE: reference to a compiler-generated field
-      wCAnonStorey1.msg = msg;
       if (!Logger.warningLogEnabled)
         return;
-      // ISSUE: reference to a compiler-generated method
-      PlayGamesHelperObject.RunOnGameThread(new Action(wCAnonStorey1.\u003C\u003Em__0));
+      PlayGamesHelperObject.RunOnGameThread((Action) (() => Debug.LogWarning((object) Logger.ToLogMessage("!!!", "WARNING", msg))));
     }
 
     public static void e(string msg)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      Logger.\u003Ce\u003Ec__AnonStorey2 eCAnonStorey2 = new Logger.\u003Ce\u003Ec__AnonStorey2();
-      // ISSUE: reference to a compiler-generated field
-      eCAnonStorey2.msg = msg;
       if (!Logger.warningLogEnabled)
         return;
-      // ISSUE: reference to a compiler-generated method
-      PlayGamesHelperObject.RunOnGameThread(new Action(eCAnonStorey2.\u003C\u003Em__0));
+      PlayGamesHelperObject.RunOnGameThread((Action) (() => Debug.LogWarning((object) Logger.ToLogMessage("***", "ERROR", msg))));
     }
 
     public static string describe(byte[] b)

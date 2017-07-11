@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: Thinksquirrel.CShakeExample.CameraShakeExample
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using System;
 using System.Collections;
@@ -114,7 +114,10 @@ namespace Thinksquirrel.CShakeExample
     private IEnumerator DoFootsteps()
     {
       // ISSUE: object of a compiler-generated type is created
-      return (IEnumerator) new CameraShakeExample.\u003CDoFootsteps\u003Ec__Iterator0() { \u0024this = this };
+      return (IEnumerator) new CameraShakeExample.\u003CDoFootsteps\u003Ec__Iterator0()
+      {
+        \u0024this = this
+      };
     }
 
     private void Earthquake()
@@ -129,14 +132,20 @@ namespace Thinksquirrel.CShakeExample
     private IEnumerator DoEarthquake()
     {
       // ISSUE: object of a compiler-generated type is created
-      return (IEnumerator) new CameraShakeExample.\u003CDoEarthquake\u003Ec__Iterator1() { \u0024this = this };
+      return (IEnumerator) new CameraShakeExample.\u003CDoEarthquake\u003Ec__Iterator1()
+      {
+        \u0024this = this
+      };
     }
 
     [DebuggerHidden]
     private IEnumerator DoEarthquake2()
     {
       // ISSUE: object of a compiler-generated type is created
-      return (IEnumerator) new CameraShakeExample.\u003CDoEarthquake2\u003Ec__Iterator2() { \u0024this = this };
+      return (IEnumerator) new CameraShakeExample.\u003CDoEarthquake2\u003Ec__Iterator2()
+      {
+        \u0024this = this
+      };
     }
 
     public void OnShakeCamera()

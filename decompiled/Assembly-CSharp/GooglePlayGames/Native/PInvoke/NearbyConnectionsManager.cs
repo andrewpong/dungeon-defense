@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: GooglePlayGames.Native.PInvoke.NearbyConnectionsManager
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using AOT;
 using GooglePlayGames.Native.Cwrapper;
@@ -206,7 +206,10 @@ namespace GooglePlayGames.Native.PInvoke
         using (AndroidJavaObject androidJavaObject = androidJavaClass.GetStatic<AndroidJavaObject>("currentActivity"))
         {
           string str1 = androidJavaObject.Call<string>("getPackageName");
-          string str2 = androidJavaObject.Call<AndroidJavaObject>("getPackageManager").Call<AndroidJavaObject>("getApplicationInfo", (object) str1, (object) 128).Get<AndroidJavaObject>("metaData").Call<string>("getString", new object[1]{ (object) "com.google.android.gms.nearby.connection.SERVICE_ID" });
+          string str2 = androidJavaObject.Call<AndroidJavaObject>("getPackageManager").Call<AndroidJavaObject>("getApplicationInfo", (object) str1, (object) 128).Get<AndroidJavaObject>("metaData").Call<string>("getString", new object[1]
+          {
+            (object) "com.google.android.gms.nearby.connection.SERVICE_ID"
+          });
           Debug.Log((object) ("SystemId from Manifest: " + str2));
           return str2;
         }

@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: DigitalRuby.ThunderAndLightning.LightningBolt
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using System;
 using System.Collections;
@@ -179,7 +179,10 @@ namespace DigitalRuby.ThunderAndLightning
     private IEnumerator EnableLastRendererCoRoutine()
     {
       // ISSUE: object of a compiler-generated type is created
-      return (IEnumerator) new LightningBolt.\u003CEnableLastRendererCoRoutine\u003Ec__Iterator0() { \u0024this = this };
+      return (IEnumerator) new LightningBolt.\u003CEnableLastRendererCoRoutine\u003Ec__Iterator0()
+      {
+        \u0024this = this
+      };
     }
 
     private LightningBolt.LineRendererMesh GetOrCreateLineRenderer()
@@ -557,7 +560,12 @@ label_3:
     private IEnumerator GenerateParticleCoRoutine(ParticleSystem p, Vector3 pos, float delay)
     {
       // ISSUE: object of a compiler-generated type is created
-      return (IEnumerator) new LightningBolt.\u003CGenerateParticleCoRoutine\u003Ec__Iterator1() { delay = delay, pos = pos, p = p };
+      return (IEnumerator) new LightningBolt.\u003CGenerateParticleCoRoutine\u003Ec__Iterator1()
+      {
+        delay = delay,
+        pos = pos,
+        p = p
+      };
     }
 
     private void CheckForGlow(IEnumerable<LightningBoltParameters> parameters)

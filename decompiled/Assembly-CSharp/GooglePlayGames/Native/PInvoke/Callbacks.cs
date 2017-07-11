@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: GooglePlayGames.Native.PInvoke.Callbacks
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using AOT;
 using GooglePlayGames.Native.Cwrapper;
@@ -19,16 +19,40 @@ namespace GooglePlayGames.Native.PInvoke
 
     internal static IntPtr ToIntPtr<T>(Action<T> callback, Func<IntPtr, T> conversionFunction) where T : BaseReferenceHolder
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: reference to a compiler-generated method
-      return Callbacks.ToIntPtr((Delegate) new Action<IntPtr>(new Callbacks.\u003CToIntPtr\u003Ec__AnonStorey0<T>() { conversionFunction = conversionFunction, callback = callback }.\u003C\u003Em__0));
+      return Callbacks.ToIntPtr((Delegate) (result =>
+      {
+        T obj = conversionFunction(result);
+        try
+        {
+          if (callback == null)
+            return;
+          callback(obj);
+        }
+        finally
+        {
+          if ((object) obj != null)
+            obj.Dispose();
+        }
+      }));
     }
 
     internal static IntPtr ToIntPtr<T, P>(Action<T, P> callback, Func<IntPtr, P> conversionFunction) where P : BaseReferenceHolder
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: reference to a compiler-generated method
-      return Callbacks.ToIntPtr((Delegate) new Action<T, IntPtr>(new Callbacks.\u003CToIntPtr\u003Ec__AnonStorey1<T, P>() { conversionFunction = conversionFunction, callback = callback }.\u003C\u003Em__0));
+      return Callbacks.ToIntPtr((Delegate) ((param1, param2) =>
+      {
+        P p = conversionFunction(param2);
+        try
+        {
+          if (callback == null)
+            return;
+          callback(param1, p);
+        }
+        finally
+        {
+          if ((object) p != null)
+            p.Dispose();
+        }
+      }));
     }
 
     internal static IntPtr ToIntPtr(Delegate callback)
@@ -128,16 +152,22 @@ namespace GooglePlayGames.Native.PInvoke
 
     internal static Action<T> AsOnGameThreadCallback<T>(Action<T> toInvokeOnGameThread)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: reference to a compiler-generated method
-      return new Action<T>(new Callbacks.\u003CAsOnGameThreadCallback\u003Ec__AnonStorey2<T>() { toInvokeOnGameThread = toInvokeOnGameThread }.\u003C\u003Em__0);
+      return (Action<T>) (result =>
+      {
+        if (toInvokeOnGameThread == null)
+          return;
+        PlayGamesHelperObject.RunOnGameThread((Action) (() => toInvokeOnGameThread(result)));
+      });
     }
 
     internal static Action<T1, T2> AsOnGameThreadCallback<T1, T2>(Action<T1, T2> toInvokeOnGameThread)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: reference to a compiler-generated method
-      return new Action<T1, T2>(new Callbacks.\u003CAsOnGameThreadCallback\u003Ec__AnonStorey4<T1, T2>() { toInvokeOnGameThread = toInvokeOnGameThread }.\u003C\u003Em__0);
+      return (Action<T1, T2>) ((result1, result2) =>
+      {
+        if (toInvokeOnGameThread == null)
+          return;
+        PlayGamesHelperObject.RunOnGameThread((Action) (() => toInvokeOnGameThread(result1, result2)));
+      });
     }
 
     internal static void AsCoroutine(IEnumerator routine)

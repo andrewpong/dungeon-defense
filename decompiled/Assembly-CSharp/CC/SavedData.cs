@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: CC.SavedData
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using CodeStage.AntiCheat.ObscuredTypes;
 using System;
@@ -18,7 +18,14 @@ namespace CC
     public ObscuredInt nGold = (ObscuredInt) 0;
     public ObscuredInt nPerfect = (ObscuredInt) 0;
     public ObscuredInt nMod = (ObscuredInt) 0;
-    public ObscuredLong[] nEquipWeapon = new ObscuredLong[5]{ (ObscuredLong) -1L, (ObscuredLong) -1L, (ObscuredLong) -1L, (ObscuredLong) -1L, (ObscuredLong) -1L };
+    public ObscuredLong[] nEquipWeapon = new ObscuredLong[5]
+    {
+      (ObscuredLong) -1L,
+      (ObscuredLong) -1L,
+      (ObscuredLong) -1L,
+      (ObscuredLong) -1L,
+      (ObscuredLong) -1L
+    };
     public ObscuredFloat fDunCurHP = (ObscuredFloat) 100f;
     public PlayerMonsterData[] arrPlayerMon = new PlayerMonsterData[5];
     public List<PlayerItemData> listShopItem = new List<PlayerItemData>();

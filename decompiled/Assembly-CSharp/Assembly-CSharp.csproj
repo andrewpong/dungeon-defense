@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <!--Project was exported from assembly: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll-->
+  <!--Project was exported from assembly: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll-->
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{72D454B4-7F53-41F2-B471-B9A32102C9F6}</ProjectGuid>
+    <ProjectGuid>{26F6562E-5A52-40D1-A59B-D79AEE067D77}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AssemblyName>Assembly-CSharp</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
@@ -53,14 +53,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PopupOption.cs" />
+    <Compile Include="TextCustom.cs" />
+    <Compile Include="IKeyChainPluginPath.cs" />
+    <Compile Include="KeyChainDebug.cs" />
+    <Compile Include="StringTooltip.cs" />
+    <Compile Include="KeyChainCrypto.cs" />
+    <Compile Include="KeyChainBinding.cs" />
+    <Compile Include="WeaponElt.cs" />
+    <Compile Include="SaveManager.cs" />
+    <Compile Include="ResearchElt.cs" />
+    <Compile Include="RebirthShopElt.cs" />
+    <Compile Include="RSMgr.cs" />
+    <Compile Include="Purchaser.cs" />
+    <Compile Include="PopupWeaponSelect.cs" />
+    <Compile Include="PopupTypeSelect.cs" />
+    <Compile Include="PopupTrialBrief.cs" />
     <Compile Include="PopupSkillSelect.cs" />
     <Compile Include="PopupRubyShop.cs" />
-    <Compile Include="PopupNewAcc.cs" />
     <Compile Include="PopupResearchPlanner.cs" />
     <Compile Include="PopupRebirthDiff.cs" />
     <Compile Include="PopupRebirth.cs" />
+    <Compile Include="PopupPromote.cs" />
+    <Compile Include="PopupOption.cs" />
+    <Compile Include="PopupNewAcc.cs" />
     <Compile Include="PopupMsg.cs" />
+    <Compile Include="PopupMonsterTrait.cs" />
     <Compile Include="PopupMission.cs" />
     <Compile Include="PopupMercenarySkill.cs" />
     <Compile Include="PopupHire.cs" />
@@ -71,6 +88,8 @@
     <Compile Include="PopupEndlessResult.cs" />
     <Compile Include="PopupEndlessBrief.cs" />
     <Compile Include="PopupElementalTrait.cs" />
+    <Compile Include="UIPage.cs" />
+    <Compile Include="UIMgr.cs" />
     <Compile Include="PopupElementalSelect.cs" />
     <Compile Include="PopupChange.cs" />
     <Compile Include="PopupBuildOrder.cs" />
@@ -81,11 +100,13 @@
     <Compile Include="PopupAccBook.cs" />
     <Compile Include="ParticleMgr.cs" />
     <Compile Include="ParticleElt.cs" />
+    <Compile Include="TooltipWindow.cs" />
     <Compile Include="PageStart.cs" />
     <Compile Include="PageMain.cs" />
     <Compile Include="PageLobby.cs" />
     <Compile Include="PageBattle.cs" />
     <Compile Include="Monster.cs" />
+    <Compile Include="MonTraitElt.cs" />
     <Compile Include="MissionElt.cs" />
     <Compile Include="MainTabElt.cs" />
     <Compile Include="ItemModElt.cs" />
@@ -96,7 +117,6 @@
     <Compile Include="DungeonElt.cs" />
     <Compile Include="DmgText.cs" />
     <Compile Include="CharUnitTab.cs" />
-    <Compile Include="PopupPromote.cs" />
     <Compile Include="CharSkillElt.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="BattleLaserElt.cs" />
@@ -129,6 +149,7 @@
     <Compile Include="DataQuest.cs" />
     <Compile Include="DataMutation.cs" />
     <Compile Include="DataMonster.cs" />
+    <Compile Include="DataMonTrait.cs" />
     <Compile Include="DataMod.cs" />
     <Compile Include="DataEnemy.cs" />
     <Compile Include="DataElemental.cs" />
@@ -137,24 +158,6 @@
     <Compile Include="DataAccessory.cs" />
     <Compile Include="GPGSIds.cs" />
     <Compile Include="SelfDestruct.cs" />
-    <Compile Include="PopupTrialBrief.cs" />
-    <Compile Include="PopupTypeSelect.cs" />
-    <Compile Include="PopupWeaponSelect.cs" />
-    <Compile Include="Purchaser.cs" />
-    <Compile Include="RSMgr.cs" />
-    <Compile Include="RebirthShopElt.cs" />
-    <Compile Include="ResearchElt.cs" />
-    <Compile Include="SaveManager.cs" />
-    <Compile Include="StringTooltip.cs" />
-    <Compile Include="TextCustom.cs" />
-    <Compile Include="TooltipWindow.cs" />
-    <Compile Include="UIMgr.cs" />
-    <Compile Include="UIPage.cs" />
-    <Compile Include="WeaponElt.cs" />
-    <Compile Include="KeyChainBinding.cs" />
-    <Compile Include="KeyChainCrypto.cs" />
-    <Compile Include="KeyChainDebug.cs" />
-    <Compile Include="IKeyChainPluginPath.cs" />
     <Compile Include="CC\Ads.cs" />
     <Compile Include="CC\WeaponType.cs" />
     <Compile Include="CC\ArmorType.cs" />
@@ -180,6 +183,7 @@
     <Compile Include="CC\AccDropType.cs" />
     <Compile Include="CC\Element.cs" />
     <Compile Include="CC\ElementalID.cs" />
+    <Compile Include="CC\MonTraitID.cs" />
     <Compile Include="CC\PlayerMonsterData.cs" />
     <Compile Include="CC\ItemModData.cs" />
     <Compile Include="CC\PlayerItemData.cs" />
@@ -203,6 +207,7 @@
     <Compile Include="CC\AccData.cs" />
     <Compile Include="CC\QuestData.cs" />
     <Compile Include="CC\ElementalData.cs" />
+    <Compile Include="CC\MonTraitData.cs" />
     <Compile Include="CC\CloudSavedData.cs" />
     <Compile Include="CC\SavedData.cs" />
     <Compile Include="CC\SavedOption.cs" />

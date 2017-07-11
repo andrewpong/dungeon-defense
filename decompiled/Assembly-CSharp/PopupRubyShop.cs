@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: PopupRubyShop
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using CC;
 using CodeStage.AntiCheat.ObscuredTypes;
@@ -13,7 +13,7 @@ using UnityEngine.UI;
 
 public class PopupRubyShop : UIPage
 {
-  private static int[] nCashBonus = new int[10]
+  private static int[] nCashBonus = new int[11]
   {
     100,
     100,
@@ -24,7 +24,8 @@ public class PopupRubyShop : UIPage
     0,
     10,
     20,
-    40
+    40,
+    300
   };
   public static PopupRubyShop obj;
   public Text textTitle;
@@ -52,6 +53,7 @@ public class PopupRubyShop : UIPage
   public Button[] btnAwakenPurchase;
   public Image[] imgBtnHighlight;
   public GameObject goForbidden;
+  public GameObject goExpensive;
   private bool bChange;
 
   public ObscuredInt nRuby
@@ -217,6 +219,8 @@ public class PopupRubyShop : UIPage
     shopIdList.Add(ShopID.eRubyR1080);
     shopIdList.Add(ShopID.eRubyR2100);
     shopIdList.Add(ShopID.eAwakenPackage);
+    shopIdList.Add(ShopID.eRubyF12000);
+    this.goExpensive.SetActive(Info.rebirth.listPurchase.Contains(ShopID.eRubyF12000));
     for (int index = 0; index < this.btnCashPurchase.Length; ++index)
     {
       ShopData shop = BData.GetShop(shopIdList[index]);

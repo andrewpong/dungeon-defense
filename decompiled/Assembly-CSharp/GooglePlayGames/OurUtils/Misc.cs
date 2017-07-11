@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: GooglePlayGames.OurUtils.Misc
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using System;
 
@@ -27,11 +27,11 @@ namespace GooglePlayGames.OurUtils
     public static byte[] GetSubsetBytes(byte[] array, int offset, int length)
     {
       if (array == null)
-        throw new ArgumentNullException("array");
+        throw new ArgumentNullException(nameof (array));
       if (offset < 0 || offset >= array.Length)
-        throw new ArgumentOutOfRangeException("offset");
+        throw new ArgumentOutOfRangeException(nameof (offset));
       if (length < 0 || array.Length - offset < length)
-        throw new ArgumentOutOfRangeException("length");
+        throw new ArgumentOutOfRangeException(nameof (length));
       if (offset == 0 && length == array.Length)
         return array;
       byte[] numArray = new byte[length];

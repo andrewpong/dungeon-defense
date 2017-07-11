@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: PageMain
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using CC;
 using CodeStage.AntiCheat.ObscuredTypes;
@@ -145,6 +145,8 @@ public class PageMain : UIMgr
       }
       flag = true;
     }
+    if ((long) Info.rebirth.nNewMedal < 0L)
+      Info.rebirth.nNewMedal = (ObscuredLong) 0L;
     if (!Info.rebirth.bFixAppleHellStoneBug)
     {
       int num1 = 0;
@@ -222,116 +224,19 @@ public class PageMain : UIMgr
         UIMgr.popupMsg.SetMsg(BData.GetString("UI0357"), true, false, string.Empty);
       }
     }
-    if (Info.rebirth != null)
+    if ((bool) Info.rebirth.bVIP)
     {
-      List<RebirthID> rebirthIdList = new List<RebirthID>();
-      rebirthIdList.Add(RebirthID.eMagicalGirl);
-      rebirthIdList.Add(RebirthID.eDarkKnight);
-      rebirthIdList.Add(RebirthID.eDoubleSpeed);
-      rebirthIdList.Add(RebirthID.eAutoBattle);
-      rebirthIdList.Add(RebirthID.eWaveRush);
-      rebirthIdList.Add(RebirthID.eStartLevel);
-      rebirthIdList.Add(RebirthID.eWeaponDmg);
-      rebirthIdList.Add(RebirthID.eBossDmg);
-      rebirthIdList.Add(RebirthID.eCriRate);
-      rebirthIdList.Add(RebirthID.eCriDmg);
-      rebirthIdList.Add(RebirthID.eMastery);
-      rebirthIdList.Add(RebirthID.eAttackSpd);
-      rebirthIdList.Add(RebirthID.eReloadSpd);
-      rebirthIdList.Add(RebirthID.eRegen);
-      rebirthIdList.Add(RebirthID.eResearch);
-      rebirthIdList.Add(RebirthID.eEnchant);
-      rebirthIdList.Add(RebirthID.eItemBag);
-      rebirthIdList.Add(RebirthID.eStartGold);
-      rebirthIdList.Add(RebirthID.eMonsterEye);
-      rebirthIdList.Add(RebirthID.eSellPrice);
-      rebirthIdList.Add(RebirthID.eDunHp);
-      rebirthIdList.Add(RebirthID.eSoul);
-      rebirthIdList.Add(RebirthID.eBlade);
-      rebirthIdList.Add(RebirthID.eMutationInhibit);
-      rebirthIdList.Add(RebirthID.eItemQuality);
-      rebirthIdList.Add(RebirthID.eRebirthDef);
-      long nNewStone = (long) Info.rebirth.nNewStone;
-      for (int index1 = 0; index1 < rebirthIdList.Count; ++index1)
-      {
-        if (Info.rebirth.dictRebirth.ContainsKey(rebirthIdList[index1]))
-        {
-          int num = (int) Info.rebirth.dictRebirth[rebirthIdList[index1]];
-          for (int index2 = 0; index2 < num; ++index2)
-            nNewStone += (long) Info.GetCostRebirth(rebirthIdList[index1], num - 1 - index2);
-        }
-      }
-      foreach (KeyValuePair<ObscuredInt, List<ObscuredInt>> keyValuePair in Info.rebirth.dictRebirthHistory)
-      {
-        for (int index = 0; index < keyValuePair.Value.Count; ++index)
-          nNewStone -= (long) Info.GetStone((int) keyValuePair.Value[index], (int) keyValuePair.Key);
-      }
-      if (nNewStone >= (long) this.nAllStone)
-      {
-        Info.rebirth.bVIP = (ObscuredBool) true;
-        ObscuredPrefs.SetBool("DD_VIP", true);
-      }
-    }
-    if (Info.rebirth != null)
-    {
-      List<RebirthID> rebirthIdList = new List<RebirthID>();
-      rebirthIdList.Add(RebirthID.eStoneStatMax);
-      rebirthIdList.Add(RebirthID.eAutoItemSell);
-      rebirthIdList.Add(RebirthID.eAutoResearch);
-      rebirthIdList.Add(RebirthID.eAutoRepair);
-      rebirthIdList.Add(RebirthID.eAutoEnchant);
-      rebirthIdList.Add(RebirthID.eAutoSkillSelect);
-      rebirthIdList.Add(RebirthID.eAutoActiveSkill);
-      rebirthIdList.Add(RebirthID.eRingUnlock);
-      rebirthIdList.Add(RebirthID.eInheritor);
-      rebirthIdList.Add(RebirthID.eGuardian);
-      rebirthIdList.Add(RebirthID.eManager);
-      rebirthIdList.Add(RebirthID.eSkeletonAwk);
-      rebirthIdList.Add(RebirthID.eGoblinAwk);
-      rebirthIdList.Add(RebirthID.eOgreAwk);
-      rebirthIdList.Add(RebirthID.eOrcAwk);
-      rebirthIdList.Add(RebirthID.eSlimeAwk);
-      rebirthIdList.Add(RebirthID.eWraithAwk);
-      rebirthIdList.Add(RebirthID.eSnakeAwk);
-      rebirthIdList.Add(RebirthID.eSwordAwk);
-      rebirthIdList.Add(RebirthID.eSummonerAwk);
-      rebirthIdList.Add(RebirthID.eMagicalGirlAwk);
-      rebirthIdList.Add(RebirthID.eDarkKnightAwk);
-      rebirthIdList.Add(RebirthID.eEyeAwk);
-      rebirthIdList.Add(RebirthID.eInheritLevel);
-      rebirthIdList.Add(RebirthID.eBladeAwk);
-      rebirthIdList.Add(RebirthID.eRubyCharDmg);
-      rebirthIdList.Add(RebirthID.eSuccubusAwk);
-      rebirthIdList.Add(RebirthID.eRubyBossDmg);
-      int nRuby = (int) Info.rebirth.nRuby;
-      for (int index1 = 0; index1 < rebirthIdList.Count; ++index1)
-      {
-        if (Info.rebirth.dictRebirth.ContainsKey(rebirthIdList[index1]))
-        {
-          int num = (int) Info.rebirth.dictRebirth[rebirthIdList[index1]];
-          for (int index2 = 0; index2 < num; ++index2)
-            nRuby += Info.GetCostRebirth(rebirthIdList[index1], num - 1 - index2);
-        }
-      }
-      foreach (KeyValuePair<ObscuredInt, List<ObscuredInt>> keyValuePair in Info.rebirth.dictRebirthHistory)
-      {
-        for (int index = 0; index < keyValuePair.Value.Count; ++index)
-          nRuby -= Info.GetRuby((int) keyValuePair.Value[index] / 4, (int) keyValuePair.Key);
-      }
-      if (nRuby >= this.nAllRuby)
-      {
-        Info.rebirth.bVIP = (ObscuredBool) true;
-        ObscuredPrefs.SetBool("DD_VIP", true);
-      }
+      Info.rebirth.bVIP = (ObscuredBool) false;
+      flag = true;
     }
     if (flag)
       SaveManager.SaveRebirth();
     this.OnClick(-1);
     UIMgr.PlayMusic();
-    if (Info.nNewStone > 0 || Info.nNewRuby > 0)
+    if (Info.nNewStone > 0L || Info.nNewRuby > 0L)
     {
       UIMgr.popupMsg.SetMsg(BData.GetString("UI0196").Replace("[1]", Info.nNewStone.ToString()).Replace("[2]", Info.nNewRuby.ToString()), true, false, string.Empty);
-      Info.nNewRuby = Info.nNewStone = 0;
+      Info.nNewRuby = Info.nNewStone = 0L;
     }
     if (!Info.CheckRebirth(RebirthID.eDoubleSpeed))
       Info.option.bDoubleSpeed = false;
@@ -583,7 +488,7 @@ public class PageMain : UIMgr
 
   public void OnCharSelect()
   {
-    Info.Rebirth(this.nSelectedDiff, this.nSelectedDiff, this.listCharID[this.nCharSelPos], (byte) Info.byCurrentSaveSlot, false, 1, -1L, new List<PlayerItemData>(), 0, false);
+    Info.Rebirth(this.nSelectedDiff, this.nSelectedDiff, this.listCharID[this.nCharSelPos], (byte) Info.byCurrentSaveSlot, false, 1, -1L, new List<PlayerItemData>(), new List<short>(), 0, false);
   }
 
   public void OnDifficult(int nDiff)

@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: GooglePlayGames.Android.AndroidTokenClient
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using Com.Google.Android.Gms.Common.Api;
 using GooglePlayGames.BasicApi;
@@ -51,21 +51,6 @@ namespace GooglePlayGames.Android
 
     internal void Fetch(string scope, bool fetchEmail, bool fetchAccessToken, bool fetchIdToken, Action<CommonStatusCodes> doneCallback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      AndroidTokenClient.\u003CFetch\u003Ec__AnonStorey0 fetchCAnonStorey0 = new AndroidTokenClient.\u003CFetch\u003Ec__AnonStorey0();
-      // ISSUE: reference to a compiler-generated field
-      fetchCAnonStorey0.scope = scope;
-      // ISSUE: reference to a compiler-generated field
-      fetchCAnonStorey0.fetchEmail = fetchEmail;
-      // ISSUE: reference to a compiler-generated field
-      fetchCAnonStorey0.fetchAccessToken = fetchAccessToken;
-      // ISSUE: reference to a compiler-generated field
-      fetchCAnonStorey0.fetchIdToken = fetchIdToken;
-      // ISSUE: reference to a compiler-generated field
-      fetchCAnonStorey0.doneCallback = doneCallback;
-      // ISSUE: reference to a compiler-generated field
-      fetchCAnonStorey0.\u0024this = this;
       if (this.apiAccessDenied)
       {
         if (this.apiWarningCount++ % this.apiWarningFreq == 0)
@@ -73,14 +58,37 @@ namespace GooglePlayGames.Android
           GooglePlayGames.OurUtils.Logger.w("Access to API denied");
           this.apiWarningCount = this.apiWarningCount / this.apiWarningFreq + 1;
         }
-        // ISSUE: reference to a compiler-generated field
-        fetchCAnonStorey0.doneCallback(CommonStatusCodes.AuthApiAccessForbidden);
+        doneCallback(CommonStatusCodes.AuthApiAccessForbidden);
       }
       else
-      {
-        // ISSUE: reference to a compiler-generated method
-        PlayGamesHelperObject.RunOnGameThread(new Action(fetchCAnonStorey0.\u003C\u003Em__0));
-      }
+        PlayGamesHelperObject.RunOnGameThread((Action) (() => AndroidTokenClient.FetchToken(scope, this.playerId, this.rationale, fetchEmail, fetchAccessToken, fetchIdToken, (Action<int, string, string, string>) ((rc, access, id, email) =>
+        {
+          if (rc != 0)
+          {
+            this.apiAccessDenied = rc == 3001 || rc == 16;
+            GooglePlayGames.OurUtils.Logger.w("Non-success returned from fetch: " + (object) rc);
+            doneCallback(CommonStatusCodes.AuthApiAccessForbidden);
+          }
+          else
+          {
+            if (fetchAccessToken)
+              GooglePlayGames.OurUtils.Logger.d("a = " + access);
+            if (fetchEmail)
+              GooglePlayGames.OurUtils.Logger.d("email = " + email);
+            if (fetchIdToken)
+              GooglePlayGames.OurUtils.Logger.d("idt = " + id);
+            if (fetchAccessToken && !string.IsNullOrEmpty(access))
+              this.accessToken = access;
+            if (fetchIdToken && !string.IsNullOrEmpty(id))
+            {
+              this.idToken = id;
+              this.idTokenCb(this.idToken);
+            }
+            if (fetchEmail && !string.IsNullOrEmpty(email))
+              this.accountName = email;
+            doneCallback(CommonStatusCodes.Success);
+          }
+        }))));
     }
 
     internal static void FetchToken(string scope, string playerId, string rationale, bool fetchEmail, bool fetchAccessToken, bool fetchIdToken, Action<int, string, string, string> callback)
@@ -118,31 +126,22 @@ namespace GooglePlayGames.Android
 
     private string GetAccountName(Action<CommonStatusCodes, string> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      AndroidTokenClient.\u003CGetAccountName\u003Ec__AnonStorey1 nameCAnonStorey1 = new AndroidTokenClient.\u003CGetAccountName\u003Ec__AnonStorey1();
-      // ISSUE: reference to a compiler-generated field
-      nameCAnonStorey1.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      nameCAnonStorey1.\u0024this = this;
       if (string.IsNullOrEmpty(this.accountName))
       {
         if (!this.fetchingEmail)
         {
           this.fetchingEmail = true;
-          // ISSUE: reference to a compiler-generated method
-          this.Fetch(this.idTokenScope, true, false, false, new Action<CommonStatusCodes>(nameCAnonStorey1.\u003C\u003Em__0));
+          this.Fetch(this.idTokenScope, true, false, false, (Action<CommonStatusCodes>) (status =>
+          {
+            this.fetchingEmail = false;
+            if (callback == null)
+              return;
+            callback(status, this.accountName);
+          }));
         }
       }
-      else
-      {
-        // ISSUE: reference to a compiler-generated field
-        if (nameCAnonStorey1.callback != null)
-        {
-          // ISSUE: reference to a compiler-generated field
-          nameCAnonStorey1.callback(CommonStatusCodes.Success, this.accountName);
-        }
-      }
+      else if (callback != null)
+        callback(CommonStatusCodes.Success, this.accountName);
       return this.accountName;
     }
 

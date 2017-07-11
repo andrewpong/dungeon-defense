@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: DigitalRuby.ThunderAndLightning.DemoConfigureScript
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using System;
 using System.Collections.Generic;
@@ -188,7 +188,23 @@ namespace DigitalRuby.ThunderAndLightning
       Stopwatch stopwatch = Stopwatch.StartNew();
       while (num1-- > 0)
       {
-        LightningBoltParameters lightningBoltParameters = new LightningBoltParameters() { Start = this.lastStart, End = this.lastEnd, Generations = (int) this.GenerationsSlider.value, LifeTime = num1 != 1 ? num7 * (float) (random.NextDouble() * 0.400000005960464 + 0.800000011920929) : num7, Delay = num3, ChaosFactor = num4, TrunkWidth = num5, Intensity = this.IntensitySlider.value, GlowIntensity = this.GlowIntensitySlider.value, GlowWidthMultiplier = this.GlowWidthSlider.value, Forkedness = num6, Random = random, FadePercent = num8, GrowthMultiplier = num9 };
+        LightningBoltParameters lightningBoltParameters = new LightningBoltParameters()
+        {
+          Start = this.lastStart,
+          End = this.lastEnd,
+          Generations = (int) this.GenerationsSlider.value,
+          LifeTime = num1 != 1 ? num7 * (float) (random.NextDouble() * 0.400000005960464 + 0.800000011920929) : num7,
+          Delay = num3,
+          ChaosFactor = num4,
+          TrunkWidth = num5,
+          Intensity = this.IntensitySlider.value,
+          GlowIntensity = this.GlowIntensitySlider.value,
+          GlowWidthMultiplier = this.GlowWidthSlider.value,
+          Forkedness = num6,
+          Random = random,
+          FadePercent = num8,
+          GrowthMultiplier = num9
+        };
         lightningBoltParametersList.Add(lightningBoltParameters);
         num3 += num7 * (float) (random.NextDouble() * 0.800000011920929 + 0.400000005960464);
       }

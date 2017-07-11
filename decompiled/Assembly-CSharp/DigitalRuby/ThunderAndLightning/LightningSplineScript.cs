@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: DigitalRuby.ThunderAndLightning.LightningSplineScript
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,10 @@ namespace DigitalRuby.ThunderAndLightning
 {
   public class LightningSplineScript : LightningBoltPathScriptBase
   {
-    private readonly List<Vector3> prevSourcePoints = new List<Vector3>((IEnumerable<Vector3>) new Vector3[1]{ Vector3.zero });
+    private readonly List<Vector3> prevSourcePoints = new List<Vector3>((IEnumerable<Vector3>) new Vector3[1]
+    {
+      Vector3.zero
+    });
     private readonly List<Vector3> sourcePoints = new List<Vector3>();
     private int previousGenerations = -1;
     private float previousDistancePerSegment = -1f;

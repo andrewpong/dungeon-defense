@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: GooglePlayGames.Native.PInvoke.PlayerManager
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using AOT;
 using GooglePlayGames.Native.Cwrapper;
@@ -116,13 +116,6 @@ namespace GooglePlayGames.Native.PInvoke
 
     internal void FetchFriends(Action<GooglePlayGames.BasicApi.ResponseStatus, List<GooglePlayGames.BasicApi.Multiplayer.Player>> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      PlayerManager.\u003CFetchFriends\u003Ec__AnonStorey1 friendsCAnonStorey1 = new PlayerManager.\u003CFetchFriends\u003Ec__AnonStorey1();
-      // ISSUE: reference to a compiler-generated field
-      friendsCAnonStorey1.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      friendsCAnonStorey1.\u0024this = this;
       HandleRef self = this.mGameServices.AsHandle();
       int num = 1;
       // ISSUE: reference to a compiler-generated field
@@ -133,8 +126,7 @@ namespace GooglePlayGames.Native.PInvoke
       }
       // ISSUE: reference to a compiler-generated field
       GooglePlayGames.Native.Cwrapper.PlayerManager.FetchListCallback fMgCache5 = PlayerManager.\u003C\u003Ef__mg\u0024cache5;
-      // ISSUE: reference to a compiler-generated method
-      Action<PlayerManager.FetchListResponse> callback1 = new Action<PlayerManager.FetchListResponse>(friendsCAnonStorey1.\u003C\u003Em__0);
+      Action<PlayerManager.FetchListResponse> callback1 = (Action<PlayerManager.FetchListResponse>) (rsp => this.HandleFetchCollected(rsp, callback));
       // ISSUE: reference to a compiler-generated field
       if (PlayerManager.\u003C\u003Ef__mg\u0024cache4 == null)
       {

@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: DigitalRuby.ThunderAndLightning.LightningBoltPrefabScriptBase
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,19 +15,39 @@ namespace DigitalRuby.ThunderAndLightning
     private readonly System.Random random = new System.Random();
     [Header("Lightning Spawn Properties")]
     [SingleLineClamp("How long to wait before creating another round of lightning bolts in seconds", 0.001, 1.79769313486232E+308)]
-    public RangeOfFloats IntervalRange = new RangeOfFloats() { Minimum = 0.05f, Maximum = 0.1f };
+    public RangeOfFloats IntervalRange = new RangeOfFloats()
+    {
+      Minimum = 0.05f,
+      Maximum = 0.1f
+    };
     [SingleLineClamp("How many lightning bolts to emit for each interval", 0.0, 100.0)]
-    public RangeOfIntegers CountRange = new RangeOfIntegers() { Minimum = 1, Maximum = 1 };
+    public RangeOfIntegers CountRange = new RangeOfIntegers()
+    {
+      Minimum = 1,
+      Maximum = 1
+    };
     [Tooltip("Reduces the probability that additional bolts from CountRange will actually happen (0 - 1).")]
     [Range(0.0f, 1f)]
     public float CountProbabilityModifier = 1f;
     [SingleLineClamp("Delay in seconds (range) before each additional lightning bolt in count range is emitted", 0.0, 30.0)]
-    public RangeOfFloats DelayRange = new RangeOfFloats() { Minimum = 0.0f, Maximum = 0.0f };
+    public RangeOfFloats DelayRange = new RangeOfFloats()
+    {
+      Minimum = 0.0f,
+      Maximum = 0.0f
+    };
     [SingleLineClamp("For each bolt emitted, how long should it stay in seconds", 0.01, 10.0)]
-    public RangeOfFloats DurationRange = new RangeOfFloats() { Minimum = 0.06f, Maximum = 0.12f };
+    public RangeOfFloats DurationRange = new RangeOfFloats()
+    {
+      Minimum = 0.06f,
+      Maximum = 0.12f
+    };
     [Header("Lightning Appearance Properties")]
     [SingleLineClamp("The trunk width range in unity units (x = min, y = max)", 0.0001, 100.0)]
-    public RangeOfFloats TrunkWidthRange = new RangeOfFloats() { Minimum = 0.1f, Maximum = 0.2f };
+    public RangeOfFloats TrunkWidthRange = new RangeOfFloats()
+    {
+      Minimum = 0.1f,
+      Maximum = 0.2f
+    };
     [Tooltip("Generations (1 - 8, higher makes more detailed but more expensive lightning)")]
     [Range(1f, 8f)]
     public int Generations = 6;

@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: GooglePlayGames.PlayGamesPlatform
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using GooglePlayGames.BasicApi;
 using GooglePlayGames.BasicApi.Events;
@@ -138,29 +138,24 @@ namespace GooglePlayGames
 
     public static void InitializeNearby(Action<INearbyConnectionClient> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      PlayGamesPlatform.\u003CInitializeNearby\u003Ec__AnonStorey0 nearbyCAnonStorey0 = new PlayGamesPlatform.\u003CInitializeNearby\u003Ec__AnonStorey0();
-      // ISSUE: reference to a compiler-generated field
-      nearbyCAnonStorey0.callback = callback;
       Debug.Log((object) "Calling InitializeNearby!");
       if (PlayGamesPlatform.sNearbyConnectionClient == null)
+        NearbyConnectionClientFactory.Create((Action<INearbyConnectionClient>) (client =>
+        {
+          Debug.Log((object) "Nearby Client Created!!");
+          PlayGamesPlatform.sNearbyConnectionClient = client;
+          if (callback != null)
+            callback(client);
+          else
+            Debug.Log((object) "Initialize Nearby callback is null");
+        }));
+      else if (callback != null)
       {
-        // ISSUE: reference to a compiler-generated method
-        NearbyConnectionClientFactory.Create(new Action<INearbyConnectionClient>(nearbyCAnonStorey0.\u003C\u003Em__0));
+        Debug.Log((object) "Nearby Already initialized: calling callback directly");
+        callback(PlayGamesPlatform.sNearbyConnectionClient);
       }
       else
-      {
-        // ISSUE: reference to a compiler-generated field
-        if (nearbyCAnonStorey0.callback != null)
-        {
-          Debug.Log((object) "Nearby Already initialized: calling callback directly");
-          // ISSUE: reference to a compiler-generated field
-          nearbyCAnonStorey0.callback(PlayGamesPlatform.sNearbyConnectionClient);
-        }
-        else
-          Debug.Log((object) "Nearby Already initialized");
-      }
+        Debug.Log((object) "Nearby Already initialized");
     }
 
     public static PlayGamesPlatform Activate()
@@ -193,12 +188,7 @@ namespace GooglePlayGames
 
     public void Authenticate(Action<bool> callback, bool silent)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: reference to a compiler-generated method
-      this.Authenticate(new Action<bool, string>(new PlayGamesPlatform.\u003CAuthenticate\u003Ec__AnonStorey1()
-      {
-        callback = callback
-      }.\u003C\u003Em__0), silent);
+      this.Authenticate((Action<bool, string>) ((success, msg) => callback(success)), silent);
     }
 
     public void Authenticate(Action<bool, string> callback, bool silent)
@@ -443,45 +433,38 @@ namespace GooglePlayGames
 
     public void LoadAchievementDescriptions(Action<IAchievementDescription[]> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      PlayGamesPlatform.\u003CLoadAchievementDescriptions\u003Ec__AnonStorey2 descriptionsCAnonStorey2 = new PlayGamesPlatform.\u003CLoadAchievementDescriptions\u003Ec__AnonStorey2();
-      // ISSUE: reference to a compiler-generated field
-      descriptionsCAnonStorey2.callback = callback;
       if (!this.IsAuthenticated())
       {
         GooglePlayGames.OurUtils.Logger.e("LoadAchievementDescriptions can only be called after authentication.");
-        // ISSUE: reference to a compiler-generated field
-        if (descriptionsCAnonStorey2.callback == null)
+        if (callback == null)
           return;
-        // ISSUE: reference to a compiler-generated field
-        descriptionsCAnonStorey2.callback((IAchievementDescription[]) null);
+        callback((IAchievementDescription[]) null);
       }
       else
-      {
-        // ISSUE: reference to a compiler-generated method
-        this.mClient.LoadAchievements(new Action<Achievement[]>(descriptionsCAnonStorey2.\u003C\u003Em__0));
-      }
+        this.mClient.LoadAchievements((Action<Achievement[]>) (ach =>
+        {
+          IAchievementDescription[] achievementDescriptionArray = new IAchievementDescription[ach.Length];
+          for (int index = 0; index < achievementDescriptionArray.Length; ++index)
+            achievementDescriptionArray[index] = (IAchievementDescription) new PlayGamesAchievement(ach[index]);
+          callback(achievementDescriptionArray);
+        }));
     }
 
     public void LoadAchievements(Action<IAchievement[]> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      PlayGamesPlatform.\u003CLoadAchievements\u003Ec__AnonStorey3 achievementsCAnonStorey3 = new PlayGamesPlatform.\u003CLoadAchievements\u003Ec__AnonStorey3();
-      // ISSUE: reference to a compiler-generated field
-      achievementsCAnonStorey3.callback = callback;
       if (!this.IsAuthenticated())
       {
         GooglePlayGames.OurUtils.Logger.e("LoadAchievements can only be called after authentication.");
-        // ISSUE: reference to a compiler-generated field
-        achievementsCAnonStorey3.callback((IAchievement[]) null);
+        callback((IAchievement[]) null);
       }
       else
-      {
-        // ISSUE: reference to a compiler-generated method
-        this.mClient.LoadAchievements(new Action<Achievement[]>(achievementsCAnonStorey3.\u003C\u003Em__0));
-      }
+        this.mClient.LoadAchievements((Action<Achievement[]>) (ach =>
+        {
+          IAchievement[] achievementArray = new IAchievement[ach.Length];
+          for (int index = 0; index < achievementArray.Length; ++index)
+            achievementArray[index] = (IAchievement) new PlayGamesAchievement(ach[index]);
+          callback(achievementArray);
+        }));
     }
 
     public IAchievement CreateAchievement()
@@ -523,12 +506,7 @@ namespace GooglePlayGames
 
     public void LoadScores(string leaderboardId, Action<IScore[]> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: reference to a compiler-generated method
-      this.LoadScores(leaderboardId, LeaderboardStart.PlayerCentered, this.mClient.LeaderboardMaxResults(), LeaderboardCollection.Public, LeaderboardTimeSpan.AllTime, new Action<LeaderboardScoreData>(new PlayGamesPlatform.\u003CLoadScores\u003Ec__AnonStorey4()
-      {
-        callback = callback
-      }.\u003C\u003Em__0));
+      this.LoadScores(leaderboardId, LeaderboardStart.PlayerCentered, this.mClient.LeaderboardMaxResults(), LeaderboardCollection.Public, LeaderboardTimeSpan.AllTime, (Action<LeaderboardScoreData>) (scoreData => callback(scoreData.Scores)));
     }
 
     public void LoadScores(string leaderboardId, LeaderboardStart start, int rowCount, LeaderboardCollection collection, LeaderboardTimeSpan timeSpan, Action<LeaderboardScoreData> callback)
@@ -633,29 +611,17 @@ namespace GooglePlayGames
 
     public void LoadScores(ILeaderboard board, Action<bool> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      PlayGamesPlatform.\u003CLoadScores\u003Ec__AnonStorey5 scoresCAnonStorey5 = new PlayGamesPlatform.\u003CLoadScores\u003Ec__AnonStorey5();
-      // ISSUE: reference to a compiler-generated field
-      scoresCAnonStorey5.board = board;
-      // ISSUE: reference to a compiler-generated field
-      scoresCAnonStorey5.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      scoresCAnonStorey5.\u0024this = this;
       if (!this.IsAuthenticated())
       {
         GooglePlayGames.OurUtils.Logger.e("LoadScores can only be called after authentication.");
-        // ISSUE: reference to a compiler-generated field
-        if (scoresCAnonStorey5.callback == null)
+        if (callback == null)
           return;
-        // ISSUE: reference to a compiler-generated field
-        scoresCAnonStorey5.callback(false);
+        callback(false);
       }
       else
       {
         LeaderboardTimeSpan timeSpan;
-        // ISSUE: reference to a compiler-generated field
-        switch (scoresCAnonStorey5.board.timeScope)
+        switch (board.timeScope)
         {
           case TimeScope.Today:
             timeSpan = LeaderboardTimeSpan.Daily;
@@ -670,17 +636,9 @@ namespace GooglePlayGames
             timeSpan = LeaderboardTimeSpan.AllTime;
             break;
         }
-        // ISSUE: reference to a compiler-generated field
-        ((PlayGamesLeaderboard) scoresCAnonStorey5.board).loading = true;
-        // ISSUE: reference to a compiler-generated field
-        // ISSUE: reference to a compiler-generated field
-        GooglePlayGames.OurUtils.Logger.d("LoadScores, board=" + (object) scoresCAnonStorey5.board + " callback is " + (object) scoresCAnonStorey5.callback);
-        // ISSUE: reference to a compiler-generated field
-        // ISSUE: reference to a compiler-generated field
-        // ISSUE: reference to a compiler-generated field
-        // ISSUE: reference to a compiler-generated field
-        // ISSUE: reference to a compiler-generated method
-        this.mClient.LoadScores(scoresCAnonStorey5.board.id, LeaderboardStart.PlayerCentered, scoresCAnonStorey5.board.range.count <= 0 ? this.mClient.LeaderboardMaxResults() : scoresCAnonStorey5.board.range.count, scoresCAnonStorey5.board.userScope != UserScope.FriendsOnly ? LeaderboardCollection.Public : LeaderboardCollection.Social, timeSpan, new Action<LeaderboardScoreData>(scoresCAnonStorey5.\u003C\u003Em__0));
+        ((PlayGamesLeaderboard) board).loading = true;
+        GooglePlayGames.OurUtils.Logger.d("LoadScores, board=" + (object) board + " callback is " + (object) callback);
+        this.mClient.LoadScores(board.id, LeaderboardStart.PlayerCentered, board.range.count <= 0 ? this.mClient.LeaderboardMaxResults() : board.range.count, board.userScope != UserScope.FriendsOnly ? LeaderboardCollection.Public : LeaderboardCollection.Social, timeSpan, (Action<LeaderboardScoreData>) (scoreData => this.HandleLoadingScores((PlayGamesLeaderboard) board, scoreData, callback)));
       }
     }
 
@@ -703,31 +661,14 @@ namespace GooglePlayGames
 
     internal void HandleLoadingScores(PlayGamesLeaderboard board, LeaderboardScoreData scoreData, Action<bool> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      PlayGamesPlatform.\u003CHandleLoadingScores\u003Ec__AnonStorey6 scoresCAnonStorey6 = new PlayGamesPlatform.\u003CHandleLoadingScores\u003Ec__AnonStorey6();
-      // ISSUE: reference to a compiler-generated field
-      scoresCAnonStorey6.board = board;
-      // ISSUE: reference to a compiler-generated field
-      scoresCAnonStorey6.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      scoresCAnonStorey6.\u0024this = this;
-      // ISSUE: reference to a compiler-generated field
-      bool flag = scoresCAnonStorey6.board.SetFromData(scoreData);
-      // ISSUE: reference to a compiler-generated field
-      if (flag && !scoresCAnonStorey6.board.HasAllScores() && scoreData.NextPageToken != null)
+      bool flag = board.SetFromData(scoreData);
+      if (flag && !board.HasAllScores() && scoreData.NextPageToken != null)
       {
-        // ISSUE: reference to a compiler-generated field
-        // ISSUE: reference to a compiler-generated field
-        int rowCount = scoresCAnonStorey6.board.range.count - scoresCAnonStorey6.board.ScoreCount;
-        // ISSUE: reference to a compiler-generated method
-        this.mClient.LoadMoreScores(scoreData.NextPageToken, rowCount, new Action<LeaderboardScoreData>(scoresCAnonStorey6.\u003C\u003Em__0));
+        int rowCount = board.range.count - board.ScoreCount;
+        this.mClient.LoadMoreScores(scoreData.NextPageToken, rowCount, (Action<LeaderboardScoreData>) (nextScoreData => this.HandleLoadingScores(board, nextScoreData, callback)));
       }
       else
-      {
-        // ISSUE: reference to a compiler-generated field
-        scoresCAnonStorey6.callback(flag);
-      }
+        callback(flag);
     }
 
     internal IUserProfile[] GetFriends()

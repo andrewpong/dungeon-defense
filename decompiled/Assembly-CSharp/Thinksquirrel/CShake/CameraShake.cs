@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: Thinksquirrel.CShake.CameraShake
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using System;
 using System.Collections;
@@ -277,7 +277,7 @@ namespace Thinksquirrel.CShake
       if (this.cameras.Count < 1 && (bool) ((UnityEngine.Object) Camera.main))
         this.cameras.Add(Camera.main);
       if (this.cameras.Count < 1)
-        CameraShakeBase.LogError((object) "No cameras assigned in the inspector!", "Camera Shake", "CameraShake", (UnityEngine.Object) this);
+        CameraShakeBase.LogError((object) "No cameras assigned in the inspector!", "Camera Shake", nameof (CameraShake), (UnityEngine.Object) this);
       CameraShake.m_Components.Add(this);
     }
 
@@ -451,7 +451,22 @@ namespace Thinksquirrel.CShake
     private IEnumerator DoShake_Internal(Camera cam, Vector3 seed, CameraShake.ShakeType shakeType, int numberOfShakes, Vector3 shakeAmount, Vector3 rotationAmount, float distance, float speed, float decay, float uiShakeModifier, bool multiplyByTimeScale, Action callback)
     {
       // ISSUE: object of a compiler-generated type is created
-      return (IEnumerator) new CameraShake.\u003CDoShake_Internal\u003Ec__Iterator0() { seed = seed, cam = cam, numberOfShakes = numberOfShakes, distance = distance, multiplyByTimeScale = multiplyByTimeScale, uiShakeModifier = uiShakeModifier, shakeType = shakeType, rotationAmount = rotationAmount, shakeAmount = shakeAmount, speed = speed, decay = decay, callback = callback, \u0024this = this };
+      return (IEnumerator) new CameraShake.\u003CDoShake_Internal\u003Ec__Iterator0()
+      {
+        seed = seed,
+        cam = cam,
+        numberOfShakes = numberOfShakes,
+        distance = distance,
+        multiplyByTimeScale = multiplyByTimeScale,
+        uiShakeModifier = uiShakeModifier,
+        shakeType = shakeType,
+        rotationAmount = rotationAmount,
+        shakeAmount = shakeAmount,
+        speed = speed,
+        decay = decay,
+        callback = callback,
+        \u0024this = this
+      };
     }
 
     private void CheckShakeRect()
@@ -474,7 +489,13 @@ namespace Thinksquirrel.CShake
     private IEnumerator DoResetState(IList<Camera> cameras, IDictionary<Camera, int> shakeCount, float time)
     {
       // ISSUE: object of a compiler-generated type is created
-      return (IEnumerator) new CameraShake.\u003CDoResetState\u003Ec__Iterator1() { cameras = cameras, shakeCount = shakeCount, time = time, \u0024this = this };
+      return (IEnumerator) new CameraShake.\u003CDoResetState\u003Ec__Iterator1()
+      {
+        cameras = cameras,
+        shakeCount = shakeCount,
+        time = time,
+        \u0024this = this
+      };
     }
 
     private static Vector3 GetGeometricAvg(IList<CameraShake.ShakeState> states, bool position)

@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: UnityStandardAssets.Water.Water
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using System;
 using System.Collections.Generic;
@@ -195,7 +195,11 @@ namespace UnityStandardAssets.Water
         this.m_ReflectionCameras.TryGetValue(currentCamera, out reflectionCamera);
         if (!(bool) ((UnityEngine.Object) reflectionCamera))
         {
-          GameObject gameObject = new GameObject("Water Refl Camera id" + (object) this.GetInstanceID() + " for " + (object) currentCamera.GetInstanceID(), new System.Type[2]{ typeof (Camera), typeof (Skybox) });
+          GameObject gameObject = new GameObject("Water Refl Camera id" + (object) this.GetInstanceID() + " for " + (object) currentCamera.GetInstanceID(), new System.Type[2]
+          {
+            typeof (Camera),
+            typeof (Skybox)
+          });
           reflectionCamera = gameObject.GetComponent<Camera>();
           reflectionCamera.enabled = false;
           reflectionCamera.transform.position = this.transform.position;
@@ -220,7 +224,11 @@ namespace UnityStandardAssets.Water
       this.m_RefractionCameras.TryGetValue(currentCamera, out refractionCamera);
       if ((bool) ((UnityEngine.Object) refractionCamera))
         return;
-      GameObject gameObject1 = new GameObject("Water Refr Camera id" + (object) this.GetInstanceID() + " for " + (object) currentCamera.GetInstanceID(), new System.Type[2]{ typeof (Camera), typeof (Skybox) });
+      GameObject gameObject1 = new GameObject("Water Refr Camera id" + (object) this.GetInstanceID() + " for " + (object) currentCamera.GetInstanceID(), new System.Type[2]
+      {
+        typeof (Camera),
+        typeof (Skybox)
+      });
       refractionCamera = gameObject1.GetComponent<Camera>();
       refractionCamera.enabled = false;
       refractionCamera.transform.position = this.transform.position;

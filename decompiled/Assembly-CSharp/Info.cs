@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: Info
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using CC;
 using CodeStage.AntiCheat.ObscuredTypes;
@@ -51,25 +51,36 @@ public class Info
   public static ObscuredInt nAwakenCost = (ObscuredInt) 5000000;
   public static ObscuredInt nDiffTrial = (ObscuredInt) 0;
   public static ObscuredInt nStartEndless = (ObscuredInt) 0;
-  public static float[] fDiffTrialDiffFac = new float[3]
+  public static float fDiffTrialDayFac = 0.8f;
+  public static float[] fDiffTrialDiffFac = new float[4]
   {
     0.65f,
     0.825f,
-    1f
+    1f,
+    1.2f
   };
-  public static float[] fDiffTrialDiffDmg = new float[3]
+  public static int[] nDiffTrialDiffDay = new int[4]
+  {
+    0,
+    0,
+    0,
+    100
+  };
+  public static float[] fDiffTrialDiffDmg = new float[4]
   {
     0.65f,
     0.825f,
-    1f
+    1f,
+    1.2f
   };
-  public static float[] fDiffTrialReward = new float[3]
+  public static float[] fDiffTrialReward = new float[4]
   {
     0.25f,
     0.5f,
-    1f
+    1f,
+    3f
   };
-  public static float[] fDiffSpd = new float[16]
+  public static float[] fDiffSpd = new float[21]
   {
     1f,
     0.8f,
@@ -86,9 +97,14 @@ public class Info
     5f,
     5f,
     5f,
-    5f
+    5f,
+    6f,
+    7f,
+    8f,
+    9f,
+    10f
   };
-  public static float[] fDiffFac = new float[16]
+  public static float[] fDiffFac = new float[21]
   {
     1f,
     0.7f,
@@ -105,9 +121,14 @@ public class Info
     1E+08f,
     1E+09f,
     1E+10f,
-    1E+11f
+    1E+11f,
+    1E+12f,
+    1E+13f,
+    1E+14f,
+    1E+15f,
+    1E+16f
   };
-  public static float[] fDiffEmDmgFac = new float[16]
+  public static float[] fDiffEmDmgFac = new float[21]
   {
     1f,
     0.5f,
@@ -124,9 +145,14 @@ public class Info
     8100f,
     10100f,
     12200f,
-    14500f
+    14500f,
+    17000f,
+    19700f,
+    22600f,
+    25700f,
+    29000f
   };
-  public static double[] fDiffEmHpFac = new double[16]
+  public static double[] fDiffEmHpFac = new double[21]
   {
     1.0,
     0.8,
@@ -143,34 +169,312 @@ public class Info
     1000000000.0,
     10000000000.0,
     100000000000.0,
-    1000000000000.0
+    1000000000000.0,
+    10000000000000.0,
+    100000000000000.0,
+    1E+15,
+    1E+16,
+    1E+17
   };
-  public static float[] fDiffMutGrow = new float[16]{ 0.5f, 0.4f, 0.8f, 1f, 3f, 5f, 6f, 7f, 8f, 9f, 10f, 11f, 12f, 13f, 14f, 15f };
-  public static ObscuredInt[] nEndlessMutationDay = new ObscuredInt[16]{ (ObscuredInt) 200, (ObscuredInt) 240, (ObscuredInt) 160, (ObscuredInt) 120, (ObscuredInt) 80, (ObscuredInt) 40, (ObscuredInt) 35, (ObscuredInt) 30, (ObscuredInt) 25, (ObscuredInt) 20, (ObscuredInt) 10, (ObscuredInt) 9, (ObscuredInt) 8, (ObscuredInt) 7, (ObscuredInt) 6, (ObscuredInt) 5 };
-  public static ObscuredInt[] nMutateStartDay = new ObscuredInt[16]{ (ObscuredInt) 50, (ObscuredInt) 60, (ObscuredInt) 30, (ObscuredInt) 10, (ObscuredInt) 5, (ObscuredInt) 3, (ObscuredInt) 3, (ObscuredInt) 3, (ObscuredInt) 3, (ObscuredInt) 3, (ObscuredInt) 2, (ObscuredInt) 2, (ObscuredInt) 2, (ObscuredInt) 2, (ObscuredInt) 2, (ObscuredInt) 2 };
-  public static ObscuredInt[] nDiffRepairCost = new ObscuredInt[16]{ (ObscuredInt) 8, (ObscuredInt) 4, (ObscuredInt) 12, (ObscuredInt) 20, (ObscuredInt) 40, (ObscuredInt) 60, (ObscuredInt) 100, (ObscuredInt) 200, (ObscuredInt) 300, (ObscuredInt) 400, (ObscuredInt) 500, (ObscuredInt) 600, (ObscuredInt) 700, (ObscuredInt) 800, (ObscuredInt) 900, (ObscuredInt) 1000 };
-  public static ObscuredByte[] byInitBatch = new ObscuredByte[5]{ (ObscuredByte) (byte) 2, (ObscuredByte) (byte) 3, (ObscuredByte) (byte) 1, (ObscuredByte) (byte) 4, (ObscuredByte) (byte) 0 };
+  public static float[] fDiffMutGrow = new float[21]
+  {
+    0.5f,
+    0.4f,
+    0.8f,
+    1f,
+    3f,
+    5f,
+    6f,
+    7f,
+    8f,
+    9f,
+    10f,
+    11f,
+    12f,
+    13f,
+    14f,
+    15f,
+    18f,
+    21f,
+    24f,
+    27f,
+    30f
+  };
+  public static ObscuredInt[] nEndlessMutationDay = new ObscuredInt[21]
+  {
+    (ObscuredInt) 200,
+    (ObscuredInt) 240,
+    (ObscuredInt) 160,
+    (ObscuredInt) 120,
+    (ObscuredInt) 80,
+    (ObscuredInt) 40,
+    (ObscuredInt) 35,
+    (ObscuredInt) 30,
+    (ObscuredInt) 25,
+    (ObscuredInt) 20,
+    (ObscuredInt) 10,
+    (ObscuredInt) 9,
+    (ObscuredInt) 8,
+    (ObscuredInt) 7,
+    (ObscuredInt) 6,
+    (ObscuredInt) 5,
+    (ObscuredInt) 5,
+    (ObscuredInt) 4,
+    (ObscuredInt) 4,
+    (ObscuredInt) 3,
+    (ObscuredInt) 3
+  };
+  public static ObscuredInt[] nMutateStartDay = new ObscuredInt[21]
+  {
+    (ObscuredInt) 50,
+    (ObscuredInt) 60,
+    (ObscuredInt) 30,
+    (ObscuredInt) 10,
+    (ObscuredInt) 5,
+    (ObscuredInt) 3,
+    (ObscuredInt) 3,
+    (ObscuredInt) 3,
+    (ObscuredInt) 3,
+    (ObscuredInt) 3,
+    (ObscuredInt) 2,
+    (ObscuredInt) 2,
+    (ObscuredInt) 2,
+    (ObscuredInt) 2,
+    (ObscuredInt) 2,
+    (ObscuredInt) 2,
+    (ObscuredInt) 2,
+    (ObscuredInt) 2,
+    (ObscuredInt) 2,
+    (ObscuredInt) 2,
+    (ObscuredInt) 2
+  };
+  public static ObscuredInt[] nDiffRepairCost = new ObscuredInt[21]
+  {
+    (ObscuredInt) 8,
+    (ObscuredInt) 4,
+    (ObscuredInt) 12,
+    (ObscuredInt) 20,
+    (ObscuredInt) 40,
+    (ObscuredInt) 60,
+    (ObscuredInt) 100,
+    (ObscuredInt) 200,
+    (ObscuredInt) 300,
+    (ObscuredInt) 400,
+    (ObscuredInt) 500,
+    (ObscuredInt) 600,
+    (ObscuredInt) 700,
+    (ObscuredInt) 800,
+    (ObscuredInt) 900,
+    (ObscuredInt) 1000,
+    (ObscuredInt) 1000,
+    (ObscuredInt) 1000,
+    (ObscuredInt) 1000,
+    (ObscuredInt) 1000,
+    (ObscuredInt) 1000
+  };
+  public static ObscuredByte[] byInitBatch = new ObscuredByte[5]
+  {
+    (ObscuredByte) (byte) 2,
+    (ObscuredByte) (byte) 3,
+    (ObscuredByte) (byte) 1,
+    (ObscuredByte) (byte) 4,
+    (ObscuredByte) (byte) 0
+  };
   public static List<PlayerAccData> listGetAcc = new List<PlayerAccData>();
   public static bool bRebirthChanged = false;
   public static bool bTempQuitBattle = false;
-  public static int[] nMulStone = new int[10]{ 1, 1, 1, 1, 2, 2, 2, 3, 3, 4 };
+  public static int[] nMulStone = new int[10]
+  {
+    1,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2,
+    3,
+    3,
+    4
+  };
   public static int nSelectedDiff = 0;
   public static ObscuredShort sSelectedRebirthCharID = (ObscuredShort) (short) 0;
   public static bool bForceQuit = false;
   public static bool bBattleFail = false;
   public static ObscuredFloat fDoubleDayPass = (ObscuredFloat) 1f;
   public static Dictionary<ElementalID, ObscuredFloat[]> dictElementalFac = new Dictionary<ElementalID, ObscuredFloat[]>();
-  public static ObscuredInt[,] nAccEnchantMedal = new ObscuredInt[5, 11]{ { (ObscuredInt) 20, (ObscuredInt) 40, (ObscuredInt) 60, (ObscuredInt) 100, (ObscuredInt) 140, (ObscuredInt) 200, (ObscuredInt) 260, (ObscuredInt) 340, (ObscuredInt) 420, (ObscuredInt) 500, (ObscuredInt) 600 }, { (ObscuredInt) 400, (ObscuredInt) 600, (ObscuredInt) 1000, (ObscuredInt) 1400, (ObscuredInt) 2000, (ObscuredInt) 2600, (ObscuredInt) 3400, (ObscuredInt) 4200, (ObscuredInt) 5000, (ObscuredInt) 6000, (ObscuredInt) 7000 }, { (ObscuredInt) 6000, (ObscuredInt) 10000, (ObscuredInt) 14000, (ObscuredInt) 20000, (ObscuredInt) 26000, (ObscuredInt) 34000, (ObscuredInt) 42000, (ObscuredInt) 50000, (ObscuredInt) 60000, (ObscuredInt) 70000, (ObscuredInt) 80000 }, { (ObscuredInt) 10000, (ObscuredInt) 14000, (ObscuredInt) 20000, (ObscuredInt) 26000, (ObscuredInt) 34000, (ObscuredInt) 42000, (ObscuredInt) 50000, (ObscuredInt) 60000, (ObscuredInt) 70000, (ObscuredInt) 80000, (ObscuredInt) 90000 }, { (ObscuredInt) 28000, (ObscuredInt) 40000, (ObscuredInt) 52000, (ObscuredInt) 68000, (ObscuredInt) 84000, (ObscuredInt) 100000, (ObscuredInt) 120000, (ObscuredInt) 140000, (ObscuredInt) 160000, (ObscuredInt) 200000, (ObscuredInt) 300000 } };
-  public static ObscuredInt[,] nAccEnchantStone = new ObscuredInt[5, 11]{ { (ObscuredInt) 1, (ObscuredInt) 5, (ObscuredInt) 10, (ObscuredInt) 15, (ObscuredInt) 25, (ObscuredInt) 35, (ObscuredInt) 50, (ObscuredInt) 65, (ObscuredInt) 85, (ObscuredInt) 105, (ObscuredInt) 0 }, { (ObscuredInt) 10, (ObscuredInt) 15, (ObscuredInt) 25, (ObscuredInt) 35, (ObscuredInt) 50, (ObscuredInt) 65, (ObscuredInt) 85, (ObscuredInt) 105, (ObscuredInt) 125, (ObscuredInt) 150, (ObscuredInt) 0 }, { (ObscuredInt) 25, (ObscuredInt) 35, (ObscuredInt) 50, (ObscuredInt) 65, (ObscuredInt) 85, (ObscuredInt) 105, (ObscuredInt) 125, (ObscuredInt) 150, (ObscuredInt) 200, (ObscuredInt) 250, (ObscuredInt) 0 }, { (ObscuredInt) 50, (ObscuredInt) 65, (ObscuredInt) 85, (ObscuredInt) 105, (ObscuredInt) 125, (ObscuredInt) 150, (ObscuredInt) 200, (ObscuredInt) 250, (ObscuredInt) 375, (ObscuredInt) 500, (ObscuredInt) 0 }, { (ObscuredInt) 85, (ObscuredInt) 105, (ObscuredInt) 125, (ObscuredInt) 150, (ObscuredInt) 200, (ObscuredInt) 250, (ObscuredInt) 375, (ObscuredInt) 500, (ObscuredInt) 750, (ObscuredInt) 1000, (ObscuredInt) 0 } };
-  private static float[] fGradeRate = new float[5]{ 100f, 52f, 22f, 8f, 1.5f };
+  public static ObscuredInt[,] nAccEnchantMedal = new ObscuredInt[5, 11]
+  {
+    {
+      (ObscuredInt) 20,
+      (ObscuredInt) 40,
+      (ObscuredInt) 60,
+      (ObscuredInt) 100,
+      (ObscuredInt) 140,
+      (ObscuredInt) 200,
+      (ObscuredInt) 260,
+      (ObscuredInt) 340,
+      (ObscuredInt) 420,
+      (ObscuredInt) 500,
+      (ObscuredInt) 600
+    },
+    {
+      (ObscuredInt) 400,
+      (ObscuredInt) 600,
+      (ObscuredInt) 1000,
+      (ObscuredInt) 1400,
+      (ObscuredInt) 2000,
+      (ObscuredInt) 2600,
+      (ObscuredInt) 3400,
+      (ObscuredInt) 4200,
+      (ObscuredInt) 5000,
+      (ObscuredInt) 6000,
+      (ObscuredInt) 7000
+    },
+    {
+      (ObscuredInt) 6000,
+      (ObscuredInt) 10000,
+      (ObscuredInt) 14000,
+      (ObscuredInt) 20000,
+      (ObscuredInt) 26000,
+      (ObscuredInt) 34000,
+      (ObscuredInt) 42000,
+      (ObscuredInt) 50000,
+      (ObscuredInt) 60000,
+      (ObscuredInt) 70000,
+      (ObscuredInt) 80000
+    },
+    {
+      (ObscuredInt) 10000,
+      (ObscuredInt) 14000,
+      (ObscuredInt) 20000,
+      (ObscuredInt) 26000,
+      (ObscuredInt) 34000,
+      (ObscuredInt) 42000,
+      (ObscuredInt) 50000,
+      (ObscuredInt) 60000,
+      (ObscuredInt) 70000,
+      (ObscuredInt) 80000,
+      (ObscuredInt) 90000
+    },
+    {
+      (ObscuredInt) 28000,
+      (ObscuredInt) 40000,
+      (ObscuredInt) 52000,
+      (ObscuredInt) 68000,
+      (ObscuredInt) 84000,
+      (ObscuredInt) 100000,
+      (ObscuredInt) 120000,
+      (ObscuredInt) 140000,
+      (ObscuredInt) 160000,
+      (ObscuredInt) 200000,
+      (ObscuredInt) 300000
+    }
+  };
+  public static ObscuredInt[,] nAccEnchantStone = new ObscuredInt[5, 11]
+  {
+    {
+      (ObscuredInt) 1,
+      (ObscuredInt) 5,
+      (ObscuredInt) 10,
+      (ObscuredInt) 15,
+      (ObscuredInt) 25,
+      (ObscuredInt) 35,
+      (ObscuredInt) 50,
+      (ObscuredInt) 65,
+      (ObscuredInt) 85,
+      (ObscuredInt) 105,
+      (ObscuredInt) 0
+    },
+    {
+      (ObscuredInt) 10,
+      (ObscuredInt) 15,
+      (ObscuredInt) 25,
+      (ObscuredInt) 35,
+      (ObscuredInt) 50,
+      (ObscuredInt) 65,
+      (ObscuredInt) 85,
+      (ObscuredInt) 105,
+      (ObscuredInt) 125,
+      (ObscuredInt) 150,
+      (ObscuredInt) 0
+    },
+    {
+      (ObscuredInt) 25,
+      (ObscuredInt) 35,
+      (ObscuredInt) 50,
+      (ObscuredInt) 65,
+      (ObscuredInt) 85,
+      (ObscuredInt) 105,
+      (ObscuredInt) 125,
+      (ObscuredInt) 150,
+      (ObscuredInt) 200,
+      (ObscuredInt) 250,
+      (ObscuredInt) 0
+    },
+    {
+      (ObscuredInt) 50,
+      (ObscuredInt) 65,
+      (ObscuredInt) 85,
+      (ObscuredInt) 105,
+      (ObscuredInt) 125,
+      (ObscuredInt) 150,
+      (ObscuredInt) 200,
+      (ObscuredInt) 250,
+      (ObscuredInt) 375,
+      (ObscuredInt) 500,
+      (ObscuredInt) 0
+    },
+    {
+      (ObscuredInt) 85,
+      (ObscuredInt) 105,
+      (ObscuredInt) 125,
+      (ObscuredInt) 150,
+      (ObscuredInt) 200,
+      (ObscuredInt) 250,
+      (ObscuredInt) 375,
+      (ObscuredInt) 500,
+      (ObscuredInt) 750,
+      (ObscuredInt) 1000,
+      (ObscuredInt) 0
+    }
+  };
+  private static float[] fGradeRate = new float[5]
+  {
+    100f,
+    52f,
+    22f,
+    8f,
+    1.5f
+  };
   public static Dictionary<int, float> dictItemPower = new Dictionary<int, float>();
   public static Dictionary<int, double> dictMonHP = new Dictionary<int, double>();
   public static Dictionary<int, float> dictMonDmg = new Dictionary<int, float>();
-  private static Color[] clGrade = new Color[5]{ new Color(0.5f, 0.5f, 0.5f), new Color(0.0f, 0.921f, 0.182f), new Color(0.0f, 0.5f, 1f), new Color(1f, 0.0f, 0.929f), new Color(1f, 0.5f, 0.0f) };
-  private static string[] strClGrade = new string[5]{ "<color='#4D4D4Dff'>", "<color='#00EA2Eff'>", "<color='#004Dffff'>", "<color='#ff00EAff'>", "<color='#ff4D00ff'>" };
-  public static int nNewRuby = 0;
-  public static int nNewStone = 0;
-  public static float[] fAccDropFactor = new float[5]{ 0.0f, 96f, 48f, 12f, 3f };
+  private static Color[] clGrade = new Color[5]
+  {
+    new Color(0.5f, 0.5f, 0.5f),
+    new Color(0.0f, 0.921f, 0.182f),
+    new Color(0.0f, 0.5f, 1f),
+    new Color(1f, 0.0f, 0.929f),
+    new Color(1f, 0.5f, 0.0f)
+  };
+  private static string[] strClGrade = new string[5]
+  {
+    "<color='#4D4D4Dff'>",
+    "<color='#00EA2Eff'>",
+    "<color='#004Dffff'>",
+    "<color='#ff00EAff'>",
+    "<color='#ff4D00ff'>"
+  };
+  public static long nNewRuby = 0;
+  public static long nNewStone = 0;
+  public static float[] fAccDropFactor = new float[5]
+  {
+    0.0f,
+    96f,
+    48f,
+    12f,
+    3f
+  };
   public static Ads eAds;
   public static ResearchID eSelectedResearch;
   public static ObscuredInt nSelectedElementalView;
@@ -229,7 +533,7 @@ public class Info
     }
   }
 
-  public static int nTodayStone
+  public static long nTodayStone
   {
     get
     {
@@ -496,6 +800,24 @@ public class Info
     {
       if (!pData.dictSkill.ContainsKey(monster.listSkill[index]))
         pData.dictSkill.Add(monster.listSkill[index], (ObscuredInt) 1);
+    }
+    if (Info.CheckMonTrait(sID, MonTraitID.eMasterBuilder))
+    {
+      if (!pData.dictSkill.ContainsKey(SkillKey.eBuilder))
+        pData.dictSkill.Add(SkillKey.eBuilder, (ObscuredInt) 0);
+      pData.dictSkill[SkillKey.eBuilder] = (ObscuredInt) BData.GetSkill(SkillKey.eBuilder).nMax;
+    }
+    if (Info.CheckMonTrait(sID, MonTraitID.eMasterMiner))
+    {
+      if (!pData.dictSkill.ContainsKey(SkillKey.eMiner))
+        pData.dictSkill.Add(SkillKey.eMiner, (ObscuredInt) 0);
+      pData.dictSkill[SkillKey.eMiner] = (ObscuredInt) BData.GetSkill(SkillKey.eMiner).nMax;
+    }
+    if (Info.CheckMonTrait(sID, MonTraitID.eMasterScientist))
+    {
+      if (!pData.dictSkill.ContainsKey(SkillKey.eScientist))
+        pData.dictSkill.Add(SkillKey.eScientist, (ObscuredInt) 0);
+      pData.dictSkill[SkillKey.eScientist] = (ObscuredInt) BData.GetSkill(SkillKey.eScientist).nMax;
     }
     if (bLevel)
     {
@@ -872,7 +1194,7 @@ public class Info
       if (Info.currentSave.arrPlayerMon[index] != null)
       {
         PlayerMonsterData playerMonsterData = Info.currentSave.arrPlayerMon[index];
-        ObscuredInt obscuredInt = (ObscuredInt) ((int) playerMonsterData.nExp + (int) (((double) (int) Info.nBattleExp * 0.200000002980232 + (double) num2) * (1.0 + (double) num1) * (1.0 + (double) Info.GetAccModFac(ModType.eExp) * 0.00999999977648258) * (1.0 + (double) Info.GetResearchFac(ResearchID.eBattleExp) * 0.00999999977648258) * (double) (float) Info.fDoubleDayPass));
+        ObscuredInt obscuredInt = (ObscuredInt) ((int) playerMonsterData.nExp + (int) (((double) (int) Info.nBattleExp * 0.200000002980232 + (double) num2) * (1.0 + (double) num1) * (1.0 + (double) Info.GetAccModFac(ModType.eExp) * 0.00999999977648258) * (1.0 + (double) Info.GetResearchFac(ResearchID.eBattleExp) * 0.00999999977648258) * (double) (float) Info.fDoubleDayPass * (1.0 + (double) Info.GetMonTraitCalc1((short) Info.currentSave.arrPlayerMon[index].sID, MonTraitID.eExpPlus) * 0.00999999977648258)));
         playerMonsterData.nExp = obscuredInt;
       }
     }
@@ -1119,13 +1441,13 @@ public class Info
     return Info.GetItemPower(nLv, fPow) * fPow2;
   }
 
-  public static int GetStone(int nDay, int nDiff)
+  public static long GetStone(int nDay, int nDiff)
   {
     if (nDay > 1000)
       nDay = 1000;
     if (nDay < 100)
       return 0;
-    return BData.GetStone(nDay).nStone[nDiff];
+    return (long) ((double) BData.GetStone(nDay).nStone[nDiff] * (1.0 + (double) Info.GetStoneBonus() * 0.00999999977648258));
   }
 
   public static int GetRuby(int nWave, int nDiff)
@@ -1136,7 +1458,7 @@ public class Info
       nWave = 1000;
     if (!Info.currentSave.bAfterEndless)
       nWave = Mathf.Min(150, nWave);
-    return BData.GetRuby(nWave).nRuby[nDiff];
+    return Mathf.RoundToInt((float) BData.GetRuby(nWave).nRuby[nDiff] * (float) (1.0 + (double) Info.GetRubyBonus() * 0.00999999977648258));
   }
 
   public static double GetMonHP(int nLv)
@@ -1255,6 +1577,21 @@ public class Info
             break;
           case 15:
             Info.dictMonHP.Add(nLv, Math.Round((num * num * num * 0.0035 + num * num * 0.029 + 0.8 * num + 0.8) * (nLv <= 50 ? 1.0 : Math.Pow(1.029 + num * 1E-06, (double) (nLv - 50))), 0));
+            break;
+          case 16:
+            Info.dictMonHP.Add(nLv, Math.Round((num * num * num * 0.004 + num * num * 0.032 + 0.9 * num + 0.9) * (nLv <= 50 ? 1.0 : Math.Pow(1.03 + num * 1E-06, (double) (nLv - 50))), 0));
+            break;
+          case 17:
+            Info.dictMonHP.Add(nLv, Math.Round((num * num * num * 0.0045 + num * num * 0.035 + 1.0 * num + 1.0) * (nLv <= 50 ? 1.0 : Math.Pow(1.032 + num * 1E-06, (double) (nLv - 50))), 0));
+            break;
+          case 18:
+            Info.dictMonHP.Add(nLv, Math.Round((num * num * num * 0.005 + num * num * 0.038 + 1.1 * num + 1.1) * (nLv <= 50 ? 1.0 : Math.Pow(1.034 + num * 1E-06, (double) (nLv - 50))), 0));
+            break;
+          case 19:
+            Info.dictMonHP.Add(nLv, Math.Round((num * num * num * 0.0055 + num * num * 0.041 + 1.2 * num + 1.2) * (nLv <= 50 ? 1.0 : Math.Pow(1.036 + num * 1E-06, (double) (nLv - 50))), 0));
+            break;
+          case 20:
+            Info.dictMonHP.Add(nLv, Math.Round((num * num * num * 0.006 + num * num * 0.045 + 1.3 * num + 1.3) * (nLv <= 50 ? 1.0 : Math.Pow(1.038 + num * 1E-06, (double) (nLv - 50))), 0));
             break;
           default:
             Info.dictMonHP.Add(nLv, Math.Round((num * num * num * 0.00012 + num * num * 0.004 + 0.04 * num + 0.04) * (nLv <= 50 ? 1.0 : Math.Pow(1.0103 + num * 1E-06, (double) (nLv - 50))), 2));
@@ -1767,12 +2104,18 @@ public class Info
 
   public static void Rebirth(SavedData savedata, short sNewChar, int nNewDiff, bool bMain, List<PlayerItemData> listInherit)
   {
-    Info.Rebirth(nNewDiff, (int) savedata.nDiff, sNewChar, savedata.bySlot, bMain, (int) savedata.nDay, savedata.uRebirthID, listInherit, (int) savedata.nMaxEndless, savedata.listResearch.Contains(ResearchID.eElementalExp));
+    List<short> listChar = new List<short>();
+    for (int index = 0; index < savedata.arrPlayerMon.Length; ++index)
+    {
+      if (savedata.arrPlayerMon[index] != null && !listChar.Contains((short) savedata.arrPlayerMon[index].sID))
+        listChar.Add((short) savedata.arrPlayerMon[index].sID);
+    }
+    Info.Rebirth(nNewDiff, (int) savedata.nDiff, sNewChar, savedata.bySlot, bMain, (int) savedata.nDay, savedata.uRebirthID, listInherit, listChar, (int) savedata.nMaxEndless, savedata.listResearch.Contains(ResearchID.eElementalExp));
   }
 
-  public static void Rebirth(int nNewDiff, int nDiff, short sID, byte bySlot, bool bMain, int nDay, long uID, List<PlayerItemData> listInherit, int nMaxEndless = 0, bool bElmAddExp = false)
+  public static void Rebirth(int nNewDiff, int nDiff, short sID, byte bySlot, bool bMain, int nDay, long uID, List<PlayerItemData> listInherit, List<short> listChar, int nMaxEndless = 0, bool bElmAddExp = false)
   {
-    int stone = Info.GetStone(nDay, nDiff);
+    long stone = Info.GetStone(nDay, nDiff);
     Info.RefreshAcvReward();
     Info.currentSave = new SavedData();
     Info.currentSave.bAfterAmulet = true;
@@ -1831,43 +2174,68 @@ public class Info
         listInherit[index].bProtected = (ObscuredBool) true;
         Info.currentSave.dictItem.Add(listInherit[index].UID, listInherit[index]);
       }
+      int num1 = (nDiff >= 2 ? nDiff : 1) * (nDay + nMaxEndless * 2 + Info.GetTrialClear(uID) * 10);
+      if (Info.rebirth.listPurchase.Contains(ShopID.eRebirthExp))
+        num1 *= 2;
+      List<short> shortList = new List<short>((IEnumerable<short>) BData.dictMonster.Keys);
+      for (int index = 0; index < shortList.Count; ++index)
+      {
+        long nExp = 0;
+        if (index == (int) listChar[0])
+          nExp = (long) num1;
+        else if (listChar.Contains((short) index))
+          nExp = !Info.CheckMonTrait(shortList[index], MonTraitID.eRebirthExp) ? (long) ((double) num1 * 0.100000001490116) : (long) ((double) num1 * ((double) BData.GetMonTrait(MonTraitID.eRebirthExp).fFac1 + (double) BData.GetMonTrait(MonTraitID.eRebirthExp).fGrow1 * (double) Info.GetMonTrait(shortList[index], MonTraitID.eRebirthExp)) * 0.00999999977648258);
+        else if (Info.CheckShop(ShopID.eRebirthPackage))
+          nExp = (long) ((double) num1 * 0.100000001490116);
+        if (nExp > 0L)
+          Info.AddRebirthExp(shortList[index], nExp);
+        Debug.Log((object) ("Char : " + (object) shortList[index] + " Exp : " + nExp.ToString()));
+      }
       Info.RefreshBattleItemData();
       Info.OnAutoEquip();
-      int num1 = Info.GetRuby(nMaxEndless, nDiff);
+      int num2 = Info.GetRuby(nMaxEndless, nDiff);
       if (nDay < 100)
-        num1 = 0;
+      {
+        num2 = 0;
+      }
       else
+      {
         ++Info.rebirth.nRebirth;
+        if ((int) Info.rebirth.nRebirthBonus > 0)
+          --Info.rebirth.nRebirthBonus;
+      }
       SavedRebirth rebirth1 = Info.rebirth;
-      ObscuredLong obscuredLong2 = (ObscuredLong) ((long) rebirth1.nNewStone + (long) stone);
+      ObscuredLong obscuredLong2 = (ObscuredLong) ((long) rebirth1.nNewStone + stone);
       rebirth1.nNewStone = obscuredLong2;
       SavedRebirth rebirth2 = Info.rebirth;
-      ObscuredInt obscuredInt = (ObscuredInt) ((int) rebirth2.nRuby + num1);
+      ObscuredInt obscuredInt = (ObscuredInt) ((int) rebirth2.nRuby + num2);
       rebirth2.nRuby = obscuredInt;
       Info.rebirth.listRebirthID.Add((ObscuredLong) uID);
       if (!Info.rebirth.dictRebirthHistory.ContainsKey((ObscuredInt) nDiff))
         Info.rebirth.dictRebirthHistory.Add((ObscuredInt) nDiff, new List<ObscuredInt>());
       Info.rebirth.dictRebirthHistory[(ObscuredInt) nDiff].Add((ObscuredInt) nDay);
-      int num2 = (nDiff >= 2 ? nDiff * nDay : nDay) + nMaxEndless * 2 + Info.GetTrialClear(uID) * 10;
+      int num3 = (nDiff >= 2 ? nDiff : 1) * (nDay + nMaxEndless * 2 + Info.GetTrialClear(uID) * 10);
       if (bElmAddExp)
-        num2 *= 2;
-      Info.AddElementalExp((int) Info.rebirth.nEquippedElemental, (long) num2);
+        num3 *= 2;
+      if (Info.rebirth.listPurchase.Contains(ShopID.eElementalExp))
+        num3 *= 2;
+      Info.AddElementalExp((int) Info.rebirth.nEquippedElemental, (long) num3);
       if ((int) Info.rebirth.nEquippedElemental != 1 && Info.CheckElementalTrait(ElementalID.eFireSeed))
-        Info.AddElementalExp(1, (long) (num2 / 2));
+        Info.AddElementalExp(1, (long) (num3 / 2));
       if ((int) Info.rebirth.nEquippedElemental != 2 && Info.CheckElementalTrait(ElementalID.eWaterSeed))
-        Info.AddElementalExp(2, (long) (num2 / 2));
+        Info.AddElementalExp(2, (long) (num3 / 2));
       if ((int) Info.rebirth.nEquippedElemental != 3 && Info.CheckElementalTrait(ElementalID.eNatureSeed))
-        Info.AddElementalExp(3, (long) (num2 / 2));
+        Info.AddElementalExp(3, (long) (num3 / 2));
       if ((int) Info.rebirth.nEquippedElemental != 4 && Info.CheckElementalTrait(ElementalID.eLightSeed))
-        Info.AddElementalExp(4, (long) (num2 / 2));
+        Info.AddElementalExp(4, (long) (num3 / 2));
       if ((int) Info.rebirth.nEquippedElemental != 5 && Info.CheckElementalTrait(ElementalID.eDarkSeed))
-        Info.AddElementalExp(5, (long) (num2 / 2));
+        Info.AddElementalExp(5, (long) (num3 / 2));
       Info.rebirth.dictTrialClear.Remove((ObscuredLong) uID);
       SaveManager.Save(bySlot);
       GPGSMgr.single.CheckAchievementRebirth();
       SaveManager.SaveRebirth();
       Info.nNewStone = stone;
-      Info.nNewRuby = num1;
+      Info.nNewRuby = (long) num2;
       UIMgr.LoadLevel("Main", 5f, 2f, Color.white);
     }
     else
@@ -1960,7 +2328,12 @@ public class Info
 
   public static PlayerAccData GetNewAcc(short sID)
   {
-    return new PlayerAccData() { UID = Info.rebirth.uAccUID++, sID = (ObscuredShort) sID, nLv = (ObscuredInt) 0 };
+    return new PlayerAccData()
+    {
+      UID = Info.rebirth.uAccUID++,
+      sID = (ObscuredShort) sID,
+      nLv = (ObscuredInt) 0
+    };
   }
 
   public static PlayerAccData GetNewAcc(int nDropMin, int nDropMax, bool bRing)
@@ -2537,7 +2910,9 @@ public class Info
   {
     if (nDiff <= 5)
       return BData.GetString("UI00" + (object) (33 + nDiff)).Replace("[1]", !bShowPercent ? string.Empty : "-" + (Info.fDiffFac[nDiff] * 100f).ToString("N0") + "%");
-    return "<color='#ff1500'><" + BData.GetString("UI0337") + BData.GetString("UI0" + (object) (342 + (nDiff - 6))) + (!bShowPercent ? string.Empty : "-???%") + "></color>";
+    if (nDiff <= 15)
+      return "<color='#ff1500'><" + BData.GetString("UI0337") + BData.GetString("UI0" + (object) (342 + (nDiff - 6))) + (!bShowPercent ? string.Empty : "-???%") + "></color>";
+    return "<color='#ff1500'><" + BData.GetString("UI0337") + BData.GetString("UI0" + (object) (406 + (nDiff - 16))) + (!bShowPercent ? string.Empty : "-???%") + "></color>";
   }
 
   public static int[] GetAllClearHellStone(int nDiff)
@@ -2723,7 +3098,13 @@ public class Info
       num3 = num1;
       num1 += (long) (num2 * (num2 + 1) / 2 * 100);
     }
-    return new long[4]{ num3, num1, elementalExp, num1 - elementalExp };
+    return new long[4]
+    {
+      num3,
+      num1,
+      elementalExp,
+      num1 - elementalExp
+    };
   }
 
   public static ElementalID GetElementalBase(int nElement)
@@ -2816,10 +3197,10 @@ public class Info
     return (float) Info.dictElementalFac[eID][n];
   }
 
-  public static int GetNeedMedalPromote(int nLv)
+  public static long GetNeedMedalPromote(long nLv)
   {
     ++nLv;
-    return nLv * (nLv + 1) * (50 + 10 * nLv);
+    return nLv * (nLv + 1L) * (50L + 10L * nLv);
   }
 
   public static int GetPromoteLevel(short sID)
@@ -2859,5 +3240,131 @@ public class Info
     if (research.bRepeat)
       return research.nCost + 200 * Info.GetRepeatResearch(eID);
     return research.nCost;
+  }
+
+  public static bool CheckMonTrait(short sID, MonTraitID eID)
+  {
+    return Info.GetMonTrait(sID, eID) != 0;
+  }
+
+  public static int GetMonTrait(short sID, MonTraitID eID)
+  {
+    if (!Info.rebirth.dictMonTrait.ContainsKey((ObscuredShort) sID))
+      Info.rebirth.dictMonTrait.Add((ObscuredShort) sID, new Dictionary<MonTraitID, ObscuredInt>());
+    if (!Info.rebirth.dictMonTrait[(ObscuredShort) sID].ContainsKey(eID))
+      return 0;
+    return (int) Info.rebirth.dictMonTrait[(ObscuredShort) sID][eID];
+  }
+
+  public static float GetMonTraitCalc1(short sID, MonTraitID eID)
+  {
+    int monTrait = Info.GetMonTrait(sID, eID);
+    if (monTrait > 0)
+      return BData.GetMonTrait(eID).fFac1 + BData.GetMonTrait(eID).fGrow1 * (float) monTrait;
+    return 0.0f;
+  }
+
+  public static float GetMonTraitCalc2(short sID, MonTraitID eID)
+  {
+    int monTrait = Info.GetMonTrait(sID, eID);
+    if (monTrait > 0)
+      return BData.GetMonTrait(eID).fFac2 + BData.GetMonTrait(eID).fGrow2 * (float) monTrait;
+    return 0.0f;
+  }
+
+  public static float GetMonTraitCalc3(short sID, MonTraitID eID)
+  {
+    int monTrait = Info.GetMonTrait(sID, eID);
+    if (monTrait > 0)
+      return BData.GetMonTrait(eID).fFac3 + BData.GetMonTrait(eID).fGrow3 * (float) monTrait;
+    return 0.0f;
+  }
+
+  public static void AddMonTrait(short sID, MonTraitID eID)
+  {
+    int monTrait = Info.GetMonTrait(sID, eID);
+    if (!Info.rebirth.dictMonTrait[(ObscuredShort) sID].ContainsKey(eID))
+      Info.rebirth.dictMonTrait[(ObscuredShort) sID].Add(eID, (ObscuredInt) 0);
+    Info.rebirth.dictMonTrait[(ObscuredShort) sID][eID] = (ObscuredInt) (monTrait + 1);
+  }
+
+  public static long GetRebirthExp(short sID)
+  {
+    if (!Info.rebirth.dictMonRebirthExp.ContainsKey((ObscuredShort) sID))
+      Info.rebirth.dictMonRebirthExp.Add((ObscuredShort) sID, (ObscuredLong) 0L);
+    return (long) Info.rebirth.dictMonRebirthExp[(ObscuredShort) sID];
+  }
+
+  public static void AddRebirthExp(short sID, long nExp)
+  {
+    nExp += Info.GetRebirthExp(sID);
+    Info.rebirth.dictMonRebirthExp[(ObscuredShort) sID] = (ObscuredLong) nExp;
+  }
+
+  public static int GetRebirthLevel(short sID)
+  {
+    long rebirthExp = Info.GetRebirthExp(sID);
+    int num1 = 0;
+    long num2 = (long) ((num1 + 1) * (num1 + 2) / 2 * 100);
+    while (rebirthExp >= num2)
+    {
+      ++num1;
+      num2 += (long) ((num1 + 1) * (num1 + 2) / 2 * 100);
+    }
+    return num1;
+  }
+
+  public static float GetNeedRebirthExpRate(short sID)
+  {
+    long rebirthExp = Info.GetRebirthExp(sID);
+    int num1 = 0;
+    long num2 = (long) ((num1 + 1) * (num1 + 2) / 2 * 100);
+    long num3 = 0;
+    while (rebirthExp >= num2)
+    {
+      ++num1;
+      num3 = num2;
+      num2 += (long) ((num1 + 1) * (num1 + 2) / 2 * 100);
+    }
+    return (float) (rebirthExp - num3) / (float) (num2 - num3);
+  }
+
+  public static int GetSpendRebirthPoint(short sID)
+  {
+    if (!Info.rebirth.dictMonTrait.ContainsKey((ObscuredShort) sID))
+      return 0;
+    List<MonTraitID> monTraitIdList = new List<MonTraitID>((IEnumerable<MonTraitID>) Info.rebirth.dictMonTrait[(ObscuredShort) sID].Keys);
+    int num = 0;
+    for (int index = 0; index < monTraitIdList.Count; ++index)
+      num += (int) Info.rebirth.dictMonTrait[(ObscuredShort) sID][monTraitIdList[index]];
+    if (Info.rebirth.listPurchase.Contains(ShopID.eRebirthPackage))
+      num = Mathf.Max(num - 1, 0);
+    return num;
+  }
+
+  public static bool CanUpgMonTrait(short sID, MonTraitElt elt)
+  {
+    int spendRebirthPoint = Info.GetSpendRebirthPoint(sID);
+    return spendRebirthPoint >= elt.nPreLearn && spendRebirthPoint < Info.GetRebirthLevel(sID) && (elt.ePreID == MonTraitID.eNone || Info.CheckMonTrait(sID, elt.ePreID));
+  }
+
+  public static float GetStoneBonus()
+  {
+    float num = 0.0f;
+    for (int index = 0; index < Info.rebirth.listPurchase.Count; ++index)
+      num += BData.GetShop(Info.rebirth.listPurchase[index]).fStoneBonus;
+    if ((int) Info.rebirth.nRebirthBonus > 0)
+      num += 100f;
+    return num;
+  }
+
+  public static float GetRubyBonus()
+  {
+    float num = 0.0f;
+    for (int index = 0; index < Info.rebirth.listPurchase.Count; ++index)
+      num += BData.GetShop(Info.rebirth.listPurchase[index]).fRubyBonus;
+    if ((int) Info.rebirth.nRebirthBonus > 0)
+      num += 100f;
+    return num;
   }
 }

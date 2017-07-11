@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: DataStone
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using System;
 using System.Collections.Generic;
@@ -23,22 +23,27 @@ public class DataStone : ScriptableObject
   public class Param
   {
     public int Index;
-    public int Normal;
-    public int Easy;
-    public int Hard;
-    public int Insane;
-    public int End;
-    public int God;
-    public int Hell1;
-    public int Hell2;
-    public int Hell3;
-    public int Hell4;
-    public int Hell5;
-    public int Hell6;
-    public int Hell7;
-    public int Hell8;
-    public int Hell9;
-    public int Hell10;
-    public int Mul;
+    public double Normal;
+    public double Easy;
+    public double Hard;
+    public double Insane;
+    public double End;
+    public double God;
+    public double Hell1;
+    public double Hell2;
+    public double Hell3;
+    public double Hell4;
+    public double Hell5;
+    public double Hell6;
+    public double Hell7;
+    public double Hell8;
+    public double Hell9;
+    public double Hell10;
+    public double Hell11;
+    public double Hell12;
+    public double Hell13;
+    public double Hell14;
+    public double Hell15;
+    public double Mul;
   }
 }

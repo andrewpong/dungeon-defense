@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: BData
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using CC;
 using System;
@@ -28,6 +28,7 @@ public class BData : MonoBehaviour
   public static Dictionary<QuestID, QuestData> dictQuest = new Dictionary<QuestID, QuestData>();
   public static Dictionary<ElementalID, ElementalData> dictElemental = new Dictionary<ElementalID, ElementalData>();
   public static Dictionary<int, TrialData> dictTrial = new Dictionary<int, TrialData>();
+  public static Dictionary<MonTraitID, MonTraitData> dictMonTrait = new Dictionary<MonTraitID, MonTraitData>();
   public static Dictionary<string, List<string>> dictString = new Dictionary<string, List<string>>();
   public static List<MutateType> listMutation = new List<MutateType>();
   public static List<MutateType> listBossMutation = new List<MutateType>();
@@ -50,6 +51,7 @@ public class BData : MonoBehaviour
   public DataRuby _ruby;
   public DataQuest _quest;
   public DataElemental _elemental;
+  public DataMonTrait _montrait;
   public Strings _string;
 
   public void Awake()
@@ -303,6 +305,8 @@ public class BData : MonoBehaviour
       shopData.strDesc = obj.Desc;
       shopData.bOnly = obj.Only;
       shopData.nBonus = obj.Bonus;
+      shopData.fStoneBonus = obj.StoneBonus;
+      shopData.fRubyBonus = obj.RubyBonus;
       BData.dictShop.Add(shopData.eID, shopData);
     }
     for (int index = 0; index < this._stone.sheets[0].list.Count; ++index)
@@ -310,23 +314,28 @@ public class BData : MonoBehaviour
       DataStone.Param obj = this._stone.sheets[0].list[index];
       StoneData stoneData = new StoneData();
       stoneData.nDay = obj.Index;
-      stoneData.nStone = new int[16];
-      stoneData.nStone[0] = obj.Normal;
-      stoneData.nStone[1] = obj.Easy;
-      stoneData.nStone[2] = obj.Hard;
-      stoneData.nStone[3] = obj.Insane;
-      stoneData.nStone[4] = obj.End;
-      stoneData.nStone[5] = obj.God;
-      stoneData.nStone[6] = obj.Hell1;
-      stoneData.nStone[7] = obj.Hell2;
-      stoneData.nStone[8] = obj.Hell3;
-      stoneData.nStone[9] = obj.Hell4;
-      stoneData.nStone[10] = obj.Hell5;
-      stoneData.nStone[11] = obj.Hell6;
-      stoneData.nStone[12] = obj.Hell7;
-      stoneData.nStone[13] = obj.Hell8;
-      stoneData.nStone[14] = obj.Hell9;
-      stoneData.nStone[15] = obj.Hell10;
+      stoneData.nStone = new long[21];
+      stoneData.nStone[0] = (long) obj.Normal;
+      stoneData.nStone[1] = (long) obj.Easy;
+      stoneData.nStone[2] = (long) obj.Hard;
+      stoneData.nStone[3] = (long) obj.Insane;
+      stoneData.nStone[4] = (long) obj.End;
+      stoneData.nStone[5] = (long) obj.God;
+      stoneData.nStone[6] = (long) obj.Hell1;
+      stoneData.nStone[7] = (long) obj.Hell2;
+      stoneData.nStone[8] = (long) obj.Hell3;
+      stoneData.nStone[9] = (long) obj.Hell4;
+      stoneData.nStone[10] = (long) obj.Hell5;
+      stoneData.nStone[11] = (long) obj.Hell6;
+      stoneData.nStone[12] = (long) obj.Hell7;
+      stoneData.nStone[13] = (long) obj.Hell8;
+      stoneData.nStone[14] = (long) obj.Hell9;
+      stoneData.nStone[15] = (long) obj.Hell10;
+      stoneData.nStone[16] = (long) obj.Hell11;
+      stoneData.nStone[17] = (long) obj.Hell12;
+      stoneData.nStone[18] = (long) obj.Hell13;
+      stoneData.nStone[19] = (long) obj.Hell14;
+      stoneData.nStone[20] = (long) obj.Hell15;
       BData.dictStone.Add(stoneData.nDay, stoneData);
     }
     for (int index = 0; index < this._ruby.sheets[0].list.Count; ++index)
@@ -334,23 +343,28 @@ public class BData : MonoBehaviour
       DataRuby.Param obj = this._ruby.sheets[0].list[index];
       RubyData rubyData = new RubyData();
       rubyData.nWave = obj.Index;
-      rubyData.nRuby = new int[16];
-      rubyData.nRuby[0] = Mathf.FloorToInt(obj.Normal);
-      rubyData.nRuby[1] = Mathf.FloorToInt(obj.Easy);
-      rubyData.nRuby[2] = Mathf.FloorToInt(obj.Hard);
-      rubyData.nRuby[3] = Mathf.FloorToInt(obj.Insane);
-      rubyData.nRuby[4] = Mathf.FloorToInt(obj.End);
-      rubyData.nRuby[5] = Mathf.FloorToInt(obj.God);
-      rubyData.nRuby[6] = Mathf.FloorToInt(obj.Hell1);
-      rubyData.nRuby[7] = Mathf.FloorToInt(obj.Hell2);
-      rubyData.nRuby[8] = Mathf.FloorToInt(obj.Hell3);
-      rubyData.nRuby[9] = Mathf.FloorToInt(obj.Hell4);
-      rubyData.nRuby[10] = Mathf.FloorToInt(obj.Hell5);
-      rubyData.nRuby[11] = Mathf.FloorToInt(obj.Hell6);
-      rubyData.nRuby[12] = Mathf.FloorToInt(obj.Hell7);
-      rubyData.nRuby[13] = Mathf.FloorToInt(obj.Hell8);
-      rubyData.nRuby[14] = Mathf.FloorToInt(obj.Hell9);
-      rubyData.nRuby[15] = Mathf.FloorToInt(obj.Hell10);
+      rubyData.nRuby = new long[21];
+      rubyData.nRuby[0] = (long) obj.Normal;
+      rubyData.nRuby[1] = (long) obj.Easy;
+      rubyData.nRuby[2] = (long) obj.Hard;
+      rubyData.nRuby[3] = (long) obj.Insane;
+      rubyData.nRuby[4] = (long) obj.End;
+      rubyData.nRuby[5] = (long) obj.God;
+      rubyData.nRuby[6] = (long) obj.Hell1;
+      rubyData.nRuby[7] = (long) obj.Hell2;
+      rubyData.nRuby[8] = (long) obj.Hell3;
+      rubyData.nRuby[9] = (long) obj.Hell4;
+      rubyData.nRuby[10] = (long) obj.Hell5;
+      rubyData.nRuby[11] = (long) obj.Hell6;
+      rubyData.nRuby[12] = (long) obj.Hell7;
+      rubyData.nRuby[13] = (long) obj.Hell8;
+      rubyData.nRuby[14] = (long) obj.Hell9;
+      rubyData.nRuby[15] = (long) obj.Hell10;
+      rubyData.nRuby[16] = (long) obj.Hell11;
+      rubyData.nRuby[17] = (long) obj.Hell12;
+      rubyData.nRuby[18] = (long) obj.Hell13;
+      rubyData.nRuby[19] = (long) obj.Hell14;
+      rubyData.nRuby[20] = (long) obj.Hell15;
       BData.dictRuby.Add(rubyData.nWave, rubyData);
     }
     for (int index = 0; index < this._quest.sheets[0].list.Count; ++index)
@@ -412,7 +426,29 @@ public class BData : MonoBehaviour
       trialData.dictMedal.Add(13, obj.Hell8);
       trialData.dictMedal.Add(14, obj.Hell9);
       trialData.dictMedal.Add(15, obj.Hell10);
+      trialData.dictMedal.Add(16, obj.Hell11);
+      trialData.dictMedal.Add(17, obj.Hell12);
+      trialData.dictMedal.Add(18, obj.Hell13);
+      trialData.dictMedal.Add(19, obj.Hell14);
+      trialData.dictMedal.Add(20, obj.Hell15);
       BData.dictTrial.Add(trialData.nFloor, trialData);
+    }
+    for (int index = 0; index < this._montrait.sheets[0].list.Count; ++index)
+    {
+      DataMonTrait.Param obj = this._montrait.sheets[0].list[index];
+      MonTraitData monTraitData = new MonTraitData();
+      monTraitData.eID = (MonTraitID) Enum.Parse(typeof (MonTraitID), obj.Index);
+      monTraitData.strName = obj.Name;
+      monTraitData.strDesc = obj.Desc;
+      monTraitData.strIcon = obj.Icon;
+      monTraitData.nMax = obj.Max;
+      monTraitData.fFac1 = obj.Fac1;
+      monTraitData.fGrow1 = obj.Grow1;
+      monTraitData.fFac2 = obj.Fac2;
+      monTraitData.fGrow2 = obj.Grow2;
+      monTraitData.fFac3 = obj.Fac3;
+      monTraitData.fGrow3 = obj.Grow3;
+      BData.dictMonTrait.Add(monTraitData.eID, monTraitData);
     }
     for (int index = 0; index < this._acc.sheets[0].list.Count; ++index)
     {
@@ -575,5 +611,10 @@ public class BData : MonoBehaviour
   public static ElementalData GetElemental(ElementalID eID)
   {
     return BData.dictElemental[eID];
+  }
+
+  public static MonTraitData GetMonTrait(MonTraitID eID)
+  {
+    return BData.dictMonTrait[eID];
   }
 }

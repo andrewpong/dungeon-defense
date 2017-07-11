@@ -1,13 +1,14 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: GPGSIds
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 public static class GPGSIds
 {
   public const string leaderboard_endless_wave_normal = "CgkIu5mC6tcCEAIQEQ";
   public const string achievement_impossible_survival = "CgkIu5mC6tcCEAIQBQ";
+  public const string leaderboard_survival_hell13 = "CgkIu5mC6tcCEAIQLg";
   public const string leaderboard_endless_wave_hell1 = "CgkIu5mC6tcCEAIQHQ";
   public const string leaderboard_survival_easy = "CgkIu5mC6tcCEAIQBg";
   public const string leaderboard_endless_wave_hell3 = "CgkIu5mC6tcCEAIQHw";
@@ -36,7 +37,11 @@ public static class GPGSIds
   public const string achievement_is_this_end = "CgkIu5mC6tcCEAIQCw";
   public const string achievement_survive_in_earnest = "CgkIu5mC6tcCEAIQAw";
   public const string leaderboard_survival_hell10 = "CgkIu5mC6tcCEAIQJg";
+  public const string leaderboard_survival_hell11 = "CgkIu5mC6tcCEAIQLA";
+  public const string leaderboard_survival_hell12 = "CgkIu5mC6tcCEAIQLQ";
   public const string leaderboard_survival_hard = "CgkIu5mC6tcCEAIQCA";
+  public const string leaderboard_survival_hell14 = "CgkIu5mC6tcCEAIQLw";
+  public const string leaderboard_survival_hell15 = "CgkIu5mC6tcCEAIQMA";
   public const string leaderboard_endless_wave_end = "CgkIu5mC6tcCEAIQDg";
   public const string leaderboard_survival_hell1 = "CgkIu5mC6tcCEAIQGA";
   public const string achievement_easy_so_easy = "CgkIu5mC6tcCEAIQAg";
@@ -45,8 +50,13 @@ public static class GPGSIds
   public const string leaderboard_survival_normal = "CgkIu5mC6tcCEAIQBw";
   public const string leaderboard_endless_wave_easy = "CgkIu5mC6tcCEAIQEg";
   public const string leaderboard_endless_wave_hell10 = "CgkIu5mC6tcCEAIQKw";
+  public const string leaderboard_endless_wave_hell11 = "CgkIu5mC6tcCEAIQMQ";
+  public const string leaderboard_endless_wave_hell12 = "CgkIu5mC6tcCEAIQMg";
   public const string achievement_rebirth = "CgkIu5mC6tcCEAIQAQ";
   public const string achievement_god_of_survival = "CgkIu5mC6tcCEAIQEw";
+  public const string leaderboard_endless_wave_hell15 = "CgkIu5mC6tcCEAIQNQ";
   public const string achievement_save_the_world = "CgkIu5mC6tcCEAIQFQ";
+  public const string leaderboard_endless_wave_hell13 = "CgkIu5mC6tcCEAIQMw";
+  public const string leaderboard_endless_wave_hell14 = "CgkIu5mC6tcCEAIQNA";
   public const string leaderboard_endless_wave_god = "CgkIu5mC6tcCEAIQFw";
 }

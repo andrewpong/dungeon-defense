@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: DigitalRuby.ThunderAndLightning.LightningMeshSurfaceScript
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,12 +12,24 @@ namespace DigitalRuby.ThunderAndLightning
   public class LightningMeshSurfaceScript : LightningBoltPrefabScriptBase
   {
     [SingleLine("Random range that the point will offset from the mesh, using the normal of the chosen point to offset")]
-    public RangeOfFloats MeshOffsetRange = new RangeOfFloats() { Minimum = 0.5f, Maximum = 1f };
+    public RangeOfFloats MeshOffsetRange = new RangeOfFloats()
+    {
+      Minimum = 0.5f,
+      Maximum = 1f
+    };
     [Header("Lightning Path Properties")]
     [SingleLine("Range for points in the lightning path")]
-    public RangeOfIntegers PathLengthCount = new RangeOfIntegers() { Minimum = 3, Maximum = 6 };
+    public RangeOfIntegers PathLengthCount = new RangeOfIntegers()
+    {
+      Minimum = 3,
+      Maximum = 6
+    };
     [SingleLine("Range for minimum distance between points in the lightning path")]
-    public RangeOfFloats MinimumPathDistanceRange = new RangeOfFloats() { Minimum = 0.5f, Maximum = 1f };
+    public RangeOfFloats MinimumPathDistanceRange = new RangeOfFloats()
+    {
+      Minimum = 0.5f,
+      Maximum = 1f
+    };
     [Tooltip("The maximum distance between mesh points. When walking the mesh, if a point is greater than this, the path direction is reversed. This tries to avoid paths crossing between mesh points that are not actually physically touching.")]
     public float MaximumPathDistance = 2f;
     private readonly List<Vector3> sourcePoints = new List<Vector3>();

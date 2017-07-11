@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: GooglePlayGames.Native.PInvoke.LeaderboardManager
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using AOT;
 using GooglePlayGames.BasicApi;
@@ -33,7 +33,7 @@ namespace GooglePlayGames.Native.PInvoke
 
     internal void SubmitScore(string leaderboardId, long score, string metadata)
     {
-      Misc.CheckNotNull<string>(leaderboardId, "leaderboardId");
+      Misc.CheckNotNull<string>(leaderboardId, nameof (leaderboardId));
       Logger.d("Native Submitting score: " + (object) score + " for lb " + leaderboardId + " with metadata: " + metadata);
       GooglePlayGames.Native.Cwrapper.LeaderboardManager.LeaderboardManager_SubmitScore(this.mServices.AsHandle(), leaderboardId, (ulong) score, metadata ?? string.Empty);
     }
@@ -210,26 +210,9 @@ namespace GooglePlayGames.Native.PInvoke
 
     public void LoadScorePage(LeaderboardScoreData data, int maxResults, ScorePageToken token, Action<LeaderboardScoreData> callback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      LeaderboardManager.\u003CLoadScorePage\u003Ec__AnonStorey2 pageCAnonStorey2 = new LeaderboardManager.\u003CLoadScorePage\u003Ec__AnonStorey2();
-      // ISSUE: reference to a compiler-generated field
-      pageCAnonStorey2.data = data;
-      // ISSUE: reference to a compiler-generated field
-      pageCAnonStorey2.token = token;
-      // ISSUE: reference to a compiler-generated field
-      pageCAnonStorey2.callback = callback;
-      // ISSUE: reference to a compiler-generated field
-      pageCAnonStorey2.\u0024this = this;
-      // ISSUE: reference to a compiler-generated field
-      if (pageCAnonStorey2.data == null)
-      {
-        // ISSUE: reference to a compiler-generated field
-        // ISSUE: reference to a compiler-generated field
-        pageCAnonStorey2.data = new LeaderboardScoreData(pageCAnonStorey2.token.LeaderboardId);
-      }
-      // ISSUE: reference to a compiler-generated field
-      NativeScorePageToken internalObject = (NativeScorePageToken) pageCAnonStorey2.token.InternalObject;
+      if (data == null)
+        data = new LeaderboardScoreData(token.LeaderboardId);
+      NativeScorePageToken internalObject = (NativeScorePageToken) token.InternalObject;
       HandleRef self = this.mServices.AsHandle();
       int num1 = 1;
       IntPtr token1 = internalObject.AsPointer();
@@ -242,8 +225,7 @@ namespace GooglePlayGames.Native.PInvoke
       }
       // ISSUE: reference to a compiler-generated field
       GooglePlayGames.Native.Cwrapper.LeaderboardManager.FetchScorePageCallback fMgCache7 = LeaderboardManager.\u003C\u003Ef__mg\u0024cache7;
-      // ISSUE: reference to a compiler-generated method
-      Action<FetchScorePageResponse> callback1 = new Action<FetchScorePageResponse>(pageCAnonStorey2.\u003C\u003Em__0);
+      Action<FetchScorePageResponse> callback1 = (Action<FetchScorePageResponse>) (rsp => this.HandleFetchScorePage(data, token, rsp, callback));
       // ISSUE: reference to a compiler-generated field
       if (LeaderboardManager.\u003C\u003Ef__mg\u0024cache6 == null)
       {

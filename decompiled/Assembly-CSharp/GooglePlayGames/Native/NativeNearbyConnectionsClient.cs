@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: GooglePlayGames.Native.NativeNearbyConnectionsClient
 // Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 2EE8B15F-8D58-4BD6-8905-91665367FCCE
-// Assembly location: C:\Users\Andrew\Downloads\base\assets\bin\Data\Managed\Assembly-CSharp.dll
+// MVID: 15F75AAD-48E7-469E-B756-4D8C100CB626
+// Assembly location: D:\Dropbox\apps\android\com.GameCoaster.ProtectDungeon\1.92.2\apk\assets\bin\Data\Managed\Assembly-CSharp.dll
 
 using GooglePlayGames.BasicApi.Nearby;
 using GooglePlayGames.Native.PInvoke;
@@ -45,9 +45,9 @@ namespace GooglePlayGames.Native
     private void InternalSend(List<string> recipientEndpointIds, byte[] payload, bool isReliable)
     {
       if (recipientEndpointIds == null)
-        throw new ArgumentNullException("recipientEndpointIds");
+        throw new ArgumentNullException(nameof (recipientEndpointIds));
       if (payload == null)
-        throw new ArgumentNullException("payload");
+        throw new ArgumentNullException(nameof (payload));
       if (recipientEndpointIds.Contains((string) null))
         throw new InvalidOperationException("Cannot send a message to a null recipient");
       if (recipientEndpointIds.Count == 0)
@@ -75,26 +75,13 @@ namespace GooglePlayGames.Native
 
     public void StartAdvertising(string name, List<string> appIdentifiers, TimeSpan? advertisingDuration, Action<AdvertisingResult> resultCallback, Action<ConnectionRequest> requestCallback)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeNearbyConnectionsClient.\u003CStartAdvertising\u003Ec__AnonStorey0 advertisingCAnonStorey0 = new NativeNearbyConnectionsClient.\u003CStartAdvertising\u003Ec__AnonStorey0();
-      // ISSUE: reference to a compiler-generated field
-      advertisingCAnonStorey0.resultCallback = resultCallback;
-      // ISSUE: reference to a compiler-generated field
-      advertisingCAnonStorey0.requestCallback = requestCallback;
-      Misc.CheckNotNull<List<string>>(appIdentifiers, "appIdentifiers");
-      // ISSUE: reference to a compiler-generated field
-      Misc.CheckNotNull<Action<AdvertisingResult>>(advertisingCAnonStorey0.resultCallback, "resultCallback");
-      // ISSUE: reference to a compiler-generated field
-      Misc.CheckNotNull<Action<ConnectionRequest>>(advertisingCAnonStorey0.requestCallback, "connectionRequestCallback");
+      Misc.CheckNotNull<List<string>>(appIdentifiers, nameof (appIdentifiers));
+      Misc.CheckNotNull<Action<AdvertisingResult>>(resultCallback, nameof (resultCallback));
+      Misc.CheckNotNull<Action<ConnectionRequest>>(requestCallback, "connectionRequestCallback");
       if (advertisingDuration.HasValue && advertisingDuration.Value.Ticks < 0L)
         throw new InvalidOperationException("advertisingDuration must be positive");
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      advertisingCAnonStorey0.resultCallback = Callbacks.AsOnGameThreadCallback<AdvertisingResult>(advertisingCAnonStorey0.resultCallback);
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      advertisingCAnonStorey0.requestCallback = Callbacks.AsOnGameThreadCallback<ConnectionRequest>(advertisingCAnonStorey0.requestCallback);
+      resultCallback = Callbacks.AsOnGameThreadCallback<AdvertisingResult>(resultCallback);
+      requestCallback = Callbacks.AsOnGameThreadCallback<ConnectionRequest>(requestCallback);
       NearbyConnectionsManager mManager = this.mManager;
       string name1 = name;
       List<string> source = appIdentifiers;
@@ -108,10 +95,8 @@ namespace GooglePlayGames.Native
       Func<string, NativeAppIdentifier> fMgCache0 = NativeNearbyConnectionsClient.\u003C\u003Ef__mg\u0024cache0;
       List<NativeAppIdentifier> list = source.Select<string, NativeAppIdentifier>(fMgCache0).ToList<NativeAppIdentifier>();
       long timeoutMillis = NativeNearbyConnectionsClient.ToTimeoutMillis(advertisingDuration);
-      // ISSUE: reference to a compiler-generated method
-      Action<long, NativeStartAdvertisingResult> advertisingCallback = new Action<long, NativeStartAdvertisingResult>(advertisingCAnonStorey0.\u003C\u003Em__0);
-      // ISSUE: reference to a compiler-generated method
-      Action<long, NativeConnectionRequest> connectionRequestCallback = new Action<long, NativeConnectionRequest>(advertisingCAnonStorey0.\u003C\u003Em__1);
+      Action<long, NativeStartAdvertisingResult> advertisingCallback = (Action<long, NativeStartAdvertisingResult>) ((localClientId, result) => resultCallback(result.AsResult()));
+      Action<long, NativeConnectionRequest> connectionRequestCallback = (Action<long, NativeConnectionRequest>) ((localClientId, request) => requestCallback(request.AsRequest()));
       mManager.StartAdvertising(name1, list, timeoutMillis, advertisingCallback, connectionRequestCallback);
     }
 
@@ -129,49 +114,29 @@ namespace GooglePlayGames.Native
 
     public void SendConnectionRequest(string name, string remoteEndpointId, byte[] payload, Action<ConnectionResponse> responseCallback, IMessageListener listener)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeNearbyConnectionsClient.\u003CSendConnectionRequest\u003Ec__AnonStorey1 requestCAnonStorey1 = new NativeNearbyConnectionsClient.\u003CSendConnectionRequest\u003Ec__AnonStorey1();
-      // ISSUE: reference to a compiler-generated field
-      requestCAnonStorey1.responseCallback = responseCallback;
-      Misc.CheckNotNull<string>(remoteEndpointId, "remoteEndpointId");
-      Misc.CheckNotNull<byte[]>(payload, "payload");
-      // ISSUE: reference to a compiler-generated field
-      Misc.CheckNotNull<Action<ConnectionResponse>>(requestCAnonStorey1.responseCallback, "responseCallback");
-      Misc.CheckNotNull<IMessageListener>(listener, "listener");
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      requestCAnonStorey1.responseCallback = Callbacks.AsOnGameThreadCallback<ConnectionResponse>(requestCAnonStorey1.responseCallback);
+      Misc.CheckNotNull<string>(remoteEndpointId, nameof (remoteEndpointId));
+      Misc.CheckNotNull<byte[]>(payload, nameof (payload));
+      Misc.CheckNotNull<Action<ConnectionResponse>>(responseCallback, nameof (responseCallback));
+      Misc.CheckNotNull<IMessageListener>(listener, nameof (listener));
+      responseCallback = Callbacks.AsOnGameThreadCallback<ConnectionResponse>(responseCallback);
       using (NativeMessageListenerHelper messageListener = NativeNearbyConnectionsClient.ToMessageListener(listener))
-      {
-        // ISSUE: reference to a compiler-generated method
-        this.mManager.SendConnectionRequest(name, remoteEndpointId, payload, new Action<long, NativeConnectionResponse>(requestCAnonStorey1.\u003C\u003Em__0), messageListener);
-      }
+        this.mManager.SendConnectionRequest(name, remoteEndpointId, payload, (Action<long, NativeConnectionResponse>) ((localClientId, response) => responseCallback(response.AsResponse(localClientId))), messageListener);
     }
 
     private static NativeMessageListenerHelper ToMessageListener(IMessageListener listener)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeNearbyConnectionsClient.\u003CToMessageListener\u003Ec__AnonStorey2 listenerCAnonStorey2 = new NativeNearbyConnectionsClient.\u003CToMessageListener\u003Ec__AnonStorey2();
-      // ISSUE: reference to a compiler-generated field
-      listenerCAnonStorey2.listener = listener;
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      listenerCAnonStorey2.listener = (IMessageListener) new NativeNearbyConnectionsClient.OnGameThreadMessageListener(listenerCAnonStorey2.listener);
+      listener = (IMessageListener) new NativeNearbyConnectionsClient.OnGameThreadMessageListener(listener);
       NativeMessageListenerHelper messageListenerHelper = new NativeMessageListenerHelper();
-      // ISSUE: reference to a compiler-generated method
-      messageListenerHelper.SetOnMessageReceivedCallback(new NativeMessageListenerHelper.OnMessageReceived(listenerCAnonStorey2.\u003C\u003Em__0));
-      // ISSUE: reference to a compiler-generated method
-      messageListenerHelper.SetOnDisconnectedCallback(new Action<long, string>(listenerCAnonStorey2.\u003C\u003Em__1));
+      messageListenerHelper.SetOnMessageReceivedCallback((NativeMessageListenerHelper.OnMessageReceived) ((localClientId, endpointId, data, isReliable) => listener.OnMessageReceived(endpointId, data, isReliable)));
+      messageListenerHelper.SetOnDisconnectedCallback((Action<long, string>) ((localClientId, endpointId) => listener.OnRemoteEndpointDisconnected(endpointId)));
       return messageListenerHelper;
     }
 
     public void AcceptConnectionRequest(string remoteEndpointId, byte[] payload, IMessageListener listener)
     {
-      Misc.CheckNotNull<string>(remoteEndpointId, "remoteEndpointId");
-      Misc.CheckNotNull<byte[]>(payload, "payload");
-      Misc.CheckNotNull<IMessageListener>(listener, "listener");
+      Misc.CheckNotNull<string>(remoteEndpointId, nameof (remoteEndpointId));
+      Misc.CheckNotNull<byte[]>(payload, nameof (payload));
+      Misc.CheckNotNull<IMessageListener>(listener, nameof (listener));
       Logger.d("Calling AcceptConncectionRequest");
       this.mManager.AcceptConnectionRequest(remoteEndpointId, payload, NativeNearbyConnectionsClient.ToMessageListener(listener));
       Logger.d("Called!");
@@ -179,39 +144,30 @@ namespace GooglePlayGames.Native
 
     public void StartDiscovery(string serviceId, TimeSpan? advertisingTimeout, IDiscoveryListener listener)
     {
-      Misc.CheckNotNull<string>(serviceId, "serviceId");
-      Misc.CheckNotNull<IDiscoveryListener>(listener, "listener");
+      Misc.CheckNotNull<string>(serviceId, nameof (serviceId));
+      Misc.CheckNotNull<IDiscoveryListener>(listener, nameof (listener));
       using (NativeEndpointDiscoveryListenerHelper discoveryListener = NativeNearbyConnectionsClient.ToDiscoveryListener(listener))
         this.mManager.StartDiscovery(serviceId, NativeNearbyConnectionsClient.ToTimeoutMillis(advertisingTimeout), discoveryListener);
     }
 
     private static NativeEndpointDiscoveryListenerHelper ToDiscoveryListener(IDiscoveryListener listener)
     {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      NativeNearbyConnectionsClient.\u003CToDiscoveryListener\u003Ec__AnonStorey3 listenerCAnonStorey3 = new NativeNearbyConnectionsClient.\u003CToDiscoveryListener\u003Ec__AnonStorey3();
-      // ISSUE: reference to a compiler-generated field
-      listenerCAnonStorey3.listener = listener;
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: reference to a compiler-generated field
-      listenerCAnonStorey3.listener = (IDiscoveryListener) new NativeNearbyConnectionsClient.OnGameThreadDiscoveryListener(listenerCAnonStorey3.listener);
+      listener = (IDiscoveryListener) new NativeNearbyConnectionsClient.OnGameThreadDiscoveryListener(listener);
       NativeEndpointDiscoveryListenerHelper discoveryListenerHelper = new NativeEndpointDiscoveryListenerHelper();
-      // ISSUE: reference to a compiler-generated method
-      discoveryListenerHelper.SetOnEndpointFound(new Action<long, NativeEndpointDetails>(listenerCAnonStorey3.\u003C\u003Em__0));
-      // ISSUE: reference to a compiler-generated method
-      discoveryListenerHelper.SetOnEndpointLostCallback(new Action<long, string>(listenerCAnonStorey3.\u003C\u003Em__1));
+      discoveryListenerHelper.SetOnEndpointFound((Action<long, NativeEndpointDetails>) ((localClientId, endpoint) => listener.OnEndpointFound(endpoint.ToDetails())));
+      discoveryListenerHelper.SetOnEndpointLostCallback((Action<long, string>) ((localClientId, lostEndpointId) => listener.OnEndpointLost(lostEndpointId)));
       return discoveryListenerHelper;
     }
 
     public void StopDiscovery(string serviceId)
     {
-      Misc.CheckNotNull<string>(serviceId, "serviceId");
+      Misc.CheckNotNull<string>(serviceId, nameof (serviceId));
       this.mManager.StopDiscovery(serviceId);
     }
 
     public void RejectConnectionRequest(string requestingEndpointId)
     {
-      Misc.CheckNotNull<string>(requestingEndpointId, "requestingEndpointId");
+      Misc.CheckNotNull<string>(requestingEndpointId, nameof (requestingEndpointId));
       this.mManager.RejectConnectionRequest(requestingEndpointId);
     }
 
@@ -256,26 +212,12 @@ namespace GooglePlayGames.Native
 
       public void OnMessageReceived(string remoteEndpointId, byte[] data, bool isReliableMessage)
       {
-        // ISSUE: object of a compiler-generated type is created
-        // ISSUE: reference to a compiler-generated method
-        PlayGamesHelperObject.RunOnGameThread(new Action(new NativeNearbyConnectionsClient.OnGameThreadMessageListener.\u003COnMessageReceived\u003Ec__AnonStorey0()
-        {
-          remoteEndpointId = remoteEndpointId,
-          data = data,
-          isReliableMessage = isReliableMessage,
-          \u0024this = this
-        }.\u003C\u003Em__0));
+        PlayGamesHelperObject.RunOnGameThread((Action) (() => this.mListener.OnMessageReceived(remoteEndpointId, data, isReliableMessage)));
       }
 
       public void OnRemoteEndpointDisconnected(string remoteEndpointId)
       {
-        // ISSUE: object of a compiler-generated type is created
-        // ISSUE: reference to a compiler-generated method
-        PlayGamesHelperObject.RunOnGameThread(new Action(new NativeNearbyConnectionsClient.OnGameThreadMessageListener.\u003COnRemoteEndpointDisconnected\u003Ec__AnonStorey1()
-        {
-          remoteEndpointId = remoteEndpointId,
-          \u0024this = this
-        }.\u003C\u003Em__0));
+        PlayGamesHelperObject.RunOnGameThread((Action) (() => this.mListener.OnRemoteEndpointDisconnected(remoteEndpointId)));
       }
     }
 
@@ -290,24 +232,12 @@ namespace GooglePlayGames.Native
 
       public void OnEndpointFound(EndpointDetails discoveredEndpoint)
       {
-        // ISSUE: object of a compiler-generated type is created
-        // ISSUE: reference to a compiler-generated method
-        PlayGamesHelperObject.RunOnGameThread(new Action(new NativeNearbyConnectionsClient.OnGameThreadDiscoveryListener.\u003COnEndpointFound\u003Ec__AnonStorey0()
-        {
-          discoveredEndpoint = discoveredEndpoint,
-          \u0024this = this
-        }.\u003C\u003Em__0));
+        PlayGamesHelperObject.RunOnGameThread((Action) (() => this.mListener.OnEndpointFound(discoveredEndpoint)));
       }
 
       public void OnEndpointLost(string lostEndpointId)
       {
-        // ISSUE: object of a compiler-generated type is created
-        // ISSUE: reference to a compiler-generated method
-        PlayGamesHelperObject.RunOnGameThread(new Action(new NativeNearbyConnectionsClient.OnGameThreadDiscoveryListener.\u003COnEndpointLost\u003Ec__AnonStorey1()
-        {
-          lostEndpointId = lostEndpointId,
-          \u0024this = this
-        }.\u003C\u003Em__0));
+        PlayGamesHelperObject.RunOnGameThread((Action) (() => this.mListener.OnEndpointLost(lostEndpointId)));
       }
     }
   }
