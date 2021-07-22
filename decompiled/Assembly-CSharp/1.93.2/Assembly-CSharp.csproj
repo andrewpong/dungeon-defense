@@ -1,0 +1,566 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props"
+	        Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+	<PropertyGroup>
+		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+		<ProjectGuid>{57C764AF-4796-4775-A837-8CF816488F1D}</ProjectGuid>
+		<OutputType>Library</OutputType>
+		<RootNamespace>Assembly-CSharp</RootNamespace>
+		<AssemblyName>Assembly-CSharp</AssemblyName>
+		<TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+		<FileAlignment>512</FileAlignment>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<Optimize>false</Optimize>
+		<OutputPath>bin\Debug\</OutputPath>
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<DebugType>pdbonly</DebugType>
+		<Optimize>true</Optimize>
+		<OutputPath>bin\Release\</OutputPath>
+		<DefineConstants>TRACE</DefineConstants>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+	</PropertyGroup>
+	<ItemGroup>
+		<Reference Include="Il2CppDummyDll">
+			<HintPath>..\..\..\..\DummyDll\Il2CppDummyDll.dll</HintPath>
+		</Reference>
+		<Reference Include="System">
+			<HintPath>..\..\..\..\DummyDll\System.dll</HintPath>
+		</Reference>
+		<Reference Include="System.Core">
+			<HintPath>..\..\..\..\DummyDll\System.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.AnimationModule">
+			<HintPath>..\..\..\..\DummyDll\UnityEngine.AnimationModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.AudioModule">
+			<HintPath>..\..\..\..\DummyDll\UnityEngine.AudioModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.CoreModule">
+			<HintPath>..\..\..\..\DummyDll\UnityEngine.CoreModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.GameCenterModule">
+			<HintPath>..\..\..\..\DummyDll\UnityEngine.GameCenterModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.IMGUIModule">
+			<HintPath>..\..\..\..\DummyDll\UnityEngine.IMGUIModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.ParticleSystemModule">
+			<HintPath>..\..\..\..\DummyDll\UnityEngine.ParticleSystemModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.Physics2DModule">
+			<HintPath>..\..\..\..\DummyDll\UnityEngine.Physics2DModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.PhysicsModule">
+			<HintPath>..\..\..\..\DummyDll\UnityEngine.PhysicsModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.Purchasing">
+			<HintPath>..\..\..\..\DummyDll\UnityEngine.Purchasing.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.TextRenderingModule">
+			<HintPath>..\..\..\..\DummyDll\UnityEngine.TextRenderingModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UI">
+			<HintPath>..\..\..\..\DummyDll\UnityEngine.UI.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UIModule">
+			<HintPath>..\..\..\..\DummyDll\UnityEngine.UIModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UnityWebRequestModule">
+			<HintPath>..\..\..\..\DummyDll\UnityEngine.UnityWebRequestModule.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+	<ItemGroup>
+		<AppDesigner Include="Properties\" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="-PrivateImplementationDetails-.cs" />
+		<Compile Include="AccElt.cs" />
+		<Compile Include="AchievementElt.cs" />
+		<Compile Include="ActiveSkillElt.cs" />
+		<Compile Include="AwakenSkillElt.cs" />
+		<Compile Include="BattleClockElt.cs" />
+		<Compile Include="BattleCoinElt.cs" />
+		<Compile Include="BattleLaserElt.cs" />
+		<Compile Include="BData.cs" />
+		<Compile Include="BeamScript.cs" />
+		<Compile Include="Bullet.cs" />
+		<Compile Include="BUtil.cs" />
+		<Compile Include="ButtonScript.cs" />
+		<Compile Include="CC\AccData.cs" />
+		<Compile Include="CC\AccDropType.cs" />
+		<Compile Include="CC\AchievementData.cs" />
+		<Compile Include="CC\AchievementType.cs" />
+		<Compile Include="CC\AcvRewardType.cs" />
+		<Compile Include="CC\AcvRewardTypeComparer.cs" />
+		<Compile Include="CC\Ads.cs" />
+		<Compile Include="CC\ArmorType.cs" />
+		<Compile Include="CC\BattleItemData.cs" />
+		<Compile Include="CC\BattleType.cs" />
+		<Compile Include="CC\BulletType.cs" />
+		<Compile Include="CC\CloudSavedData.cs" />
+		<Compile Include="CC\CurrencyType.cs" />
+		<Compile Include="CC\Difficult.cs" />
+		<Compile Include="CC\DungeonData.cs" />
+		<Compile Include="CC\DungeonType.cs" />
+		<Compile Include="CC\Element.cs" />
+		<Compile Include="CC\ElementalData.cs" />
+		<Compile Include="CC\ElementalID.cs" />
+		<Compile Include="CC\EnemyData.cs" />
+		<Compile Include="CC\ItemData.cs" />
+		<Compile Include="CC\ItemModData.cs" />
+		<Compile Include="CC\ItemType.cs" />
+		<Compile Include="CC\ModData.cs" />
+		<Compile Include="CC\ModType.cs" />
+		<Compile Include="CC\MonsterData.cs" />
+		<Compile Include="CC\MonTraitData.cs" />
+		<Compile Include="CC\MonTraitID.cs" />
+		<Compile Include="CC\MonTraitIDComparer.cs" />
+		<Compile Include="CC\MoveType.cs" />
+		<Compile Include="CC\MutateType.cs" />
+		<Compile Include="CC\MutateTypeComparer.cs" />
+		<Compile Include="CC\MutationData.cs" />
+		<Compile Include="CC\PlayerAccData.cs" />
+		<Compile Include="CC\PlayerItemData.cs" />
+		<Compile Include="CC\PlayerMonsterData.cs" />
+		<Compile Include="CC\QuestData.cs" />
+		<Compile Include="CC\QuestID.cs" />
+		<Compile Include="CC\RebirthData.cs" />
+		<Compile Include="CC\RebirthID.cs" />
+		<Compile Include="CC\ResearchData.cs" />
+		<Compile Include="CC\ResearchID.cs" />
+		<Compile Include="CC\RubyData.cs" />
+		<Compile Include="CC\SavedAchievement.cs" />
+		<Compile Include="CC\SavedData.cs" />
+		<Compile Include="CC\SavedOption.cs" />
+		<Compile Include="CC\SavedRebirth.cs" />
+		<Compile Include="CC\ShopData.cs" />
+		<Compile Include="CC\ShopID.cs" />
+		<Compile Include="CC\SkillData.cs" />
+		<Compile Include="CC\SkillKey.cs" />
+		<Compile Include="CC\SkillKeyComparer.cs" />
+		<Compile Include="CC\SkillType.cs" />
+		<Compile Include="CC\SpawnType.cs" />
+		<Compile Include="CC\StoneData.cs" />
+		<Compile Include="CC\TrailType.cs" />
+		<Compile Include="CC\TrialData.cs" />
+		<Compile Include="CC\WaveData.cs" />
+		<Compile Include="CC\WeaponType.cs" />
+		<Compile Include="CharSkillElt.cs" />
+		<Compile Include="CharUnitTab.cs" />
+		<Compile Include="CodeStage\AntiCheat\Common\ACTkByte16.cs" />
+		<Compile Include="CodeStage\AntiCheat\Common\ACTkByte4.cs" />
+		<Compile Include="CodeStage\AntiCheat\Common\ACTkByte8.cs" />
+		<Compile Include="CodeStage\AntiCheat\Common\Constants.cs" />
+		<Compile Include="CodeStage\AntiCheat\Detectors\ActDetectorBase.cs" />
+		<Compile Include="CodeStage\AntiCheat\Detectors\InjectionDetector.cs" />
+		<Compile Include="CodeStage\AntiCheat\Detectors\ObscuredCheatingDetector.cs" />
+		<Compile Include="CodeStage\AntiCheat\Detectors\SpeedHackDetector.cs" />
+		<Compile Include="CodeStage\AntiCheat\Detectors\WallHackDetector.cs" />
+		<Compile Include="CodeStage\AntiCheat\ObscuredTypes\ObscuredBool.cs" />
+		<Compile Include="CodeStage\AntiCheat\ObscuredTypes\ObscuredByte.cs" />
+		<Compile Include="CodeStage\AntiCheat\ObscuredTypes\ObscuredChar.cs" />
+		<Compile Include="CodeStage\AntiCheat\ObscuredTypes\ObscuredDecimal.cs" />
+		<Compile Include="CodeStage\AntiCheat\ObscuredTypes\ObscuredDouble.cs" />
+		<Compile Include="CodeStage\AntiCheat\ObscuredTypes\ObscuredFloat.cs" />
+		<Compile Include="CodeStage\AntiCheat\ObscuredTypes\ObscuredInt.cs" />
+		<Compile Include="CodeStage\AntiCheat\ObscuredTypes\ObscuredLong.cs" />
+		<Compile Include="CodeStage\AntiCheat\ObscuredTypes\ObscuredPrefs.cs" />
+		<Compile Include="CodeStage\AntiCheat\ObscuredTypes\ObscuredQuaternion.cs" />
+		<Compile Include="CodeStage\AntiCheat\ObscuredTypes\ObscuredSByte.cs" />
+		<Compile Include="CodeStage\AntiCheat\ObscuredTypes\ObscuredShort.cs" />
+		<Compile Include="CodeStage\AntiCheat\ObscuredTypes\ObscuredString.cs" />
+		<Compile Include="CodeStage\AntiCheat\ObscuredTypes\ObscuredUInt.cs" />
+		<Compile Include="CodeStage\AntiCheat\ObscuredTypes\ObscuredULong.cs" />
+		<Compile Include="CodeStage\AntiCheat\ObscuredTypes\ObscuredUShort.cs" />
+		<Compile Include="CodeStage\AntiCheat\ObscuredTypes\ObscuredVector2.cs" />
+		<Compile Include="CodeStage\AntiCheat\ObscuredTypes\ObscuredVector3.cs" />
+		<Compile Include="CodeStage\AntiCheat\Utils\xxHash.cs" />
+		<Compile Include="Com\Google\Android\Gms\Common\Api\GoogleApiClient.cs" />
+		<Compile Include="Com\Google\Android\Gms\Common\Api\PendingResult.cs" />
+		<Compile Include="Com\Google\Android\Gms\Common\Api\Result.cs" />
+		<Compile Include="Com\Google\Android\Gms\Common\Api\ResultCallback.cs" />
+		<Compile Include="Com\Google\Android\Gms\Common\Api\ResultCallbackProxy.cs" />
+		<Compile Include="Com\Google\Android\Gms\Common\Api\Status.cs" />
+		<Compile Include="Com\Google\Android\Gms\Common\ConnectionResult.cs" />
+		<Compile Include="Com\Google\Android\Gms\Games\Games.cs" />
+		<Compile Include="Com\Google\Android\Gms\Games\Games_BaseGamesApiMethodImpl.cs" />
+		<Compile Include="Com\Google\Android\Gms\Games\Stats\PlayerStats.cs" />
+		<Compile Include="Com\Google\Android\Gms\Games\Stats\PlayerStatsObject.cs" />
+		<Compile Include="Com\Google\Android\Gms\Games\Stats\Stats.cs" />
+		<Compile Include="Com\Google\Android\Gms\Games\Stats\StatsObject.cs" />
+		<Compile Include="Com\Google\Android\Gms\Games\Stats\Stats_LoadPlayerStatsResult.cs" />
+		<Compile Include="Com\Google\Android\Gms\Games\Stats\Stats_LoadPlayerStatsResultObject.cs" />
+		<Compile Include="DataAccessory.cs" />
+		<Compile Include="DataAchievement.cs" />
+		<Compile Include="DataDungeon.cs" />
+		<Compile Include="DataElemental.cs" />
+		<Compile Include="DataEnemy.cs" />
+		<Compile Include="DataMod.cs" />
+		<Compile Include="DataMonster.cs" />
+		<Compile Include="DataMonTrait.cs" />
+		<Compile Include="DataMutation.cs" />
+		<Compile Include="DataQuest.cs" />
+		<Compile Include="DataRebirth.cs" />
+		<Compile Include="DataResearch.cs" />
+		<Compile Include="DataRuby.cs" />
+		<Compile Include="DataShop.cs" />
+		<Compile Include="DataSkill.cs" />
+		<Compile Include="DataStone.cs" />
+		<Compile Include="DataTrial.cs" />
+		<Compile Include="DataWeapon.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\CameraMode.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\DemoConfigureScript.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\DemoMeshScript.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\DemoPathScript.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\DemoPlayerControllerScript.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\DemoScript.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\DemoScript2D.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\DemoScriptManualAutomatic.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\DemoScriptPrefabTutorial.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\DemoScriptRotate.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\DemoScriptTriggerPath.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\ICollisionHandler.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningBeamSpellScript.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningBolt.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningBoltDependencies.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningBoltParameters.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningBoltPathScript.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningBoltPathScriptBase.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningBoltPrefabScript.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningBoltPrefabScriptBase.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningBoltQualitySetting.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningBoltScript.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningBoltSegment.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningBoltSegmentGroup.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningBoltShapeConeScript.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningBoltShapeSphereScript.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningCameraScript.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningFieldScript.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningGenerator.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningGeneratorPath.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningGizmoScript.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningLightParameters.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningLightsabreScript.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningMeshSurfaceScript.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningParticleCollisionForwarder.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningParticleSpellScript.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningQualityMaximum.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningSpellScript.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningSplineScript.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningThreadState.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningWhipScript.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\LightningWhipSpell.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\MeshHelper.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\PathGenerator.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\RangeOfFloats.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\RangeOfIntegers.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\ReorderableList.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\ReorderableListAttribute.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\ReorderableListBase.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\ReorderableList_Float.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\ReorderableList_GameObject.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\ReorderableList_Int.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\ReorderableList_Rect.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\ReorderableList_RectOffset.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\ReorderableList_String.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\ReorderableList_Transform.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\ReorderableList_Vector3.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\SingleLineAttribute.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\SingleLineClampAttribute.cs" />
+		<Compile Include="DigitalRuby\ThunderAndLightning\ThunderAndLightningScript.cs" />
+		<Compile Include="DmgText.cs" />
+		<Compile Include="DragMouseOrbit.cs" />
+		<Compile Include="DungeonElt.cs" />
+		<Compile Include="Enemy.cs" />
+		<Compile Include="EnemyBullet.cs" />
+		<Compile Include="FireProjectile.cs" />
+		<Compile Include="GooglePlayGames\Android\AndroidTokenClient.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Achievement.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\CommonStatusCodes.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\CommonTypesUtil.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\DataSource.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\DummyClient.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Events\EventVisibility.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Events\IEvent.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Events\IEventsClient.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Gravity.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\InvitationReceivedDelegate.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\IPlayGamesClient.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\LeaderboardCollection.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\LeaderboardScoreData.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\LeaderboardStart.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\LeaderboardTimeSpan.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Multiplayer\Invitation.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Multiplayer\IRealTimeMultiplayerClient.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Multiplayer\ITurnBasedMultiplayerClient.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Multiplayer\MatchDelegate.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Multiplayer\MatchOutcome.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Multiplayer\Participant.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Multiplayer\Player.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Multiplayer\RealTimeMultiplayerListener.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Multiplayer\TurnBasedMatch.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Nearby\AdvertisingResult.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Nearby\ConnectionRequest.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Nearby\ConnectionResponse.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Nearby\DummyNearbyConnectionClient.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Nearby\EndpointDetails.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Nearby\IDiscoveryListener.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Nearby\IMessageListener.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Nearby\INearbyConnectionClient.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Nearby\InitializationStatus.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Nearby\NearbyConnectionConfiguration.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\PlayerStats.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\PlayGamesClientConfiguration.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\ResponseStatus.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\SavedGame\ConflictCallback.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\SavedGame\ConflictResolutionStrategy.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\SavedGame\IConflictResolver.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\SavedGame\ISavedGameClient.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\SavedGame\ISavedGameMetadata.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\SavedGame\SavedGameMetadataUpdate.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\SavedGame\SavedGameRequestStatus.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\SavedGame\SelectUIStatus.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\ScorePageToken.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\UIStatus.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\VideoCaptureMode.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\VideoCaptureOverlayState.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\VideoQualityLevel.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Video\CaptureOverlayStateListener.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Video\IVideoClient.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Video\VideoCapabilities.cs" />
+		<Compile Include="GooglePlayGames\BasicApi\Video\VideoCaptureState.cs" />
+		<Compile Include="GooglePlayGames\GameInfo.cs" />
+		<Compile Include="GooglePlayGames\Native\Android\AndroidClient.cs" />
+		<Compile Include="GooglePlayGames\Native\CallbackUtils.cs" />
+		<Compile Include="GooglePlayGames\Native\ConversionUtils.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\Achievement.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\AchievementManager.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\AndroidPlatformConfiguration.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\Builder.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\CaptureOverlayStateListenerHelper.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\CommonErrorStatus.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\EndpointDiscoveryListenerHelper.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\Event.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\EventManager.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\GameServices.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\InternalHooks.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\Leaderboard.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\LeaderboardManager.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\MessageListenerHelper.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\MultiplayerInvitation.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\MultiplayerParticipant.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\NearbyConnections.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\NearbyConnectionsBuilder.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\NearbyConnectionsStatus.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\NearbyConnectionTypes.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\ParticipantResults.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\Player.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\PlayerManager.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\PlayerStats.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\RealTimeEventListenerHelper.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\RealTimeMultiplayerManager.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\RealTimeRoom.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\RealTimeRoomConfig.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\RealTimeRoomConfigBuilder.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\Score.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\ScorePage.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\ScoreSummary.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\Sentinels.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\SnapshotManager.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\SnapshotMetadata.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\SnapshotMetadataChange.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\SnapshotMetadataChangeBuilder.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\StatsManager.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\Status.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\SymbolLocation.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\TurnBasedMatch.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\TurnBasedMatchConfig.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\TurnBasedMatchConfigBuilder.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\TurnBasedMultiplayerManager.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\Types.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\VideoCapabilities.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\VideoCaptureState.cs" />
+		<Compile Include="GooglePlayGames\Native\Cwrapper\VideoManager.cs" />
+		<Compile Include="GooglePlayGames\Native\IClientImpl.cs" />
+		<Compile Include="GooglePlayGames\Native\JavaUtils.cs" />
+		<Compile Include="GooglePlayGames\Native\NativeClient.cs" />
+		<Compile Include="GooglePlayGames\Native\NativeEventClient.cs" />
+		<Compile Include="GooglePlayGames\Native\NativeNearbyConnectionClientFactory.cs" />
+		<Compile Include="GooglePlayGames\Native\NativeNearbyConnectionsClient.cs" />
+		<Compile Include="GooglePlayGames\Native\NativeRealtimeMultiplayerClient.cs" />
+		<Compile Include="GooglePlayGames\Native\NativeSavedGameClient.cs" />
+		<Compile Include="GooglePlayGames\Native\NativeTurnBasedMultiplayerClient.cs" />
+		<Compile Include="GooglePlayGames\Native\NativeVideoClient.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\AchievementManager.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\AndroidPlatformConfiguration.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\BaseReferenceHolder.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\Callbacks.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\CaptureOverlayStateListenerHelper.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\EventManager.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\FetchResponse.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\FetchScorePageResponse.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\FetchScoreSummaryResponse.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\GameServices.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\GameServicesBuilder.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\GetCaptureCapabilitiesResponse.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\GetCaptureStateResponse.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\IsCaptureAvailableResponse.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\LeaderboardManager.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\MultiplayerInvitation.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\MultiplayerParticipant.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NativeAchievement.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NativeAppIdentifier.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NativeConnectionRequest.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NativeConnectionResponse.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NativeEndpointDetails.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NativeEndpointDiscoveryListenerHelper.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NativeEvent.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NativeLeaderboard.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NativeMessageListenerHelper.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NativePlayer.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NativePlayerStats.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NativeRealTimeRoom.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NativeScore.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NativeScoreEntry.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NativeScorePage.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NativeScorePageToken.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NativeScoreSummary.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NativeSnapshotMetadata.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NativeSnapshotMetadataChange.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NativeStartAdvertisingResult.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NativeTurnBasedMatch.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NativeVideoCapabilities.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NativeVideoCaptureState.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NearbyConnectionsManager.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\NearbyConnectionsManagerBuilder.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\ParticipantResults.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\PInvokeUtilities.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\PlatformConfiguration.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\PlayerManager.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\PlayerSelectUIResponse.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\RealTimeEventListenerHelper.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\RealtimeManager.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\RealtimeRoomConfig.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\RealtimeRoomConfigBuilder.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\SnapshotManager.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\StatsManager.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\TurnBasedManager.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\TurnBasedMatchConfig.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\TurnBasedMatchConfigBuilder.cs" />
+		<Compile Include="GooglePlayGames\Native\PInvoke\VideoManager.cs" />
+		<Compile Include="GooglePlayGames\Native\UnsupportedSavedGamesClient.cs" />
+		<Compile Include="GooglePlayGames\NearbyConnectionClientFactory.cs" />
+		<Compile Include="GooglePlayGames\OurUtils\Logger.cs" />
+		<Compile Include="GooglePlayGames\OurUtils\Misc.cs" />
+		<Compile Include="GooglePlayGames\OurUtils\PlatformUtils.cs" />
+		<Compile Include="GooglePlayGames\OurUtils\PlayGamesHelperObject.cs" />
+		<Compile Include="GooglePlayGames\PlayGamesAchievement.cs" />
+		<Compile Include="GooglePlayGames\PlayGamesClientFactory.cs" />
+		<Compile Include="GooglePlayGames\PlayGamesLeaderboard.cs" />
+		<Compile Include="GooglePlayGames\PlayGamesLocalUser.cs" />
+		<Compile Include="GooglePlayGames\PlayGamesPlatform.cs" />
+		<Compile Include="GooglePlayGames\PlayGamesScore.cs" />
+		<Compile Include="GooglePlayGames\PlayGamesUserProfile.cs" />
+		<Compile Include="GooglePlayGames\PluginVersion.cs" />
+		<Compile Include="GooglePlayGames\ReportProgress.cs" />
+		<Compile Include="GooglePlayGames\TokenClient.cs" />
+		<Compile Include="Google\Developers\JavaInterfaceProxy.cs" />
+		<Compile Include="Google\Developers\JavaObjWrapper.cs" />
+		<Compile Include="GPGSIds.cs" />
+		<Compile Include="GPGSMgr.cs" />
+		<Compile Include="IKeyChainPluginPath.cs" />
+		<Compile Include="Info.cs" />
+		<Compile Include="ItemModElt.cs" />
+		<Compile Include="KeyChainBinding.cs" />
+		<Compile Include="KeyChainCrypto.cs" />
+		<Compile Include="KeyChainDebug.cs" />
+		<Compile Include="lightScript.cs" />
+		<Compile Include="LoadSceneOnClickPA.cs" />
+		<Compile Include="loopScript.cs" />
+		<Compile Include="MainTabElt.cs" />
+		<Compile Include="MissionElt.cs" />
+		<Compile Include="Monster.cs" />
+		<Compile Include="MonTraitElt.cs" />
+		<Compile Include="PageBattle.cs" />
+		<Compile Include="PageLobby.cs" />
+		<Compile Include="PageMain.cs" />
+		<Compile Include="PageStart.cs" />
+		<Compile Include="ParticleElt.cs" />
+		<Compile Include="ParticleMgr.cs" />
+		<Compile Include="PopupAccBook.cs" />
+		<Compile Include="PopupAccSelect.cs" />
+		<Compile Include="PopupAwakening.cs" />
+		<Compile Include="PopupBatch.cs" />
+		<Compile Include="PopupBlock.cs" />
+		<Compile Include="PopupBuildOrder.cs" />
+		<Compile Include="PopupChange.cs" />
+		<Compile Include="PopupElementalSelect.cs" />
+		<Compile Include="PopupElementalTrait.cs" />
+		<Compile Include="PopupEndlessBrief.cs" />
+		<Compile Include="PopupEndlessResult.cs" />
+		<Compile Include="PopupFocusSkill.cs" />
+		<Compile Include="PopupGameOver.cs" />
+		<Compile Include="PopupHellShop.cs" />
+		<Compile Include="PopupHellStone.cs" />
+		<Compile Include="PopupHire.cs" />
+		<Compile Include="PopupMercenarySkill.cs" />
+		<Compile Include="PopupMission.cs" />
+		<Compile Include="PopupMonsterTrait.cs" />
+		<Compile Include="PopupMsg.cs" />
+		<Compile Include="PopupNewAcc.cs" />
+		<Compile Include="PopupOption.cs" />
+		<Compile Include="PopupPromote.cs" />
+		<Compile Include="PopupRebirth.cs" />
+		<Compile Include="PopupRebirthDiff.cs" />
+		<Compile Include="PopupResearchPlanner.cs" />
+		<Compile Include="PopupRubyShop.cs" />
+		<Compile Include="PopupSkillSelect.cs" />
+		<Compile Include="PopupTrialBrief.cs" />
+		<Compile Include="PopupTypeSelect.cs" />
+		<Compile Include="PopupWeaponSelect.cs" />
+		<Compile Include="Projectile.cs" />
+		<Compile Include="ProjectileScript.cs" />
+		<Compile Include="Properties\AssemblyInfo.cs" />
+		<Compile Include="Purchaser.cs" />
+		<Compile Include="RebirthShopElt.cs" />
+		<Compile Include="ResearchElt.cs" />
+		<Compile Include="RSMgr.cs" />
+		<Compile Include="SaveManager.cs" />
+		<Compile Include="SelfDestruct.cs" />
+		<Compile Include="Strings.cs" />
+		<Compile Include="StringTooltip.cs" />
+		<Compile Include="TextCustom.cs" />
+		<Compile Include="Thinksquirrel\CShakeExample\CameraShakeExample.cs" />
+		<Compile Include="Thinksquirrel\CShake\CameraShake.cs" />
+		<Compile Include="Thinksquirrel\CShake\CameraShakeBase.cs" />
+		<Compile Include="Thinksquirrel\CShake\Internal\CameraShakeDocumentationName.cs" />
+		<Compile Include="Thinksquirrel\CShake\Internal\VersionInfo.cs" />
+		<Compile Include="TooltipWindow.cs" />
+		<Compile Include="UIMgr.cs" />
+		<Compile Include="UIPage.cs" />
+		<Compile Include="UnityStandardAssets\Water\Displace.cs" />
+		<Compile Include="UnityStandardAssets\Water\GerstnerDisplace.cs" />
+		<Compile Include="UnityStandardAssets\Water\MeshContainer.cs" />
+		<Compile Include="UnityStandardAssets\Water\PlanarReflection.cs" />
+		<Compile Include="UnityStandardAssets\Water\SpecularLighting.cs" />
+		<Compile Include="UnityStandardAssets\Water\Water.cs" />
+		<Compile Include="UnityStandardAssets\Water\WaterBase.cs" />
+		<Compile Include="UnityStandardAssets\Water\WaterQuality.cs" />
+		<Compile Include="UnityStandardAssets\Water\WaterTile.cs" />
+		<Compile Include="WeaponElt.cs" />
+	</ItemGroup>
+	<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
